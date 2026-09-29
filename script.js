@@ -11,6 +11,23 @@
   const btn = $("#form-btn");
   if (C.formUrl) {
     btn.href = C.formUrl;
+    $("#form-newtab").href = C.formUrl;
+    const modal = $("#form-modal");
+    const frame = $("#form-frame");
+    btn.addEventListener("click", (e) => {
+      if (!modal.showModal) return; // navegador antigo: segue o link normal
+      e.preventDefault();
+      if (!frame.src) {
+        frame.addEventListener("load", () => modal.classList.add("is-loaded"), { once: true });
+        frame.src = C.formUrl + (C.formUrl.includes("?") ? "&" : "?") + "embedded=true";
+      }
+      modal.showModal();
+      document.body.classList.add("no-scroll");
+    });
+    const close = () => modal.close();
+    $("#form-close").addEventListener("click", close);
+    modal.addEventListener("click", (e) => { if (e.target === modal) close(); }); // clique fora
+    modal.addEventListener("close", () => document.body.classList.remove("no-scroll"));
   } else {
     btn.addEventListener("click", (e) => {
       e.preventDefault();
