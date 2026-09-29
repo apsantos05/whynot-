@@ -1,0 +1,101 @@
+/* why not? — tokens tirados da logo: preto azulado profundo, gelo, extrusão em degradê */
+:root {
+  --abyss: #03090b;      /* fundo */
+  --tide: #1d3a42;       /* bordas, extrusão escura */
+  --frost: #7fa3ad;      /* texto secundário */
+  --ice: #e2f1f5;        /* texto principal / face das letras */
+
+  --serif: "Fraunces", Georgia, serif;
+  --sans: "Hanken Grotesk", system-ui, sans-serif;
+
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.3125rem;
+  --step-3: clamp(2.25rem, 5vw, 3.25rem);
+
+  --gutter: clamp(16px, 5vw, 64px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  display: flex; flex-direction: column;
+  background:
+    radial-gradient(ellipse 80% 60% at 30% 40%, #0b1d22 0%, transparent 70%),
+    var(--abyss);
+  background-attachment: fixed;
+  color: var(--ice);
+  font-family: var(--sans);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--ice); outline-offset: 3px; border-radius: 4px; }
+
+/* ---------- layout: logo | formulário ---------- */
+.page {
+  flex: 1;
+  display: grid;
+  gap: clamp(40px, 8vw, 64px);
+  align-items: center;
+  padding: clamp(48px, 8vw, 96px) var(--gutter) 32px;
+  max-width: 80rem; width: 100%; margin: 0 auto;
+}
+@media (min-width: 960px) {
+  .page { grid-template-columns: 1.15fr 1fr; column-gap: 64px; }
+}
+
+/* ---------- a extrusão é o elemento principal ---------- */
+.hero__stack {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 900;
+  font-variation-settings: "opsz" 144;
+  font-size: clamp(3.2rem, 12vw, 8.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  color: var(--ice);
+  display: flex; flex-direction: column;
+  transform: rotate(-11deg) skewX(-6deg);
+  transform-origin: 30% 50%;
+  padding: 0.3em 0 0.3em 0.4em;
+  user-select: none;
+}
+@media (min-width: 960px) { .hero__stack { font-size: clamp(4rem, 9.5vw, 9.5rem); } }
+.extrude { display: block; white-space: nowrap; }
+.extrude:nth-child(2) { margin-left: 0.18em; }
+.extrude:nth-child(3) { margin-left: 0.36em; }
+
+/* ---------- chamada ---------- */
+.apply { max-width: 30rem; width: 100%; justify-self: center; }
+.h2 {
+  font-family: var(--serif); font-weight: 900; font-size: var(--step-3);
+  line-height: 1; letter-spacing: -0.02em; margin: 0 0 12px;
+  text-shadow: -1px 1px 0 #6c8e99, -2px 2px 0 #43636e, -3px 3px 0 #263e46, -4px 4px 0 #132328;
+}
+.apply__lead { margin: 0 0 24px; color: var(--frost); font-size: var(--step-1); line-height: 1.45; }
+
+.btn {
+  display: inline-flex; justify-content: center; align-items: center;
+  font: 700 var(--step-0) / 1 var(--sans);
+  color: var(--abyss); background: var(--ice);
+  border: 0; border-radius: 999px; padding: 17px 26px; margin-top: 8px;
+  cursor: pointer; text-decoration: none;
+  box-shadow: -2px 2px 0 var(--frost), -4px 4px 0 var(--tide);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.btn:hover { transform: translate(1px, -1px); box-shadow: -3px 3px 0 var(--frost), -6px 6px 0 var(--tide); }
+.btn:active { transform: translate(-2px, 2px); box-shadow: 0 0 0 var(--frost); }
+.btn[disabled] { opacity: .5; cursor: progress; }
+.btn--block { width: 100%; }
+
+/* ---------- rodapé ---------- */
+.foot { text-align: center; padding: 24px var(--gutter) 32px; font-size: var(--step--1); color: var(--frost); }
+.foot a { text-decoration: none; }
+.foot a:hover { color: var(--ice); text-decoration: underline; }
