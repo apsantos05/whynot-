@@ -38,7 +38,7 @@
   /* ---------- line-up: nomes flutuando + logo 3D girando ----------
      A seção é alta e o conteúdo fica "grudado" na tela. Conforme a pessoa rola:
      1) os nomes dos DJs atravessam o fundo em faixas, em sentidos alternados;
-     2) a logo 3D aparece no centro, flutua e dá uma volta completa;
+     2) a logo 3D aparece no centro, flutuando e girando sozinha;
      3) a logo sobe e entram a mensagem e o botão da lista VIP. */
   const reveal = $(".reveal");
   if (reveal) setupLineup();
@@ -110,7 +110,6 @@
 
     const seg = (p, a, b) => Math.max(0, Math.min(1, (p - a) / (b - a)));
     const out = (t) => 1 - Math.pow(1 - t, 3);
-    const inOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
     const paint = (now) => {
       const r = reveal.getBoundingClientRect();
@@ -126,9 +125,9 @@
         row.el.style.opacity = nIn.toFixed(3);
       }
 
-      // 2) logo: entra, flutua e dá uma volta inteira
+      // 2) logo: entra, flutua e gira sem parar (independe da rolagem)
       const show = out(seg(p, 0, 0.14));
-      const spin = inOut(seg(p, 0.06, 0.7)) * 360 + Math.sin(now * 0.0011) * 9;
+      const spin = (now * 0.04) % 360;                    // gira sozinha: 1 volta a cada 9 s
       const tilt = 7 + Math.sin(now * 0.0008) * 6;
       const bob = Math.sin(now * 0.0014) * fontPx * 0.07;
       obj.style.transform = `translateY(${bob.toFixed(1)}px) rotateX(${tilt.toFixed(2)}deg) rotateY(${spin.toFixed(2)}deg) ${BASE}`;
