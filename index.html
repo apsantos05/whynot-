@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Hanken+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="styles.css?v=14">
 </head>
 <body>
   <main>
@@ -42,8 +42,11 @@
             <span class="reveal__line reveal__line--big"><span>Por que não?</span></span>
           </h2>
           <div class="reveal__cta">
-            <a class="btn" id="form-btn" href="#" target="_blank" rel="noopener">Entrar na lista VIP</a>
-            <p class="reveal__note">Cadastro em menos de 1 minuto.</p>
+            <div class="reveal__actions">
+              <a class="btn" id="ticket-btn" target="_blank" rel="noopener" hidden>Comprar ingresso antecipado</a>
+              <a class="btn" id="form-btn" href="#" target="_blank" rel="noopener">Entrar na lista VIP</a>
+            </div>
+            <p class="reveal__note" id="cta-note">Cadastro em menos de 1 minuto.</p>
           </div>
         </div>
       </div>
@@ -66,7 +69,7 @@
     <a data-href="instagram" data-bind="instagramHandle"></a>
   </footer>
 
-  <script src="config.js?v=11"></script>
-  <script src="script.js?v=11"></script>
+  <script src="config.js?v=14"></script>
+  <script src="script.js?v=14"></script>
 </body>
 </html>

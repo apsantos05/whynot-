@@ -8,6 +8,18 @@
   $$('[data-bind="instagramHandle"]').forEach((el) => { el.textContent = C.instagramHandle; });
   $$('[data-href="instagram"]').forEach((el) => { el.href = C.instagram; });
 
+  // ingresso antecipado: botão principal quando há link; a lista VIP vira secundária
+  const ticket = C.ingressos || {};
+  if (ticket.url) {
+    const tb = $("#ticket-btn");
+    tb.href = ticket.url;
+    tb.hidden = false;
+    $("#form-btn").classList.add("btn--ghost");
+    $("#cta-note").textContent = ticket.vendidoPor
+      ? `Ingressos vendidos pela ${ticket.vendidoPor}. Lista VIP em menos de 1 minuto.`
+      : "Lista VIP em menos de 1 minuto.";
+  }
+
   const btn = $("#form-btn");
   if (C.formUrl) {
     btn.href = C.formUrl;
