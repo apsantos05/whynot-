@@ -24,7 +24,7 @@ body {
   min-height: 100svh;
   display: flex; flex-direction: column;
   background:
-    radial-gradient(ellipse 80% 60% at 30% 40%, #0b1d22 0%, transparent 70%),
+    radial-gradient(ellipse 70% 55% at 50% 45%, #0b1d22 0%, transparent 70%),
     var(--abyss);
   background-attachment: fixed;
   color: var(--ice);
@@ -38,17 +38,13 @@ body {
 a { color: inherit; }
 :focus-visible { outline: 2px solid var(--ice); outline-offset: 3px; border-radius: 4px; }
 
-/* ---------- layout: logo | formulário ---------- */
-.page {
-  flex: 1;
-  display: grid;
-  gap: clamp(40px, 8vw, 64px);
-  align-items: center;
-  padding: clamp(48px, 8vw, 96px) var(--gutter) 32px;
-  max-width: 80rem; width: 100%; margin: 0 auto;
-}
-@media (min-width: 960px) {
-  .page { grid-template-columns: 1.15fr 1fr; column-gap: 64px; }
+/* ---------- 1ª tela: só a logo ---------- */
+.stage {
+  position: relative;
+  min-height: 100svh;
+  display: grid; place-items: center;
+  padding: 48px var(--gutter) 96px;
+  overflow: hidden;
 }
 
 /* ---------- a extrusão é o elemento principal ---------- */
@@ -57,29 +53,90 @@ a { color: inherit; }
   font-family: var(--serif);
   font-weight: 900;
   font-variation-settings: "opsz" 144;
-  font-size: clamp(3.2rem, 12vw, 8.5rem);
+  font-size: clamp(3.4rem, 17.5vw, 11rem);
   line-height: 0.92;
   letter-spacing: -0.035em;
   color: var(--ice);
   display: flex; flex-direction: column;
   transform: rotate(-11deg) skewX(-6deg);
-  transform-origin: 30% 50%;
-  padding: 0.3em 0 0.3em 0.4em;
+  transform-origin: 50% 50%;
+  padding: 0.2em 0.2em 0.2em 0;
   user-select: none;
 }
-@media (min-width: 960px) { .hero__stack { font-size: clamp(4rem, 9.5vw, 9.5rem); } }
+@media (min-width: 960px) { .hero__stack { font-size: clamp(5rem, 13vh + 3vw, 11rem); } }
 .extrude { display: block; white-space: nowrap; }
 .extrude:nth-child(2) { margin-left: 0.18em; }
 .extrude:nth-child(3) { margin-left: 0.36em; }
 
-/* ---------- chamada ---------- */
-.apply { max-width: 30rem; width: 100%; justify-self: center; }
-.h2 {
-  font-family: var(--serif); font-weight: 900; font-size: var(--step-3);
-  line-height: 1; letter-spacing: -0.02em; margin: 0 0 12px;
-  text-shadow: -1px 1px 0 #6c8e99, -2px 2px 0 #43636e, -3px 3px 0 #263e46, -4px 4px 0 #132328;
+/* convite discreto pra rolar */
+.scroll-cue {
+  position: absolute; left: 50%; bottom: 28px; translate: -50% 0;
+  display: grid; justify-items: center; gap: 10px;
+  color: var(--frost); font-size: var(--step--1); text-decoration: none;
 }
-.apply__lead { margin: 0 0 24px; color: var(--frost); font-size: var(--step-1); line-height: 1.45; }
+.scroll-cue:hover { color: var(--ice); }
+.scroll-cue i {
+  position: relative; width: 1px; height: 44px; background: var(--tide); overflow: hidden;
+}
+.scroll-cue i::after {
+  content: ""; position: absolute; left: 0; top: -40%; width: 1px; height: 40%;
+  background: var(--ice); animation: cue 1.8s cubic-bezier(.6,0,.4,1) infinite;
+}
+@keyframes cue { to { top: 100%; } }
+@media (prefers-reduced-motion: reduce) { .scroll-cue i::after { animation: none; top: 30%; } }
+
+/* ---------- revelação das atrações (controlada pelo scroll) ----------
+   O estado padrão aqui é o FINAL; o script aplica o começo e anima conforme a rolagem. */
+.reveal { position: relative; height: 330vh; }
+.reveal__sticky {
+  position: sticky; top: 0; height: 100svh;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  padding: 0 var(--gutter);
+  overflow: hidden;
+}
+.reveal__photo { margin: 0; width: min(1080px, 100vw); flex: none; will-change: clip-path, transform; }
+.reveal__photo img {
+  display: block; width: 100%; height: auto;
+  /* bordas se dissolvem no fundo */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 55%, transparent 98%),
+                      linear-gradient(to right, transparent, #000 9%, #000 91%, transparent);
+  -webkit-mask-composite: source-in;
+          mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 55%, transparent 98%),
+                      linear-gradient(to right, transparent, #000 9%, #000 91%, transparent);
+          mask-composite: intersect;
+}
+@media (max-width: 640px) { .reveal__photo { width: 128vw; } }   /* no celular a foto sangra pelas bordas */
+
+.reveal__copy {
+  position: relative; z-index: 1;
+  display: grid; justify-items: center; text-align: center;
+  margin-top: clamp(-150px, -11vw, -48px);
+}
+.reveal__title {
+  margin: 0 0 clamp(20px, 3.5vh, 36px);
+  font-family: var(--serif); font-weight: 900; letter-spacing: -0.02em;
+  font-size: clamp(1.6rem, 4vw, 2.75rem); line-height: 1.08;
+  display: grid; justify-items: center;
+}
+.reveal__line { display: block; overflow: hidden; padding: 0 .1em .12em; }
+.reveal__line > span { display: block; }
+.reveal__line--big {
+  font-size: 1.9em; line-height: 1; padding-bottom: .2em; padding-left: .25em;
+}
+.reveal__line--big > span {
+  text-shadow: -1px 1px 0 #b7d0d7, -2px 2px 0 #84a4ae, -3px 3px 0 #567884, -4px 4px 0 #334f59,
+               -5px 5px 0 #1b2f36, -6px 6px 0 #0c181c;
+}
+.reveal__cta { display: grid; justify-items: center; }
+.reveal__cta .btn { font-size: var(--step-1); padding: 20px 40px; margin-top: 0; }
+.reveal__note { margin: 12px 0 0; color: var(--frost); font-size: var(--step--1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { height: auto; }
+  .reveal__sticky { position: static; height: auto; padding-block: 64px; }
+}
+
+.btn { font-size: var(--step-1); padding: 20px 40px; margin-top: 0; }
 
 .btn {
   display: inline-flex; justify-content: center; align-items: center;
@@ -93,7 +150,6 @@ a { color: inherit; }
 .btn:hover { transform: translate(1px, -1px); box-shadow: -3px 3px 0 var(--frost), -6px 6px 0 var(--tide); }
 .btn:active { transform: translate(-2px, 2px); box-shadow: 0 0 0 var(--frost); }
 .btn[disabled] { opacity: .5; cursor: progress; }
-.btn--block { width: 100%; }
 
 /* ---------- rodapé ---------- */
 .foot { text-align: center; padding: 24px var(--gutter) 32px; font-size: var(--step--1); color: var(--frost); }

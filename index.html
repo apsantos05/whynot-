@@ -4,40 +4,60 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>why not?</title>
-  <meta name="description" content="why not? — entrada por aprovação.">
+  <meta name="description" content="why not? — cadastre-se na lista VIP.">
   <meta property="og:title" content="why not?">
-  <meta property="og:description" content="Mande seus dados para entrar na lista.">
+  <meta property="og:description" content="Coloque seu nome na lista VIP da próxima why not?">
   <meta property="og:image" content="assets/logo.jpg">
   <meta name="theme-color" content="#03090b">
   <link rel="icon" href="assets/logo.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Hanken+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=7">
 </head>
 <body>
-  <main class="page">
-    <h1 class="hero__stack" aria-label="why not?">
-      <span class="extrude" aria-hidden="true">why not?</span>
-      <span class="extrude" aria-hidden="true">why not?</span>
-      <span class="extrude" aria-hidden="true">why not?</span>
-    </h1>
+  <main>
+    <section class="stage" aria-label="why not?">
+      <h1 class="hero__stack" aria-label="why not?">
+        <span class="extrude" aria-hidden="true">why not?</span>
+        <span class="extrude" aria-hidden="true">why not?</span>
+        <span class="extrude" aria-hidden="true">why not?</span>
+      </h1>
+      <a class="scroll-cue" href="#lineup">
+        <span>role para ver quem toca</span>
+        <i aria-hidden="true"></i>
+      </a>
+    </section>
 
-    <section class="apply" aria-labelledby="apply-title">
-      <h2 id="apply-title" class="h2">Quero ir</h2>
-      <p class="apply__lead">A entrada é por aprovação. Preencha o formulário e a gente responde no seu WhatsApp.</p>
-      <a class="btn btn--block" id="form-btn" href="#" target="_blank" rel="noopener">Pedir para entrar</a>
+    <section class="reveal" id="lineup" aria-labelledby="reveal-title">
+      <div class="reveal__sticky">
+        <figure class="reveal__photo">
+          <img src="assets/lineup.jpg" alt="As seis atrações da próxima why not?" width="591" height="366">
+        </figure>
+
+        <div class="reveal__copy">
+          <h2 id="reveal-title" class="reveal__title">
+            <span class="reveal__line"><span>Seis atrações.</span></span>
+            <span class="reveal__line"><span>Uma noite só.</span></span>
+            <span class="reveal__line reveal__line--big"><span>Por que não?</span></span>
+          </h2>
+          <div class="reveal__cta">
+            <a class="btn" id="form-btn" href="#" target="_blank" rel="noopener">Entrar na lista VIP</a>
+            <p class="reveal__note">Cadastro em menos de 1 minuto.</p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <dialog class="modal" id="form-modal" aria-labelledby="modal-title">
       <div class="modal__bar">
-        <h2 id="modal-title" class="modal__title">Quero ir</h2>
+        <h2 id="modal-title" class="modal__title">Lista VIP</h2>
         <a class="modal__alt" id="form-newtab" target="_blank" rel="noopener">Abrir em nova aba</a>
         <button type="button" class="modal__close" id="form-close" aria-label="Fechar formulário">×</button>
       </div>
       <div class="modal__body">
         <p class="modal__loading">Carregando formulário…</p>
-        <iframe id="form-frame" title="Formulário why not? — Quero ir"></iframe>
+        <iframe id="form-frame" title="Formulário why not? — Lista VIP"></iframe>
       </div>
     </dialog>
   </main>
@@ -46,7 +66,7 @@
     <a data-href="instagram" data-bind="instagramHandle"></a>
   </footer>
 
-  <script src="config.js"></script>
-  <script src="script.js"></script>
+  <script src="config.js?v=7"></script>
+  <script src="script.js?v=7"></script>
 </body>
 </html>

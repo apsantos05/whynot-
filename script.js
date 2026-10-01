@@ -35,6 +35,44 @@
     });
   }
 
+  /* ---------- revelação das atrações ----------
+     A seção é alta e o conteúdo fica "grudado" na tela. Conforme a pessoa rola:
+     1) a foto abre de uma janelinha até o tamanho cheio e acende;
+     2) as três linhas da mensagem sobem uma a uma;
+     3) aparece o botão da lista VIP. */
+  const reveal = $(".reveal");
+  if (reveal && !reduceMotion) {
+    const photo = $(".reveal__photo", reveal);
+    const lines = $$(".reveal__line > span", reveal);
+    const cta = $(".reveal__cta", reveal);
+    const seg = (p, a, b) => Math.max(0, Math.min(1, (p - a) / (b - a)));
+    const out = (t) => 1 - Math.pow(1 - t, 3);
+    const paint = () => {
+      const r = reveal.getBoundingClientRect();
+      const p = seg(-r.top / (r.height - innerHeight), 0, 1);
+
+      const a = out(seg(p, 0, 0.42));
+      const iy = (1 - a) * 36, ix = (1 - a) * 32, rad = (1 - a) * 28;
+      photo.style.clipPath = `inset(${iy.toFixed(2)}% ${ix.toFixed(2)}% round ${rad.toFixed(1)}px)`;
+      photo.style.transform = `scale(${(1.3 - 0.3 * a).toFixed(4)})`;
+      photo.style.filter = `brightness(${(0.25 + 0.75 * a).toFixed(3)})`;
+
+      lines.forEach((el, i) => {
+        const t = out(seg(p, 0.4 + i * 0.1, 0.55 + i * 0.1));
+        el.style.transform = `translateY(${((1 - t) * 110).toFixed(1)}%)`;
+        el.style.opacity = t.toFixed(3);
+      });
+
+      const c = out(seg(p, 0.74, 0.88));
+      cta.style.opacity = c.toFixed(3);
+      cta.style.transform = `translateY(${((1 - c) * 24).toFixed(1)}px)`;
+      cta.style.pointerEvents = c > 0.6 ? "auto" : "none";
+    };
+    addEventListener("scroll", paint, { passive: true });
+    addEventListener("resize", paint);
+    paint();
+  }
+
   /* ---------- logo viva ----------
      Cada letra tem a própria extrusão 3D. Uma onda lenta passa pelas letras,
      as que ficam perto do cursor saltam pra frente, e um clique/toque solta
