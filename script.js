@@ -10,10 +10,16 @@
 
   // ingresso antecipado: botão principal quando há link; a lista VIP vira secundária
   const ticket = C.ingressos || {};
-  if (ticket.url) {
+  // prévia: ?previa=ingresso mostra o botão mesmo sem link (só pra visualizar o layout)
+  const preview = !ticket.url && new URLSearchParams(location.search).get("previa") === "ingresso";
+  if (ticket.url || preview) {
     const tb = $("#ticket-btn");
-    tb.href = ticket.url;
+    tb.href = ticket.url || "#";
     tb.hidden = false;
+    if (preview) {
+      tb.removeAttribute("target");
+      tb.addEventListener("click", (e) => { e.preventDefault(); alert("Prévia: o link de vendas ainda não foi configurado."); });
+    }
     $("#form-btn").classList.add("btn--ghost");
     $("#cta-note").textContent = ticket.vendidoPor
       ? `Ingressos vendidos pela ${ticket.vendidoPor}. Lista VIP em menos de 1 minuto.`
