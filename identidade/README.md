@@ -24,8 +24,8 @@ Instagram [@whynot.sjrp](https://www.instagram.com/whynot.sjrp) · links em [bea
 |---|---|---|---|
 | 01 | Tom Keller | @tomkellermusic | 30/09 12h |
 | 02 | Maycon Beats | @maycon_beats | 30/09 19h |
-| 03 | Mexikanno | @mexsymusic | 02/10 12h |
-| 04 | Possani | @_possani04 | 02/10 19h |
+| 03 | Possani | @_possani04 | 01/10 18h |
+| 04 | Mexikanno | @mexsymusic | 01/10 21h |
 | 05 | Coiote (atração principal) | @djcoiote | 04/10 12h |
 | 06 | Maka (atração principal) | @makaadj | 04/10 19h |
 
