@@ -1,6 +1,6 @@
 P='/tmp/claude-0/-home-claude/85f2d3d2-8d73-51f7-b638-521bd0946f03/scratchpad/latest/project/'
 H=open(P+'MeioListaElas.dc.html').read(); pre=H[:H.index('<x-dc>')]; post=H[H.index('</x-dc>'):]
-B={'coiote':'/_blob/874082e7e3c3ebc19c754947d2147472','maka':'/_blob/97eb854dbb3c8647fa9f9ea7f5e4ea7b','tom':'/_blob/6f9f48c2a707bac59f303674344e74e9','maycon':'/_blob/55a3bf7509ac2e1a93e04f79e566c966','mex':'/_blob/9175e9ba42ccfe1808ec8578f27d1f6c','possani':'/_blob/170496fafef725cc68299d6c884b5fe7'}
+B={'coiote':'/_blob/874082e7e3c3ebc19c754947d2147472','maka':'/_blob/ad0d0f77c951c9c2a043783a4b433224','tom':'/_blob/6f9f48c2a707bac59f303674344e74e9','maycon':'/_blob/55a3bf7509ac2e1a93e04f79e566c966','mex':'/_blob/9175e9ba42ccfe1808ec8578f27d1f6c','possani':'/_blob/170496fafef725cc68299d6c884b5fe7'}
 import json; ASP=json.load(open('/tmp/claude-0/-home-claude/85f2d3d2-8d73-51f7-b638-521bd0946f03/scratchpad/lineup/asp.json')); ASP.update(json.load(open('/tmp/claude-0/-home-claude/85f2d3d2-8d73-51f7-b638-521bd0946f03/scratchpad/lineup/asp_hq.json')))
 FONT='<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,900;1,9..144,400&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">'
 EXT=".ext{text-shadow:-2px 2px 0 #b3cfd6,-4px 4px 0 #9bbdc6,-6px 6px 0 #85abb5,-8px 8px 0 #7199a4,-10px 10px 0 #5f8792,-12px 12px 0 #4f7580,-14px 14px 0 #41646e,-16px 16px 0 #35535c,-18px 18px 0 #2a434b,-20px 20px 0 #20343a,-22px 22px 0 #17262b,-24px 24px 0 #0f191d} .ext2{text-shadow:-1px 1px 0 #9bbdc6,-2px 2px 0 #7199a4,-3px 3px 0 #4f7580,-4px 4px 0 #35535c,-5px 5px 0 #20343a,-6px 6px 0 #0f191d}"
@@ -13,7 +13,7 @@ def cluster(Hc,s=1.0):
 <div style="position: absolute; left: 50%; top: {S(-40)}px; width: 1100px; height: 1100px; transform: translateX(-50%); background: radial-gradient(circle, rgba(80,150,155,0.40) 0%, rgba(18,48,46,0.22) 38%, rgba(6,10,12,0) 68%)"></div>
 <div style="position: absolute; left: 50%; top: {S(-260)}px; width: 1700px; height: {Hc+400}px; transform: translateX(-50%); background: conic-gradient(from 180deg at 50% 0%, transparent 152deg, rgba(228,242,246,0.08) 165deg, transparent 172deg, transparent 188deg, rgba(228,242,246,0.08) 195deg, transparent 208deg)"></div>
 {place('tom',225,'top',S(30),S(470),1,1.0)}
-{place('maka',855,'top',S(40),S(450),1,1.0)}
+{place('maka',850,'top',S(20),S(480),1,1.0)}
 {place('coiote',540,'top',S(0),S(520),2,1.0)}
 {place('maycon',305,'bottom',S(80),S(320),5,1.0)}
 {place('mex',540,'bottom',S(70),S(320),6,1.0)}
