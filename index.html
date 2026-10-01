@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Hanken+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=7">
+  <link rel="stylesheet" href="styles.css?v=10">
 </head>
 <body>
   <main>
@@ -31,9 +31,9 @@
 
     <section class="reveal" id="lineup" aria-labelledby="reveal-title">
       <div class="reveal__sticky">
-        <figure class="reveal__photo">
-          <img src="assets/lineup.jpg" alt="As seis atrações da próxima why not?" width="591" height="366">
-        </figure>
+        <div class="names" aria-hidden="true"></div>
+        <div class="logo3d" aria-hidden="true"></div>
+        <ul class="sr-only" id="lineup-list" aria-label="Line-up"></ul>
 
         <div class="reveal__copy">
           <h2 id="reveal-title" class="reveal__title">
@@ -66,7 +66,7 @@
     <a data-href="instagram" data-bind="instagramHandle"></a>
   </footer>
 
-  <script src="config.js?v=7"></script>
-  <script src="script.js?v=7"></script>
+  <script src="config.js?v=10"></script>
+  <script src="script.js?v=10"></script>
 </body>
 </html>

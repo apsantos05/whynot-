@@ -85,50 +85,90 @@ a { color: inherit; }
 @keyframes cue { to { top: 100%; } }
 @media (prefers-reduced-motion: reduce) { .scroll-cue i::after { animation: none; top: 30%; } }
 
-/* ---------- revelação das atrações (controlada pelo scroll) ----------
+/* ---------- line-up: nomes flutuando + logo 3D girando (controlado pelo scroll) ----------
    O estado padrão aqui é o FINAL; o script aplica o começo e anima conforme a rolagem. */
-.reveal { position: relative; height: 330vh; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+.reveal { position: relative; height: 360vh; }
 .reveal__sticky {
   position: sticky; top: 0; height: 100svh;
-  display: flex; flex-direction: column; justify-content: center; align-items: center;
-  padding: 0 var(--gutter);
+  display: grid; place-items: center;
   overflow: hidden;
 }
-.reveal__photo { margin: 0; width: min(1080px, 100vw); flex: none; will-change: clip-path, transform; }
-.reveal__photo img {
-  display: block; width: 100%; height: auto;
-  /* bordas se dissolvem no fundo */
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 55%, transparent 98%),
-                      linear-gradient(to right, transparent, #000 9%, #000 91%, transparent);
-  -webkit-mask-composite: source-in;
-          mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 55%, transparent 98%),
-                      linear-gradient(to right, transparent, #000 9%, #000 91%, transparent);
-          mask-composite: intersect;
-}
-@media (max-width: 640px) { .reveal__photo { width: 128vw; } }   /* no celular a foto sangra pelas bordas */
 
-.reveal__copy {
+/* nomes ao fundo */
+.names {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: space-evenly;
+  pointer-events: none;
+  /* some nas bordas de cima e de baixo */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+          mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+}
+.names__row {
+  display: flex; white-space: nowrap; will-change: transform;
+  font-family: var(--serif); font-weight: 900; letter-spacing: -0.02em; line-height: 1;
+  font-size: clamp(2.2rem, min(10.5vh, 15vw), 7.5rem);
+}
+.names__row span { padding-right: .55em; }
+.names__row:nth-child(odd)  span { color: rgb(127 163 173 / .16); }
+.names__row:nth-child(even) span { color: transparent; -webkit-text-stroke: 1px rgb(226 241 245 / .28); }
+.names__row span.is-main { color: rgb(226 241 245 / .34); -webkit-text-stroke: 0; }
+
+/* logo 3D: pilha de camadas em profundidade real (translateZ) */
+.logo3d {
   position: relative; z-index: 1;
+  perspective: 1100px;
+  font-family: var(--serif); font-weight: 900; font-variation-settings: "opsz" 144;
+  font-size: clamp(3rem, min(16vw, 15vh), 8rem); line-height: .92; letter-spacing: -0.035em;
+  will-change: transform;
+}
+/* halo escuro atrás da logo pra ela destacar dos nomes */
+.logo3d::before {
+  content: ""; position: absolute; inset: -45% -35%; z-index: -1;
+  background: radial-gradient(closest-side, rgb(3 9 11 / .92), rgb(3 9 11 / .6) 55%, transparent);
+}
+.logo3d__obj { position: relative; transform-style: preserve-3d; will-change: transform; }
+.logo3d__layer { display: block; transform-style: preserve-3d; }
+.logo3d__layer + .logo3d__layer { position: absolute; inset: 0; }
+.logo3d__layer span { display: block; white-space: nowrap; }
+.logo3d__layer span:nth-child(2) { margin-left: .18em; }
+.logo3d__layer span:nth-child(3) { margin-left: .36em; }
+.logo3d__face { -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+
+/* mensagem + botão no fim */
+.reveal__copy {
+  position: absolute; left: 0; right: 0; bottom: clamp(28px, 7vh, 80px); z-index: 2;
   display: grid; justify-items: center; text-align: center;
-  margin-top: clamp(-150px, -11vw, -48px);
+  padding: 0 var(--gutter);
+}
+.reveal__copy::before {
+  content: ""; position: absolute; inset: -30% 0 -20%; z-index: -1;
+  background: radial-gradient(closest-side, rgb(3 9 11 / .9), rgb(3 9 11 / .5) 60%, transparent);
 }
 .reveal__title {
-  margin: 0 0 clamp(20px, 3.5vh, 36px);
+  margin: 0 0 clamp(18px, 3vh, 32px);
   font-family: var(--serif); font-weight: 900; letter-spacing: -0.02em;
-  font-size: clamp(1.6rem, 4vw, 2.75rem); line-height: 1.08;
+  font-size: clamp(1.4rem, 3.4vw, 2.4rem); line-height: 1.08;
   display: grid; justify-items: center;
 }
 .reveal__line { display: block; overflow: hidden; padding: 0 .1em .12em; }
 .reveal__line > span { display: block; }
-.reveal__line--big {
-  font-size: 1.9em; line-height: 1; padding-bottom: .2em; padding-left: .25em;
-}
+.reveal__line--big { font-size: 1.9em; line-height: 1; padding-bottom: .2em; padding-left: .25em; }
 .reveal__line--big > span {
   text-shadow: -1px 1px 0 #b7d0d7, -2px 2px 0 #84a4ae, -3px 3px 0 #567884, -4px 4px 0 #334f59,
                -5px 5px 0 #1b2f36, -6px 6px 0 #0c181c;
 }
 .reveal__cta { display: grid; justify-items: center; }
 .reveal__cta .btn { font-size: var(--step-1); padding: 20px 40px; margin-top: 0; }
+.reveal__note { margin: 12px 0 0; color: var(--frost); font-size: var(--step--1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { height: auto; }
+  .reveal__sticky { position: static; height: auto; min-height: 100svh; padding-block: 64px 360px; }
+}
+
+.btn { font-size: var(--step-1); padding: 20px 40px; margin-top: 0; }
 .reveal__note { margin: 12px 0 0; color: var(--frost); font-size: var(--step--1); }
 
 @media (prefers-reduced-motion: reduce) {

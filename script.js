@@ -35,42 +35,131 @@
     });
   }
 
-  /* ---------- revelação das atrações ----------
+  /* ---------- line-up: nomes flutuando + logo 3D girando ----------
      A seção é alta e o conteúdo fica "grudado" na tela. Conforme a pessoa rola:
-     1) a foto abre de uma janelinha até o tamanho cheio e acende;
-     2) as três linhas da mensagem sobem uma a uma;
-     3) aparece o botão da lista VIP. */
+     1) os nomes dos DJs atravessam o fundo em faixas, em sentidos alternados;
+     2) a logo 3D aparece no centro, flutua e dá uma volta completa;
+     3) a logo sobe e entram a mensagem e o botão da lista VIP. */
   const reveal = $(".reveal");
-  if (reveal && !reduceMotion) {
-    const photo = $(".reveal__photo", reveal);
-    const lines = $$(".reveal__line > span", reveal);
+  if (reveal) setupLineup();
+
+  function setupLineup() {
+    const esc = (v) => String(v).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const lineup = C.lineup || [];
+    $("#lineup-list").innerHTML = lineup.map((d) => `<li>${esc(d.nome)}</li>`).join("");
+
+    // faixas de nomes: cada uma começa num DJ diferente e repete 3x pra dar a volta sem emenda
+    const namesEl = $(".names", reveal);
+    const rows = Array.from({ length: 5 }, (_, r) => {
+      const order = lineup.map((_, i) => lineup[(i + r * 2) % lineup.length]);
+      const seq = order.map((d) => `<span${d.principal ? ' class="is-main"' : ""}>${esc(d.nome)}</span>`).join("");
+      const el = document.createElement("div");
+      el.className = "names__row";
+      el.innerHTML = seq + seq + seq;
+      namesEl.appendChild(el);
+      return { el, dir: r % 2 ? 1 : -1, speed: 0.7 + (r % 3) * 0.2, seq: 1, r };
+    });
+    const measureRows = () => rows.forEach((row) => { row.seq = row.el.scrollWidth / 3 || 1; });
+
+    // logo 3D: camadas empilhadas em profundidade (translateZ), face na frente e verso atrás
+    const logo = $(".logo3d", reveal);
+    const obj = document.createElement("div");
+    obj.className = "logo3d__obj";
+    logo.appendChild(obj);
+    const LAYERS = 18;
+    const lines = "<span>why not?</span><span>why not?</span><span>why not?</span>";
+    const mix = (t) => {
+      const a = [0xe2, 0xf1, 0xf5], b = [0x05, 0x0d, 0x10];
+      return "rgb(" + a.map((v, k) => Math.round(v + (b[k] - v) * Math.pow(t, 0.75))).join(",") + ")";
+    };
+    const layers = [];
+    for (let k = 0; k <= LAYERS + 1; k++) {
+      const el = document.createElement("div");
+      el.className = "logo3d__layer";
+      el.innerHTML = lines;
+      const back = k === LAYERS + 1;
+      if (k === 0 || back) el.classList.add("logo3d__face");
+      el.style.color = back ? "#e2f1f5" : k === 0 ? "#e2f1f5" : mix(k / LAYERS);
+      obj.appendChild(el);
+      layers.push({ el, k, back });
+    }
+    let fontPx = 100;
+    const placeLayers = () => {
+      fontPx = parseFloat(getComputedStyle(logo).fontSize);
+      const step = (fontPx * 0.24) / LAYERS;                    // profundidade total ≈ 0,24em
+      layers.forEach(({ el, k, back }) => {
+        el.style.transform = back
+          ? `translateZ(${(-step * LAYERS - 0.5).toFixed(2)}px) rotateY(180deg)`
+          : `translateZ(${(-step * k).toFixed(2)}px)`;
+      });
+    };
+
+    const copyLines = $$(".reveal__line > span", reveal);
     const cta = $(".reveal__cta", reveal);
+    const BASE = "rotateZ(-11deg) skewX(-6deg)";
+
+    placeLayers();
+    measureRows();
+    document.fonts?.ready.then(() => { placeLayers(); measureRows(); });
+    addEventListener("resize", () => { placeLayers(); measureRows(); });
+
+    if (reduceMotion) {
+      obj.style.transform = `rotateX(8deg) rotateY(-22deg) ${BASE}`;
+      return;
+    }
+
     const seg = (p, a, b) => Math.max(0, Math.min(1, (p - a) / (b - a)));
     const out = (t) => 1 - Math.pow(1 - t, 3);
-    const paint = () => {
+    const inOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+    const paint = (now) => {
       const r = reveal.getBoundingClientRect();
       const p = seg(-r.top / (r.height - innerHeight), 0, 1);
 
-      const a = out(seg(p, 0, 0.42));
-      const iy = (1 - a) * 36, ix = (1 - a) * 32, rad = (1 - a) * 28;
-      photo.style.clipPath = `inset(${iy.toFixed(2)}% ${ix.toFixed(2)}% round ${rad.toFixed(1)}px)`;
-      photo.style.transform = `scale(${(1.3 - 0.3 * a).toFixed(4)})`;
-      photo.style.filter = `brightness(${(0.25 + 0.75 * a).toFixed(3)})`;
+      // 1) nomes: deslizam com o scroll + uma deriva lenta no tempo
+      const nIn = out(seg(p, 0, 0.12)) * (1 - 0.7 * out(seg(p, 0.72, 0.9)));
+      for (const row of rows) {
+        const off = row.dir * (p * row.seq * 0.9 + now * 0.018) * row.speed;
+        const x = -row.seq + (((off % row.seq) + row.seq) % row.seq);
+        const y = (0.5 - p) * 70 * (row.r % 2 ? 1 : -1);
+        row.el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
+        row.el.style.opacity = nIn.toFixed(3);
+      }
 
-      lines.forEach((el, i) => {
-        const t = out(seg(p, 0.4 + i * 0.1, 0.55 + i * 0.1));
+      // 2) logo: entra, flutua e dá uma volta inteira
+      const show = out(seg(p, 0, 0.14));
+      const spin = inOut(seg(p, 0.06, 0.7)) * 360 + Math.sin(now * 0.0011) * 9;
+      const tilt = 7 + Math.sin(now * 0.0008) * 6;
+      const bob = Math.sin(now * 0.0014) * fontPx * 0.07;
+      obj.style.transform = `translateY(${bob.toFixed(1)}px) rotateX(${tilt.toFixed(2)}deg) rotateY(${spin.toFixed(2)}deg) ${BASE}`;
+
+      // 3) a logo sobe e abre espaço para a mensagem
+      const end = out(seg(p, 0.7, 0.86));
+      const lift = end * Math.min(innerHeight * 0.2, 190);
+      logo.style.transform = `translateY(${(-lift).toFixed(1)}px) scale(${(0.6 + 0.4 * show - 0.22 * end).toFixed(4)})`;
+      logo.style.opacity = show.toFixed(3);
+
+      copyLines.forEach((el, i) => {
+        const t = out(seg(p, 0.74 + i * 0.05, 0.84 + i * 0.05));
         el.style.transform = `translateY(${((1 - t) * 110).toFixed(1)}%)`;
         el.style.opacity = t.toFixed(3);
       });
-
-      const c = out(seg(p, 0.74, 0.88));
+      const c = out(seg(p, 0.88, 0.96));
       cta.style.opacity = c.toFixed(3);
       cta.style.transform = `translateY(${((1 - c) * 24).toFixed(1)}px)`;
       cta.style.pointerEvents = c > 0.6 ? "auto" : "none";
     };
-    addEventListener("scroll", paint, { passive: true });
-    addEventListener("resize", paint);
-    paint();
+
+    // anima só enquanto a seção está na tela (a logo flutua mesmo sem rolar)
+    let on = false;
+    const loop = (now) => { if (!on) return; paint(now); requestAnimationFrame(loop); };
+    new IntersectionObserver(([e]) => {
+      const was = on;
+      on = e.isIntersecting;
+      if (on && !was) requestAnimationFrame(loop);
+    }).observe(reveal);
+    addEventListener("scroll", () => paint(performance.now()), { passive: true });
+    paint(performance.now());
   }
 
   /* ---------- logo viva ----------
