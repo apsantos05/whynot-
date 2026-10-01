@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Destaque Lista conteúdo</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,900;1,9..144,400&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#060a0c;font-family:'Space Mono',monospace;color:#e4f2f6}
+.ext{text-shadow:-2px 2px 0 #b3cfd6,-4px 4px 0 #9bbdc6,-6px 6px 0 #85abb5,-8px 8px 0 #7199a4,-10px 10px 0 #5f8792,-12px 12px 0 #4f7580,-14px 14px 0 #41646e,-16px 16px 0 #35535c,-18px 18px 0 #2a434b,-20px 20px 0 #20343a,-22px 22px 0 #17262b,-24px 24px 0 #0f191d}
+</style>
+</helmet>
+<div style="width: 1080px; height: 1920px; box-sizing: border-box; padding: 250px 88px 330px; display: flex; flex-direction: column; justify-content: space-between; background: radial-gradient(circle at 50% 40%, #12302e 0%, #0a1315 40%, #060a0c 75%); overflow: hidden">
+<div style="display: flex; justify-content: space-between; font-size: 32px; letter-spacing: 0.14em; text-transform: uppercase; color: #9dbcc4"><span>Lista why not?</span><span>09.10</span></div>
+<div style="display: flex; flex-direction: column; gap: 36px">
+<div class="ext" style="font-family: 'Fraunces', serif; font-weight: 900; font-size: 200px; line-height: 0.95; color: #e4f2f6">lista.</div>
+<p style="margin: 0; font-family: 'Fraunces', serif; font-style: italic; font-size: 64px; line-height: 1.15; color: #e4f2f6">elas com nome na lista entram VIP até 00h.</p>
+<div style="display: flex; flex-direction: column; border-top: 2px solid #2a434b">
+<div style="display: flex; gap: 28px; padding: 26px 0; border-bottom: 2px solid #2a434b; font-size: 36px; line-height: 1.4"><span style="color: #9dbcc4; font-weight: 700">1</span><span>Entra no grupo pelo link abaixo</span></div>
+<div style="display: flex; gap: 28px; padding: 26px 0; border-bottom: 2px solid #2a434b; font-size: 36px; line-height: 1.4"><span style="color: #9dbcc4; font-weight: 700">2</span><span>Manda seu nome completo</span></div>
+<div style="display: flex; gap: 28px; padding: 26px 0; border-bottom: 2px solid #2a434b; font-size: 36px; line-height: 1.4"><span style="color: #9dbcc4; font-weight: 700">3</span><span>A lista fecha às 20h do dia da festa</span></div>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 20px; align-items: center">
+<div style="width: 760px; height: 150px"></div>
+<span style="font-size: 32px; letter-spacing: 0.14em; text-transform: uppercase; color: #e4f2f6">Link do grupo ↑</span>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1080,"height":1920}}'>
+class Component extends DCLogic {
+renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

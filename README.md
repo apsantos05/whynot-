@@ -43,3 +43,7 @@ Abra http://localhost:5173.
 - **Netlify Drop**: entre em app.netlify.com/drop e arraste a pasta `whynot` inteira. Sai um link na hora.
 - **Vercel** ou **GitHub Pages** também funcionam.
 - Domínio próprio (ex. `whynot.com.br`): ~R$ 40/ano no registro.br.
+
+## Identidade da label
+
+Tudo da marca (cores, fontes, tom de voz, funil de vendas, manual de posts e as peças da edição 01 em HD) está em [`identidade/`](identidade/). Comece por [`identidade/README.md`](identidade/README.md) e [`identidade/IDENTIDADE.md`](identidade/IDENTIDADE.md).

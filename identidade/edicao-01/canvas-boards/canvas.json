@@ -1,0 +1,455 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "CapaReels.dc.html": {
+      "h": 1920,
+      "title": "29/09 · Capa do Reels teaser",
+      "w": 1080,
+      "x": 5140,
+      "y": 1750
+    },
+    "DJ01Capa.dc.html": {
+      "h": 1920,
+      "title": "1 · 30/09 12h · Reels DJ 01 Tom Keller · AZUL",
+      "w": 1080,
+      "x": 0,
+      "y": 13300
+    },
+    "DJ02Capa.dc.html": {
+      "h": 1920,
+      "title": "3 · 30/09 19h · Reels DJ 02 Maycon Beats · AZUL",
+      "w": 1080,
+      "x": 2320,
+      "y": 13300
+    },
+    "DJ03Capa.dc.html": {
+      "h": 1920,
+      "title": "5 · 02/10 (sex) 12h · Reels DJ 03 Mexikanno · AZUL",
+      "w": 1080,
+      "x": 4760,
+      "y": 13300
+    },
+    "DJ04Capa.dc.html": {
+      "h": 1920,
+      "title": "7 · 02/10 (sex) 19h · Reels DJ 04 Possani · AZUL",
+      "w": 1080,
+      "x": 7200,
+      "y": 13300
+    },
+    "DJ05Capa.dc.html": {
+      "h": 1920,
+      "title": "9 · 04/10 (dom) 12h · Reels DJ 05 Coiote · AZUL",
+      "w": 1080,
+      "x": 9520,
+      "y": 13300
+    },
+    "DJ06Capa.dc.html": {
+      "h": 1920,
+      "title": "11 · 04/10 (dom) 19h · Reels DJ 06 Maka · AZUL",
+      "w": 1080,
+      "x": 11960,
+      "y": 13300
+    },
+    "DestaqueEd01.dc.html": {
+      "h": 1920,
+      "title": "Capa de destaque · ED. 01",
+      "w": 1080,
+      "x": 3480,
+      "y": 6430
+    },
+    "DestaqueGrupo.dc.html": {
+      "h": 1920,
+      "title": "Capa de destaque · GRUPO",
+      "w": 1080,
+      "x": 2320,
+      "y": 6430
+    },
+    "DestaqueIngressos.dc.html": {
+      "h": 1920,
+      "title": "Capa de destaque · INGRESSOS",
+      "w": 1080,
+      "x": 1160,
+      "y": 6430
+    },
+    "DestaqueLista.dc.html": {
+      "h": 1920,
+      "title": "Capa de destaque · LISTA",
+      "w": 1080,
+      "x": 0,
+      "y": 6430
+    },
+    "Dia11_14h.dc.html": {
+      "h": 1920,
+      "title": "09/10 · 14h",
+      "w": 1080,
+      "x": 0,
+      "y": 4090
+    },
+    "Dia11_18h.dc.html": {
+      "h": 1920,
+      "title": "09/10 · 18h",
+      "w": 1080,
+      "x": 1160,
+      "y": 4090
+    },
+    "Dia11_1930.dc.html": {
+      "h": 1920,
+      "title": "09/10 · 19h30",
+      "w": 1080,
+      "x": 2320,
+      "y": 4090
+    },
+    "Dia11_20h.dc.html": {
+      "h": 1920,
+      "title": "09/10 · 20h · lista fechada (sem valores)",
+      "w": 1080,
+      "x": 3480,
+      "y": 4090
+    },
+    "GrupoDentro.dc.html": {
+      "h": 1350,
+      "title": "Grupo WhatsApp · boas-vindas (fixar no grupo)",
+      "w": 1080,
+      "x": 3480,
+      "y": 10830
+    },
+    "GrupoListaDatas.dc.html": {
+      "h": 1350,
+      "title": "Grupo WhatsApp · FIXAR · lista abre 08.10, fecha 09.10 às 20h",
+      "w": 1080,
+      "x": 4640,
+      "y": 10830
+    },
+    "HLEd01.dc.html": {
+      "h": 1920,
+      "title": "Dentro do destaque ED. 01",
+      "w": 1080,
+      "x": 3480,
+      "y": 8490
+    },
+    "HLIngressos.dc.html": {
+      "h": 1920,
+      "title": "Dentro do destaque INGRESSOS · figurinha: link da Bally",
+      "w": 1080,
+      "x": 1160,
+      "y": 8490
+    },
+    "HLLista.dc.html": {
+      "h": 1920,
+      "title": "Dentro do destaque LISTA · figurinha: link do grupo",
+      "w": 1080,
+      "x": 0,
+      "y": 8490
+    },
+    "LineupCompleto.dc.html": {
+      "h": 1350,
+      "title": "12 · 05/10 · Line-up completo · PRETO",
+      "w": 1080,
+      "x": 13120,
+      "y": 13300
+    },
+    "Main.dc.html": {
+      "h": 1350,
+      "title": "29/09 (ter) · 1º post · Teaser",
+      "w": 1080,
+      "x": 0,
+      "y": 0
+    },
+    "Manifesto.dc.html": {
+      "h": 1350,
+      "title": "29/09 (ter) · 2º post · Manifesto",
+      "w": 1080,
+      "x": 1160,
+      "y": 0
+    },
+    "ManifestoB.dc.html": {
+      "h": 1350,
+      "title": "6 · 02/10 (sex) 15h · MEIO · Nem toda noite é igual · PRETO",
+      "w": 1080,
+      "x": 5920,
+      "y": 13300
+    },
+    "MeioListaElas.dc.html": {
+      "h": 1350,
+      "title": "2 · 30/09 15h · A lista VIP é delas · PRETO",
+      "w": 1080,
+      "x": 1160,
+      "y": 13300
+    },
+    "MeioSoMaisUma.dc.html": {
+      "h": 1350,
+      "title": "8 · 03/10 · Só mais uma? why not? · PRETO",
+      "w": 1080,
+      "x": 8360,
+      "y": 13300
+    },
+    "SaveTheDate.dc.html": {
+      "h": 1350,
+      "title": "29/09 (ter) · 3º post · Save the date (collab Bally)",
+      "w": 1080,
+      "x": 2320,
+      "y": 0
+    },
+    "StoryContagem.dc.html": {
+      "h": 1920,
+      "title": "Todo dia 29/09 → 07/10 · Contagem (trocar o número)",
+      "w": 1080,
+      "x": 0,
+      "y": 1750
+    },
+    "StoryGrupo.dc.html": {
+      "h": 1920,
+      "title": "Story · Grupo (também vai no destaque GRUPO)",
+      "w": 1080,
+      "x": 3980,
+      "y": 1750
+    },
+    "StoryLista.dc.html": {
+      "h": 1920,
+      "title": "Story · lista VIP só pra quem tá no grupo (figurinha: link do grupo) · 30/09, 02, 05, 07 e 08/10",
+      "w": 1080,
+      "x": 1160,
+      "y": 1750
+    },
+    "StoryMaisUma.dc.html": {
+      "h": 1920,
+      "title": "09/10 · durante a festa (repostar marcações)",
+      "w": 1080,
+      "x": 4640,
+      "y": 4090
+    },
+    "StoryPerguntas.dc.html": {
+      "h": 1920,
+      "title": "01/10 (qui) · Story caixinha de perguntas",
+      "w": 1080,
+      "x": 6300,
+      "y": 1750
+    },
+    "StoryVotaDJ.dc.html": {
+      "h": 1920,
+      "title": "Story · vota no DJ (enquete + caixinha)",
+      "w": 1080,
+      "x": 7460,
+      "y": 1750
+    },
+    "ValoresGrupo.dc.html": {
+      "h": 1350,
+      "title": "Grupo WhatsApp · VALORES (só no grupo, nunca no Instagram)",
+      "w": 1080,
+      "x": 1160,
+      "y": 10830
+    },
+    "Whats1.dc.html": {
+      "h": 1920,
+      "title": "Whats/status · 1 · Amiga, vem de VIP?",
+      "w": 1080,
+      "x": 0,
+      "y": 10830
+    },
+    "Whats3.dc.html": {
+      "h": 1920,
+      "title": "Whats/status · 3 · Sexta 09.10",
+      "w": 1080,
+      "x": 2320,
+      "y": 10830
+    },
+    "OpenGin.dc.html": {
+      "h": 1350,
+      "title": "4 · 01/10 · Open gin 22h–23h · PRETO",
+      "w": 1080,
+      "x": 3600,
+      "y": 13300
+    },
+    "StoryOpenGin.dc.html": {
+      "h": 1920,
+      "title": "Story · OPEN GIN 22h–23h",
+      "w": 1080,
+      "x": 8620,
+      "y": 1750
+    },
+    "MeioAntecipa.dc.html": {
+      "h": 1350,
+      "title": "10 · 04/10 15h · Antecipa · PRETO",
+      "w": 1080,
+      "x": 10800,
+      "y": 13300
+    },
+    "FeedVespera.dc.html": {
+      "h": 1350,
+      "title": "14 · 08/10 · É amanhã + line-up completo · PRETO",
+      "w": 1080,
+      "x": 15560,
+      "y": 13300
+    },
+    "FlyerFeed.dc.html": {
+      "h": 1350,
+      "title": "FLYER PATROCINADO · feed 4:5 · 6 DJs",
+      "w": 1080,
+      "x": 0,
+      "y": 16000
+    },
+    "FlyerStory.dc.html": {
+      "h": 1920,
+      "title": "FLYER PATROCINADO · stories/reels 9:16 · 6 DJs",
+      "w": 1080,
+      "x": 1160,
+      "y": 16000
+    },
+    "StorySuspense.dc.html": {
+      "h": 1920,
+      "title": "01/10 · Story suspense · revelação dupla hoje (18h e 21h)",
+      "w": 1080,
+      "x": 9780,
+      "y": 1750
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-09-29T13:10:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "calendario": {
+      "fill": "blue",
+      "maxH": 1920,
+      "size": 40,
+      "text": "CALENDÁRIO why not? · ed. 01 · SEXTA 09/10 · 6 DJs\nFEED: DJ (azul) e arte (preto) sempre alternando.\n\n30/09 qua · 12h DJ 01 Tom Keller · 15h A lista VIP é delas · 19h DJ 02 Maycon Beats. STORY: contagem 9 + repost + story lista (só pelo grupo) + vota no DJ\n01/10 qui · FEED: Open gin (preto). STORY: contagem 8 + story open gin + caixinha de perguntas\n02/10 sex · 12h DJ 03 Mexikanno · 15h Nem toda noite é igual · 19h DJ 04 Possani. STORY: contagem 7 + story lista\n03/10 sáb · FEED: Só mais uma? (preto). STORY: contagem 6 + story grupo\n04/10 dom · 12h DJ 05 · 15h Antecipa · 19h DJ 06. STORY: contagem 5 + repost\n05/10 seg · FEED: Line-up completo (preto). STORY: contagem 4 + story lista\n06/10 ter · FEED: Reels com os 6 DJs (capa azul). STORY: contagem 3 + vota no DJ\n07/10 qua · sem feed. STORY: contagem 2 + story open gin + story lista\n08/10 qui · ABRE A LISTA no grupo · FEED: É amanhã com os 6 DJs (preto). STORY: contagem 1 + story lista\n09/10 sex · STORIES: 14h · 18h · 19h30 · 20h lista fechada · durante: Só mais uma?\n10–11/10 · FEED: carrossel de fotos + anúncio da ed. 02\n\nREGRAS: valores NÃO vão no Instagram → só a arte VALORES no grupo do WhatsApp. Lista VIP só por dentro do grupo.",
+      "w": 1500,
+      "x": 2400,
+      "y": 1750
+    },
+    "destaques": {
+      "kind": "title1",
+      "maxW": 4560,
+      "text": "Capas de destaque (9:16)",
+      "w": 240,
+      "x": 0,
+      "y": 6130
+    },
+    "dia11": {
+      "kind": "title1",
+      "maxW": 5720,
+      "text": "Stories do dia 09/10 · lista fecha às 20h",
+      "w": 240,
+      "x": 0,
+      "y": 3790
+    },
+    "djs": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "ORDEM DO FEED · DJs sempre AZUL (vídeo + capa) · artes sempre PRETO · um de cada, alternando",
+      "w": 240,
+      "x": 0,
+      "y": 13000
+    },
+    "feed": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "Feed · posts (4:5, 1080×1350)",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "hlconteudo": {
+      "kind": "title1",
+      "maxW": 4560,
+      "text": "Stories que vão dentro de cada destaque",
+      "w": 240,
+      "x": 0,
+      "y": 8190
+    },
+    "hlgrupo": {
+      "fill": "blue",
+      "maxH": 700,
+      "size": 40,
+      "text": "DESTAQUE GRUPO\n\nUsem o story \"Story · Grupo\" (na linha de stories de divulgação, lá em cima) com a figurinha de link do grupo do WhatsApp.",
+      "w": 1080,
+      "x": 2320,
+      "y": 8490
+    },
+    "reels6": {
+      "fill": "blue",
+      "maxH": 1920,
+      "size": 40,
+      "text": "13 · 06/10\nReels com os 6 DJs\nCAPA AZUL\n(montar depois que os 6 forem revelados)",
+      "w": 1080,
+      "x": 14400,
+      "y": 13300
+    },
+    "stories": {
+      "kind": "title1",
+      "maxW": 2240,
+      "text": "Stories de divulgação (9:16)",
+      "w": 240,
+      "x": 0,
+      "y": 1450
+    },
+    "whats": {
+      "kind": "title1",
+      "maxW": 4560,
+      "text": "Divulgação e grupo no WhatsApp",
+      "w": 240,
+      "x": 0,
+      "y": 10530
+    },
+    "anuncio": {
+      "kind": "title1",
+      "maxW": 4000,
+      "text": "Anúncio patrocinado (Meta Ads)",
+      "w": 240,
+      "x": 0,
+      "y": 15700
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Manifesto.dc.html",
+    "SaveTheDate.dc.html",
+    "ManifestoB.dc.html",
+    "StoryContagem.dc.html",
+    "StoryLista.dc.html",
+    "Dia11_14h.dc.html",
+    "Dia11_18h.dc.html",
+    "Dia11_1930.dc.html",
+    "Dia11_20h.dc.html",
+    "StoryMaisUma.dc.html",
+    "StoryGrupo.dc.html",
+    "CapaReels.dc.html",
+    "DestaqueLista.dc.html",
+    "DestaqueIngressos.dc.html",
+    "DestaqueGrupo.dc.html",
+    "DestaqueEd01.dc.html",
+    "HLLista.dc.html",
+    "HLIngressos.dc.html",
+    "HLEd01.dc.html",
+    "Whats1.dc.html",
+    "Whats3.dc.html",
+    "GrupoDentro.dc.html",
+    "LineupCompleto.dc.html",
+    "StoryPerguntas.dc.html",
+    "DJ01Capa.dc.html",
+    "StoryVotaDJ.dc.html",
+    "DJ02Capa.dc.html",
+    "MeioSoMaisUma.dc.html",
+    "MeioListaElas.dc.html",
+    "ValoresGrupo.dc.html",
+    "GrupoListaDatas.dc.html",
+    "DJ03Capa.dc.html",
+    "DJ04Capa.dc.html",
+    "DJ05Capa.dc.html",
+    "DJ06Capa.dc.html",
+    "OpenGin.dc.html",
+    "StoryOpenGin.dc.html",
+    "MeioAntecipa.dc.html",
+    "FeedVespera.dc.html",
+    "FlyerFeed.dc.html",
+    "FlyerStory.dc.html",
+    "StorySuspense.dc.html"
+  ],
+  "pages": [],
+  "title": "why not? — posts de lançamento"
+}
