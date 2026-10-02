@@ -13,7 +13,7 @@ window.WHYNOT = {
     vendidoPor: "Bally Club",
   },
 
-  // Line-up da edição: os nomes flutuam no fundo enquanto a pessoa rola.
+  // Line-up da edição: os nomes passam sozinhos no fundo, como um letreiro.
   // principal: true deixa o nome em destaque.
   lineup: [
     { nome: "Tom Keller" },

@@ -126,6 +126,7 @@
       return;
     }
 
+    const NAME_SPEED = 0.07;                              // px por ms (~50–80 px/s por faixa)
     const seg = (p, a, b) => Math.max(0, Math.min(1, (p - a) / (b - a)));
     const out = (t) => 1 - Math.pow(1 - t, 3);
 
@@ -133,12 +134,13 @@
       const r = reveal.getBoundingClientRect();
       const p = seg(-r.top / (r.height - innerHeight), 0, 1);
 
-      // 1) nomes: deslizam com o scroll + uma deriva lenta no tempo
-      const nIn = out(seg(p, 0, 0.12)) * (1 - 0.7 * out(seg(p, 0.72, 0.9)));
+      // 1) nomes: passam sozinhos o tempo todo, como um letreiro (não dependem da rolagem);
+      //    só ficam mais apagados no fim, pra mensagem e o botão aparecerem bem
+      const nIn = 1 - 0.7 * out(seg(p, 0.72, 0.9));
       for (const row of rows) {
-        const off = row.dir * (p * row.seq * 0.9 + now * 0.018) * row.speed;
+        const off = row.dir * now * NAME_SPEED * row.speed;
         const x = -row.seq + (((off % row.seq) + row.seq) % row.seq);
-        const y = (0.5 - p) * 70 * (row.r % 2 ? 1 : -1);
+        const y = Math.sin(now * 0.0006 + row.r) * 10;
         row.el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
         row.el.style.opacity = nIn.toFixed(3);
       }

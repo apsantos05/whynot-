@@ -85,7 +85,7 @@ a { color: inherit; }
 @keyframes cue { to { top: 100%; } }
 @media (prefers-reduced-motion: reduce) { .scroll-cue i::after { animation: none; top: 30%; } }
 
-/* ---------- line-up: nomes flutuando + logo 3D girando (controlado pelo scroll) ----------
+/* ---------- line-up: nomes passando sozinhos + logo 3D girando ----------
    O estado padrão aqui é o FINAL; o script aplica o começo e anima conforme a rolagem. */
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
