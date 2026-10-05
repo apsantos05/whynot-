@@ -306,6 +306,10 @@ a { color: inherit; }
 }
 .chip:hover { box-shadow: inset 0 0 0 1.5px var(--ice); background: rgb(226 241 245 / .06); }
 
-/* link para camarotes no fim da página principal */
-.reveal__more { margin: 10px 0 0; font-size: var(--step--1); }
-.reveal__more a { color: var(--ice); }
+/* botão de camarote: azul-petróleo, diferente do ingresso (cheio claro) e da lista (contorno) */
+.btn.btn--tide {
+  background: var(--tide); color: var(--ice);
+  box-shadow: inset 0 0 0 1.5px var(--frost), -2px 2px 0 #0c181c, -4px 4px 0 #050d10;
+}
+.btn.btn--tide:hover { background: #24474f; box-shadow: inset 0 0 0 1.5px var(--ice), -3px 3px 0 #0c181c, -6px 6px 0 #050d10; }
+.btn.btn--tide:active { box-shadow: inset 0 0 0 1.5px var(--frost); }
