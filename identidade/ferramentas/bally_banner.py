@@ -43,9 +43,9 @@ HTML = f"""<!doctype html><html><head><meta charset="utf-8"><style>{FONTS}
  {place('tom', 556, top=78, h=318, z=1)}
  {place('maka', 910, top=70, h=330, z=1)}
  {place('coiote', 742, top=38, h=380, z=2)}
- {place('maycon', 616, bottom=-6, h=232, z=5)}
- {place('mex', 760, bottom=-10, h=228, z=6)}
- {place('possani', 896, bottom=-14, h=240, z=5)}
+ {place('maycon', 632, bottom=-4, h=262, z=5)}
+ {place('mex', 752, bottom=-14, h=262, z=6)}
+ {place('possani', 878, bottom=-12, h=272, z=5)}
 </div>
 <!-- fusão com o fundo: base e borda esquerda do grupo -->
 <div style="position:absolute;left:0;right:0;bottom:0;height:120px;z-index:7;background:linear-gradient(to top,#060a0c 8%,rgba(6,10,12,.6) 55%,rgba(6,10,12,0))"></div>
