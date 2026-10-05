@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Camarotes · why not?</title>
+  <meta name="description" content="Reserve seu camarote ou lounge na why not?">
+  <meta property="og:title" content="Camarotes · why not?">
+  <meta property="og:description" content="Escolha seu camarote ou lounge no mapa e reserve pelo WhatsApp.">
+  <meta property="og:image" content="assets/mapa-camarotes.jpg">
+  <meta name="theme-color" content="#03090b">
+  <link rel="icon" href="assets/logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Hanken+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=17">
+</head>
+<body class="page-camarotes">
+  <header class="topbar">
+    <a href="./" class="topbar__mark" aria-label="why not? — voltar para o início">why not?</a>
+    <a href="./#lineup" class="topbar__link">Ingressos e lista VIP</a>
+  </header>
+
+  <main class="cam">
+    <h1 class="cam__title">Camarotes e lounges</h1>
+    <p class="cam__lead">Toque no espaço que você quer no mapa. A conversa abre no WhatsApp com a mensagem pronta, e a gente te passa valores e disponibilidade.</p>
+
+    <figure class="map">
+      <img src="assets/mapa-camarotes.jpg" alt="Mapa da Bally Club com os camarotes 01, 02 e 03 em frente ao palco e os lounges 04, 05 e 06" width="1164" height="855">
+      <!-- áreas clicáveis por cima de cada espaço (mesmas coordenadas da imagem) -->
+      <svg class="map__spots" viewBox="0 0 1164 855" role="group" aria-label="Espaços do mapa">
+        <a class="spot" data-espaco="Camarote 01"><polygon points="378,644 478,644 478,735 382,735 362,712 362,652"/></a>
+        <a class="spot" data-espaco="Camarote 02"><polygon points="478,644 598,644 598,735 478,735"/></a>
+        <a class="spot" data-espaco="Camarote 03"><polygon points="598,644 720,644 720,735 598,735"/></a>
+        <a class="spot" data-espaco="Lounge 04"><polygon points="720,644 768,644 793,735 720,735"/></a>
+        <a class="spot" data-espaco="Lounge 05"><polygon points="447,290 485,247 573,340 525,383 460,322"/></a>
+        <a class="spot" data-espaco="Lounge 06"><polygon points="485,247 535,203 622,297 573,340"/></a>
+      </svg>
+      <p class="map__tip" id="map-tip" aria-hidden="true"></p>
+    </figure>
+
+    <section class="cam__list" aria-labelledby="cam-list-title">
+      <h2 id="cam-list-title" class="cam__subtitle">Ou escolha aqui</h2>
+      <div class="cam__group">
+        <p class="cam__label">Camarotes</p>
+        <div class="cam__chips">
+          <a class="chip" data-espaco="Camarote 01">Camarote 01</a>
+          <a class="chip" data-espaco="Camarote 02">Camarote 02</a>
+          <a class="chip" data-espaco="Camarote 03">Camarote 03</a>
+        </div>
+      </div>
+      <div class="cam__group">
+        <p class="cam__label">Lounges</p>
+        <div class="cam__chips">
+          <a class="chip" data-espaco="Lounge 04">Lounge 04</a>
+          <a class="chip" data-espaco="Lounge 05">Lounge 05</a>
+          <a class="chip" data-espaco="Lounge 06">Lounge 06</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <a data-href="instagram" data-bind="instagramHandle"></a>
+  </footer>
+
+  <script src="config.js?v=17"></script>
+  <script src="camarotes.js?v=17"></script>
+</body>
+</html>
