@@ -55,8 +55,8 @@ HTML = f"""<!doctype html><html><head><meta charset="utf-8"><style>{FONTS}
 <!-- bloco de texto -->
 <div style="position:absolute;left:52px;top:46px;bottom:44px;width:440px;z-index:9;display:flex;flex-direction:column">
  <span class="mono" style="font-size:12px;font-weight:700;letter-spacing:.32em;color:#9dbcc4">Sexta 09.10 — Edição 01</span>
- <div class="serif" style="font-weight:900;font-size:58px;line-height:.9;margin-top:14px;{EXT2}">why not?</div>
- <img src="{L('bally_logo_gelo.png')}" style="width:150px;margin-top:100px;opacity:.92">
+ <div class="serif" style="font-weight:900;font-size:64px;line-height:.9;margin-top:46px;margin-left:12px;transform:rotate(-8deg);transform-origin:left center;white-space:nowrap;{EXT}">why not?</div>
+ <img src="{L('bally_logo_gelo.png')}" style="width:150px;margin-top:74px;opacity:.92">
 
  <div style="margin-top:auto">
   <div class="serif" style="font-weight:900;font-size:41px;line-height:.92;letter-spacing:-.005em;{EXT8};white-space:nowrap">Coiote · Maka · Tom Keller</div>
