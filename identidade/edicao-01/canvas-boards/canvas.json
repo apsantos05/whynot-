@@ -39,14 +39,14 @@
     },
     "DJ05Capa.dc.html": {
       "h": 1920,
-      "title": "9 · 04/10 (dom) 12h · Reels DJ 05 Coiote · AZUL",
+      "title": "Reels Coiote · 06/06 (último) · AZUL",
       "w": 1080,
       "x": 9520,
       "y": 13300
     },
     "DJ06Capa.dc.html": {
       "h": 1920,
-      "title": "11 · 04/10 (dom) 19h · Reels DJ 06 Maka · AZUL",
+      "title": "Reels Maka · 05/06 (03/10) · AZUL",
       "w": 1080,
       "x": 11960,
       "y": 13300
@@ -302,6 +302,20 @@
       "w": 1080,
       "x": 9780,
       "y": 1750
+    },
+    "UltimoLoteFeed.dc.html": {
+      "h": 1350,
+      "title": "04/10 · Último dia do 1º lote · feed · PRETO",
+      "w": 1080,
+      "x": 16720,
+      "y": 13300
+    },
+    "UltimoLoteStory.dc.html": {
+      "h": 1920,
+      "title": "04/10 · Último dia do 1º lote · story (figurinha: link)",
+      "w": 1080,
+      "x": 10940,
+      "y": 1750
     }
   },
   "createdOnFiles": {
@@ -448,7 +462,9 @@
     "FeedVespera.dc.html",
     "FlyerFeed.dc.html",
     "FlyerStory.dc.html",
-    "StorySuspense.dc.html"
+    "StorySuspense.dc.html",
+    "UltimoLoteFeed.dc.html",
+    "UltimoLoteStory.dc.html"
   ],
   "pages": [],
   "title": "why not? — posts de lançamento"

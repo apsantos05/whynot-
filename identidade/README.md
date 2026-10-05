@@ -26,7 +26,7 @@ Instagram [@whynot.sjrp](https://www.instagram.com/whynot.sjrp) · links em [bea
 | 02 | Maycon Beats | @maycon_beats | 30/09 19h |
 | 03 | Possani | @_possani04 | 01/10 18h |
 | 04 | Mexikanno | @mexsymusic | 01/10 21h |
-| 05 | Coiote (atração principal) | @djcoiote | 04/10 12h |
-| 06 | Maka (atração principal) | @makaadj | 04/10 19h |
+| 05 | Maka (atração principal) | @makaadj | 03/10 |
+| 06 | Coiote (atração principal) | @djcoiote | último a ser revelado |
 
 Canvas de design (Claude): https://claude.ai/artifact/A9qkjRYjHzFp8dEMxFUJNf
