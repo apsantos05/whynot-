@@ -22,6 +22,7 @@ def place(k, cx, top=None, bottom=None, h=300, z=1):
 
 EXT = ("text-shadow:-1px 1px 0 #b3cfd6,-2px 2px 0 #9bbdc6,-3px 3px 0 #85abb5,-4px 4px 0 #7199a4,-5px 5px 0 #5f8792,"
        "-6px 6px 0 #4f7580,-7px 7px 0 #41646e,-8px 8px 0 #35535c,-9px 9px 0 #2a434b,-10px 10px 0 #20343a,-11px 11px 0 #17262b,-12px 12px 0 #0f191d")
+EXT8 = ("text-shadow:-1px 1px 0 #b3cfd6,-2px 2px 0 #9bbdc6,-3px 3px 0 #7199a4,-4px 4px 0 #5f8792,-5px 5px 0 #4f7580,-6px 6px 0 #35535c,-7px 7px 0 #20343a,-8px 8px 0 #0f191d")
 EXT2 = "text-shadow:-1px 1px 0 #9bbdc6,-2px 2px 0 #4f7580,-3px 3px 0 #20343a,-4px 4px 0 #0f191d"
 
 HTML = f"""<!doctype html><html><head><meta charset="utf-8"><style>{FONTS}
@@ -43,9 +44,9 @@ HTML = f"""<!doctype html><html><head><meta charset="utf-8"><style>{FONTS}
  {place('tom', 556, top=78, h=318, z=1)}
  {place('maka', 910, top=70, h=330, z=1)}
  {place('coiote', 742, top=38, h=380, z=2)}
- {place('maycon', 616, bottom=62, h=232, z=5)}
- {place('mex', 760, bottom=58, h=228, z=6)}
- {place('possani', 896, bottom=54, h=240, z=5)}
+ {place('maycon', 628, bottom=88, h=232, z=5)}
+ {place('mex', 766, bottom=84, h=228, z=6)}
+ {place('possani', 900, bottom=80, h=240, z=5)}
 </div>
 <!-- fusão com o fundo: base e borda esquerda do grupo -->
 <div style="position:absolute;left:0;right:0;bottom:0;height:120px;z-index:7;background:linear-gradient(to top,#060a0c 8%,rgba(6,10,12,.6) 55%,rgba(6,10,12,0))"></div>
@@ -55,11 +56,11 @@ HTML = f"""<!doctype html><html><head><meta charset="utf-8"><style>{FONTS}
 <div style="position:absolute;left:52px;top:46px;bottom:44px;width:440px;z-index:9;display:flex;flex-direction:column">
  <span class="mono" style="font-size:12px;font-weight:700;letter-spacing:.32em;color:#9dbcc4">Sexta 09.10 — Edição 01</span>
  <div class="serif" style="font-weight:900;font-size:58px;line-height:.9;margin-top:14px;{EXT2}">why not?</div>
- <img src="{L('bally_logo_gelo.png')}" style="width:150px;margin-top:70px;opacity:.92">
+ <img src="{L('bally_logo_gelo.png')}" style="width:150px;margin-top:100px;opacity:.92">
 
  <div style="margin-top:auto">
-  <div class="serif" style="font-weight:900;font-size:74px;line-height:.92;{EXT};white-space:nowrap">Coiote · Maka</div>
-  <div class="mono" style="font-size:14px;font-weight:700;letter-spacing:.14em;line-height:1.75;margin-top:20px">Tom Keller · Maycon Beats<br>Mexikanno · Possani</div>
+  <div class="serif" style="font-weight:900;font-size:41px;line-height:.92;letter-spacing:-.005em;{EXT8};white-space:nowrap">Coiote · Maka · Tom Keller</div>
+  <div class="mono" style="font-size:14px;font-weight:700;letter-spacing:.14em;line-height:1.75;margin-top:20px">Maycon Beats · Mexikanno · Possani</div>
  </div>
 
  <div style="margin-top:22px;display:flex;align-items:center;gap:14px">
