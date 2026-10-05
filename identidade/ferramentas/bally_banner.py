@@ -43,9 +43,9 @@ HTML = f"""<!doctype html><html><head><meta charset="utf-8"><style>{FONTS}
  {place('tom', 556, top=78, h=318, z=1)}
  {place('maka', 910, top=70, h=330, z=1)}
  {place('coiote', 742, top=38, h=380, z=2)}
- {place('maycon', 632, bottom=-4, h=262, z=5)}
- {place('mex', 752, bottom=-14, h=262, z=6)}
- {place('possani', 878, bottom=-12, h=272, z=5)}
+ {place('maycon', 616, bottom=22, h=232, z=5)}
+ {place('mex', 760, bottom=18, h=228, z=6)}
+ {place('possani', 896, bottom=14, h=240, z=5)}
 </div>
 <!-- fusão com o fundo: base e borda esquerda do grupo -->
 <div style="position:absolute;left:0;right:0;bottom:0;height:120px;z-index:7;background:linear-gradient(to top,#060a0c 8%,rgba(6,10,12,.6) 55%,rgba(6,10,12,0))"></div>
@@ -53,12 +53,11 @@ HTML = f"""<!doctype html><html><head><meta charset="utf-8"><style>{FONTS}
 
 <!-- bloco de texto -->
 <div style="position:absolute;left:52px;top:46px;bottom:44px;width:440px;z-index:9;display:flex;flex-direction:column">
- <span class="mono" style="font-size:12px;font-weight:700;letter-spacing:.32em;color:#9dbcc4">Bally Club — Sexta 09.10</span>
+ <span class="mono" style="font-size:12px;font-weight:700;letter-spacing:.32em;color:#9dbcc4">Sexta 09.10 — Edição 01</span>
  <div class="serif" style="font-weight:900;font-size:58px;line-height:.9;margin-top:14px;{EXT2}">why not?</div>
- <span class="mono" style="font-size:11px;letter-spacing:.3em;color:#9dbcc4;margin-top:10px">Edição 01 · São José do Rio Preto</span>
+ <img src="{L('bally_logo_gelo.png')}" style="width:150px;margin-top:22px;opacity:.92">
 
  <div style="margin-top:auto">
-  <span class="mono" style="display:block;font-size:11px;letter-spacing:.3em;color:#9dbcc4;margin-bottom:8px">Atrações principais</span>
   <div class="serif" style="font-weight:900;font-size:74px;line-height:.92;{EXT};white-space:nowrap">Coiote · Maka</div>
   <div class="mono" style="font-size:14px;font-weight:700;letter-spacing:.14em;line-height:1.75;margin-top:20px">Tom Keller · Maycon Beats<br>Mexikanno · Possani</div>
  </div>
