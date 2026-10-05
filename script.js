@@ -22,7 +22,7 @@
     }
     $("#form-btn").classList.add("btn--ghost");
     $("#cta-note").textContent = ticket.vendidoPor
-      ? `Ingressos vendidos pela ${ticket.vendidoPor}. Lista VIP em menos de 1 minuto.`
+      ? `Ingressos via ${ticket.vendidoPor}. Lista VIP em menos de 1 minuto.`
       : "Lista VIP em menos de 1 minuto.";
   }
 
