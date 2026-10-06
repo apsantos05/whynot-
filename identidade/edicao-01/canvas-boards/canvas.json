@@ -316,6 +316,20 @@
       "w": 1080,
       "x": 10940,
       "y": 1750
+    },
+    "BallyBanner.dc.html": {
+      "h": 600,
+      "w": 1024,
+      "x": 2320,
+      "y": 16000,
+      "title": "SITE DA BALLY · banner 1024×600 (página de ingressos)"
+    },
+    "HLSite.dc.html": {
+      "h": 1920,
+      "w": 1080,
+      "x": 4640,
+      "y": 8490,
+      "title": "Destaque · NOSSO SITE (ingressos + camarotes) · fixar"
     }
   },
   "createdOnFiles": {
@@ -464,7 +478,9 @@
     "FlyerStory.dc.html",
     "StorySuspense.dc.html",
     "UltimoLoteFeed.dc.html",
-    "UltimoLoteStory.dc.html"
+    "UltimoLoteStory.dc.html",
+    "BallyBanner.dc.html",
+    "HLSite.dc.html"
   ],
   "pages": [],
   "title": "why not? — posts de lançamento"
