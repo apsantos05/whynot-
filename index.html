@@ -4,16 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>why not?</title>
-  <meta name="description" content="why not? — cadastre-se na lista VIP.">
+  <meta name="description" content="why not? — ingressos e camarotes da próxima festa.">
   <meta property="og:title" content="why not?">
-  <meta property="og:description" content="Coloque seu nome na lista VIP da próxima why not?">
+  <meta property="og:description" content="Ingressos e camarotes da próxima why not?">
   <meta property="og:image" content="assets/logo.jpg">
   <meta name="theme-color" content="#03090b">
   <link rel="icon" href="assets/logo.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Hanken+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20">
+  <link rel="stylesheet" href="styles.css?v=21">
 </head>
 <body>
   <main>
@@ -44,33 +44,21 @@
           <div class="reveal__cta">
             <div class="reveal__actions">
               <a class="btn" id="ticket-btn" target="_blank" rel="noopener" hidden>Comprar ingresso antecipado</a>
-              <a class="btn" id="form-btn" href="#" target="_blank" rel="noopener">Entrar na lista VIP</a>
               <a class="btn btn--tide" href="camarotes.html">Reservar camarote</a>
             </div>
-            <p class="reveal__note" id="cta-note">Cadastro em menos de 1 minuto.</p>
+            <p class="reveal__note" id="cta-note"></p>
           </div>
         </div>
       </div>
     </section>
 
-    <dialog class="modal" id="form-modal" aria-labelledby="modal-title">
-      <div class="modal__bar">
-        <h2 id="modal-title" class="modal__title">Lista VIP</h2>
-        <a class="modal__alt" id="form-newtab" target="_blank" rel="noopener">Abrir em nova aba</a>
-        <button type="button" class="modal__close" id="form-close" aria-label="Fechar formulário">×</button>
-      </div>
-      <div class="modal__body">
-        <p class="modal__loading">Carregando formulário…</p>
-        <iframe id="form-frame" title="Formulário why not? — Lista VIP"></iframe>
-      </div>
-    </dialog>
   </main>
 
   <footer class="foot">
     <a data-href="instagram" data-bind="instagramHandle"></a>
   </footer>
 
-  <script src="config.js?v=20"></script>
-  <script src="script.js?v=20"></script>
+  <script src="config.js?v=21"></script>
+  <script src="script.js?v=21"></script>
 </body>
 </html>

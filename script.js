@@ -8,7 +8,7 @@
   $$('[data-bind="instagramHandle"]').forEach((el) => { el.textContent = C.instagramHandle; });
   $$('[data-href="instagram"]').forEach((el) => { el.href = C.instagram; });
 
-  // ingresso antecipado: botão principal quando há link; a lista VIP vira secundária
+  // ingresso antecipado: botão principal (só aparece quando há link)
   const ticket = C.ingressos || {};
   // prévia: ?previa=ingresso mostra o botão mesmo sem link (só pra visualizar o layout)
   const preview = !ticket.url && new URLSearchParams(location.search).get("previa") === "ingresso";
@@ -20,44 +20,14 @@
       tb.removeAttribute("target");
       tb.addEventListener("click", (e) => { e.preventDefault(); alert("Prévia: o link de vendas ainda não foi configurado."); });
     }
-    $("#form-btn").classList.add("btn--ghost");
-    $("#cta-note").textContent = ticket.vendidoPor
-      ? `Ingressos via ${ticket.vendidoPor}. Lista VIP em menos de 1 minuto.`
-      : "Lista VIP em menos de 1 minuto.";
-  }
-
-  const btn = $("#form-btn");
-  if (C.formUrl) {
-    btn.href = C.formUrl;
-    $("#form-newtab").href = C.formUrl;
-    const modal = $("#form-modal");
-    const frame = $("#form-frame");
-    btn.addEventListener("click", (e) => {
-      if (!modal.showModal) return; // navegador antigo: segue o link normal
-      e.preventDefault();
-      if (!frame.src) {
-        frame.addEventListener("load", () => modal.classList.add("is-loaded"), { once: true });
-        frame.src = C.formUrl + (C.formUrl.includes("?") ? "&" : "?") + "embedded=true";
-      }
-      modal.showModal();
-      document.body.classList.add("no-scroll");
-    });
-    const close = () => modal.close();
-    $("#form-close").addEventListener("click", close);
-    modal.addEventListener("click", (e) => { if (e.target === modal) close(); }); // clique fora
-    modal.addEventListener("close", () => document.body.classList.remove("no-scroll"));
-  } else {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      alert("O formulário ainda não foi configurado. Coloque o link do Google Forms em config.js (formUrl).");
-    });
+    if (ticket.vendidoPor) $("#cta-note").textContent = `Ingressos via ${ticket.vendidoPor}.`;
   }
 
   /* ---------- line-up: nomes flutuando + logo 3D girando ----------
      A seção é alta e o conteúdo fica "grudado" na tela. Conforme a pessoa rola:
      1) os nomes dos DJs atravessam o fundo em faixas, em sentidos alternados;
      2) a logo 3D aparece no centro, flutuando e girando sozinha;
-     3) a logo sobe e entram a mensagem e o botão da lista VIP. */
+     3) a logo sobe e entram a mensagem e os botões de ingresso e camarote. */
   const reveal = $(".reveal");
   if (reveal) setupLineup();
 
