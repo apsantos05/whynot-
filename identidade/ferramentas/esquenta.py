@@ -11,15 +11,14 @@ H=f"""<html><head><meta charset=utf-8><style>
 @font-face{{font-family:M;font-weight:700;src:url('file:///usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf')}}
 body{{margin:0}} .w{{width:1080px;height:1350px;position:relative;overflow:hidden;background:#060a0c;color:#e4f2f6;font-family:M}}
 </style></head><body><div class=w>
-<div style="position:absolute;left:50%;transform:translateX(-50%);top:100px;width:900px;height:690px;background:url('file://{D}/tw/tw_crop.jpg') center/cover;filter:saturate(.85);-webkit-mask-image:radial-gradient(ellipse 52% 54% at 50% 50%,#000 70%,transparent 100%)"></div>
-<div style="position:absolute;left:0;right:0;top:0;height:200px;background:linear-gradient(to bottom,#060a0c 0%,rgba(6,10,12,0))"></div>
+<img src="file://{D}/tw/tw_logo.png" style="position:absolute;left:50%;transform:translateX(-50%);top:150px;height:560px">
 <div style="position:absolute;left:80px;right:80px;top:64px;display:flex;justify-content:space-between;font-size:28px;letter-spacing:.16em;color:#c9dde2"><span>WHY NOT? · ESQUENTA</span><span>SEXTA · 09.10</span></div>
 <div style="position:absolute;left:80px;right:80px;top:772px">
 <div style="font:900 150px/0.86 F;{EXT};transform:rotate(-6deg);transform-origin:left center;white-space:nowrap;margin-left:14px">esquenta.</div>
 <div style="margin-top:44px;font:italic 40px F">antes da Bally, o aquecimento é no The Week.</div>
 <div style="margin-top:30px;display:flex;flex-direction:column;gap:14px">
 <div style="display:flex;align-items:center;gap:20px"><span style="padding:12px 20px;background:#e4f2f6;color:#060a0c;font-size:30px;font-weight:700;letter-spacing:.06em;white-space:nowrap">TODO MUNDO FREE ATÉ 21H</span></div>
-<div style="display:flex;align-items:center;gap:20px"><span style="padding:10px 18px;border:2px solid #9dbcc4;font-size:30px;font-weight:700;letter-spacing:.06em;white-space:nowrap">MENINAS GANHAM UM DRINK 🍸</span></div>
+<div style="display:flex;align-items:center;gap:20px"><span style="padding:10px 18px;border:2px solid #9dbcc4;font-size:30px;font-weight:700;letter-spacing:.06em;white-space:nowrap">MENINAS DA LISTA GANHAM UM DRINK 🍸</span></div>
 </div>
 </div>
 <div style="position:absolute;left:80px;right:80px;bottom:40px;display:flex;justify-content:space-between;align-items:flex-end;padding-top:22px;border-top:2px solid #35535c">
