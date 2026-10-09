@@ -9,11 +9,11 @@ H=f"""<html><head><meta charset=utf-8><style>
 @font-face{{font-family:F;font-style:italic;font-weight:400;src:url('{FD}Fraunces72pt-Italic.ttf')}}
 @font-face{{font-family:M;font-weight:400;src:url('file:///usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf')}}
 @font-face{{font-family:M;font-weight:700;src:url('file:///usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf')}}
-body{{margin:0}} .w{{width:1080px;height:1350px;position:relative;overflow:hidden;background:#060a0c;color:#e4f2f6;font-family:M}}
+body{{margin:0}} .w{{width:1080px;height:1920px;position:relative;overflow:hidden;background:#060a0c;color:#e4f2f6;font-family:M}}
 </style></head><body><div class=w>
-<img src="file://{D}/tw/tw_logo.png" style="position:absolute;left:50%;transform:translateX(-50%);top:140px;height:540px">
-<div style="position:absolute;left:80px;right:80px;top:64px;display:flex;justify-content:space-between;font-size:28px;letter-spacing:.16em;color:#c9dde2"><span>WHY NOT? · ESQUENTA</span><span>SEXTA · 09.10</span></div>
-<div style="position:absolute;left:80px;right:80px;top:740px">
+<img src="file://{D}/tw/tw_logo.png" style="position:absolute;left:50%;transform:translateX(-50%);top:360px;height:600px">
+<div style="position:absolute;left:80px;right:80px;top:250px;display:flex;justify-content:space-between;font-size:28px;letter-spacing:.16em;color:#c9dde2"><span>WHY NOT? · ESQUENTA</span><span>SEXTA · 09.10</span></div>
+<div style="position:absolute;left:80px;right:80px;top:1040px">
 <div style="font:900 150px/0.86 F;{EXT};transform:rotate(-6deg);transform-origin:left center;white-space:nowrap;margin-left:14px">esquenta.</div>
 <div style="margin-top:44px;font:italic 40px F">antes da Bally, o aquecimento é no The Week.</div>
 <div style="margin-top:30px;display:flex;flex-direction:column;gap:14px">
@@ -22,16 +22,16 @@ body{{margin:0}} .w{{width:1080px;height:1350px;position:relative;overflow:hidde
 </div>
 <div style="margin-top:20px;font-size:24px;letter-spacing:.1em;color:#9dbcc4">* VÁLIDO PARA QUEM ESTÁ NA LISTA VIP DA BALLY</div>
 </div>
-<div style="position:absolute;left:80px;right:80px;bottom:40px;display:flex;justify-content:space-between;align-items:flex-end;padding-top:22px;border-top:2px solid #35535c">
+<div style="position:absolute;left:80px;right:80px;bottom:250px;display:flex;justify-content:space-between;align-items:flex-end;padding-top:22px;border-top:2px solid #35535c">
 <span style="font-size:26px;letter-spacing:.08em;color:#9dbcc4;line-height:1.5">DEPOIS, 22H<br><b style="color:#e4f2f6">WHY NOT? NA BALLY CLUB</b></span>
 <span style="font:900 64px/1 F;{EXTM};transform:rotate(-6deg);white-space:nowrap">why not?</span></div>
 </div></body></html>"""
 async def m():
     async with async_playwright() as p:
         b=await p.chromium.launch()
-        for s,n in ((1,'esq1.png'),(2,'whats-esquenta-the-week-HD.png')):
-            pg=await b.new_page(viewport={'width':1080,'height':1350},device_scale_factor=s)
-            open(D+'/tw/e.html','w').write(H); await pg.goto('file://'+D+'/tw/e.html'); await pg.wait_for_timeout(500)
+        for s,n in ((1,'esqs1.png'),(2,'story-esquenta-the-week-HD.png')):
+            pg=await b.new_page(viewport={'width':1080,'height':1920},device_scale_factor=s)
+            open(D+'/tw/es.html','w').write(H); await pg.goto('file://'+D+'/tw/es.html'); await pg.wait_for_timeout(500)
             await pg.screenshot(path=D+'/tw/'+n)
         await b.close()
 asyncio.run(m())
