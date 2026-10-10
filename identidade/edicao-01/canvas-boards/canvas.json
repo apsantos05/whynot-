@@ -330,6 +330,27 @@
       "x": 4640,
       "y": 8490,
       "title": "Destaque · NOSSO SITE (ingressos + camarotes) · fixar"
+    },
+    "Reels6Capa.dc.html": {
+      "h": 1920,
+      "w": 1080,
+      "x": 14400,
+      "y": 13300,
+      "title": "13 · Reels 6 DJs · capa AZUL"
+    },
+    "EHojeFeed.dc.html": {
+      "h": 1350,
+      "w": 1080,
+      "x": 17880,
+      "y": 13300,
+      "title": "15 · 09/10 · É hoje · PRETO"
+    },
+    "EHojeStory.dc.html": {
+      "h": 1920,
+      "w": 1080,
+      "x": 5800,
+      "y": 4090,
+      "title": "09/10 · É hoje · story (figurinha: link dos ingressos)"
     }
   },
   "createdOnFiles": {
@@ -398,15 +419,6 @@
       "w": 1080,
       "x": 2320,
       "y": 8490
-    },
-    "reels6": {
-      "fill": "blue",
-      "maxH": 1920,
-      "size": 40,
-      "text": "13 · 06/10\nReels com os 6 DJs\nCAPA AZUL\n(montar depois que os 6 forem revelados)",
-      "w": 1080,
-      "x": 14400,
-      "y": 13300
     },
     "stories": {
       "kind": "title1",
@@ -480,7 +492,10 @@
     "UltimoLoteFeed.dc.html",
     "UltimoLoteStory.dc.html",
     "BallyBanner.dc.html",
-    "HLSite.dc.html"
+    "HLSite.dc.html",
+    "Reels6Capa.dc.html",
+    "EHojeFeed.dc.html",
+    "EHojeStory.dc.html"
   ],
   "pages": [],
   "title": "why not? — posts de lançamento"
