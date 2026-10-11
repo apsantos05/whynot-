@@ -3,57 +3,50 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>why not?</title>
-  <meta name="description" content="why not? — label de festas. Reserve seu camarote.">
+  <title>why not? · em breve</title>
+  <meta name="description" content="Algo está vindo. Em breve.">
   <meta property="og:title" content="why not?">
-  <meta property="og:description" content="Reserve seu camarote na why not?">
+  <meta property="og:description" content="Algo está vindo.">
   <meta property="og:image" content="assets/logo.jpg">
-  <meta name="theme-color" content="#03090b">
+  <meta name="theme-color" content="#050404">
   <link rel="icon" href="assets/logo.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Hanken+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=22">
+  <link rel="stylesheet" href="styles.css?v=26">
 </head>
-<body>
-  <main>
-    <section class="stage" aria-label="why not?">
-      <h1 class="hero__stack" aria-label="why not?">
-        <span class="extrude" aria-hidden="true">why not?</span>
-        <span class="extrude" aria-hidden="true">why not?</span>
-        <span class="extrude" aria-hidden="true">why not?</span>
-      </h1>
-      <a class="scroll-cue" href="#festa">
-        <span>role para baixo</span>
-        <i aria-hidden="true"></i>
-      </a>
-    </section>
+<body class="soon">
+  <!-- frases escondidas na parede: só aparecem dentro do facho da lanterna -->
+  <div class="whispers" aria-hidden="true">
+    <span style="--x:12%; --y:18%; --r:-8deg">não olhe pra trás</span>
+    <span style="--x:72%; --y:14%; --r:5deg">você foi convidado</span>
+    <span style="--x:84%; --y:46%; --r:-4deg">apague as luzes</span>
+    <span style="--x:8%;  --y:58%; --r:6deg">fique até o fim</span>
+    <span style="--x:62%; --y:80%; --r:-6deg">ninguém sai antes</span>
+    <span style="--x:22%; --y:86%; --r:3deg">shhh</span>
+    <span style="--x:44%; --y:9%;  --r:-2deg">ela acordou</span>
+    <span style="--x:90%; --y:76%; --r:8deg">por que não?</span>
+    <span style="--x:34%; --y:68%; --r:-10deg">já está aqui</span>
+  </div>
 
-    <section class="reveal" id="festa" aria-labelledby="reveal-title">
-      <div class="reveal__sticky">
-        <div class="logo3d" aria-hidden="true"></div>
+  <!-- escuridão com um furo de luz onde está a lanterna -->
+  <div class="darkness" aria-hidden="true"></div>
+  <div class="fog" aria-hidden="true"><i></i><i></i></div>
 
-        <div class="reveal__copy">
-          <h2 id="reveal-title" class="reveal__title">
-            <span class="reveal__line"><span>Nem toda noite é igual.</span></span>
-            <span class="reveal__line reveal__line--big"><span>Por que não?</span></span>
-          </h2>
-          <div class="reveal__cta">
-            <div class="reveal__actions">
-              <a class="btn" href="camarotes.html">Reservar camarote</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+  <main class="soon__stage">
+    <h1 class="hero__stack" aria-label="why not?">
+      <span class="extrude" aria-hidden="true">why not?</span>
+      <span class="extrude" aria-hidden="true">why not?</span>
+      <span class="extrude" aria-hidden="true">why not?</span>
+    </h1>
 
+    <div class="soon__copy">
+      <p class="soon__title">Algo está vindo.</p>
+      <p class="soon__sub">Em breve. Fique de olho no <a data-href="instagram" data-bind="instagramHandle"></a>.</p>
+    </div>
   </main>
 
-  <footer class="foot">
-    <a data-href="instagram" data-bind="instagramHandle"></a>
-  </footer>
-
-  <script src="config.js?v=22"></script>
-  <script src="script.js?v=22"></script>
+  <script src="config.js?v=26"></script>
+  <script src="script.js?v=26"></script>
 </body>
 </html>

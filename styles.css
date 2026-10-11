@@ -248,3 +248,92 @@ a { color: inherit; }
 }
 .btn.btn--tide:hover { background: #24474f; box-shadow: inset 0 0 0 1.5px var(--ice), -3px 3px 0 #0c181c, -6px 6px 0 #050d10; }
 .btn.btn--tide:active { box-shadow: inset 0 0 0 1.5px var(--frost); }
+
+/* =====================================================================
+   COMING SOON — tom misterioso (página inicial)
+   Paleta: breu quente, osso e brasa. A luz é uma lanterna que segue o cursor.
+   ===================================================================== */
+body.soon {
+  --void: #050404;   /* breu */
+  --bone: #e9e1cf;   /* face das letras, texto */
+  --ash:  #8d8577;   /* texto secundário */
+  --ember:#c4521c;   /* brasa: só em brilho e na extrusão */
+  --lx: 50vw; --ly: 45vh; --lr: 190px;   /* posição e raio da lanterna (o script atualiza) */
+  background: var(--void); color: var(--bone);
+  min-height: 100svh; overflow: hidden;
+}
+body.soon .hero__stack { color: var(--bone); }
+
+/* frases na parede */
+.whispers {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  /* só existem dentro do facho: fora do círculo a máscara apaga tudo */
+  -webkit-mask-image: radial-gradient(circle calc(var(--lr) * 1.15) at var(--lx) var(--ly), #000 50%, transparent 100%);
+          mask-image: radial-gradient(circle calc(var(--lr) * 1.15) at var(--lx) var(--ly), #000 50%, transparent 100%);
+  /* textura de parede: granulado que só aparece onde a luz bate */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .91 0 0 0 0 .88 0 0 0 0 .81 0 0 0 .16 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+}
+.whispers span {
+  position: absolute; left: var(--x); top: var(--y);
+  /* ancoragem proporcional: a frase nunca passa da borda da tela */
+  translate: calc(-1 * var(--x)) -50%; rotate: var(--r);
+  font-family: var(--serif); font-weight: 400; font-size: clamp(1rem, 2.2vw, 1.6rem);
+  letter-spacing: .02em; white-space: nowrap;
+  color: rgb(233 225 207 / .62);
+}
+
+/* breu com um furo de luz (lanterna) + um leve calor de brasa na borda.
+   O último tom do gradiente se estende até as bordas, então só o círculo fica aberto. */
+.darkness {
+  position: fixed; inset: 0; z-index: 2; pointer-events: none;
+  background:
+    radial-gradient(circle calc(var(--lr) * 1.3) at var(--lx) var(--ly), rgb(196 82 28 / .09), transparent 70%),
+    radial-gradient(circle var(--lr) at var(--lx) var(--ly),
+      rgb(5 4 4 / 0) 0%, rgb(5 4 4 / .5) 55%, rgb(5 4 4 / .97) 100%);
+}
+
+/* neblina rente ao chão */
+.fog { position: fixed; left: 0; right: 0; bottom: 0; height: 45vh; z-index: 3; pointer-events: none; overflow: hidden; }
+.fog i {
+  position: absolute; bottom: -20vh; left: -50%; width: 200%; height: 60vh;
+  background:
+    radial-gradient(ellipse 22% 40% at 20% 60%, rgb(233 225 207 / .07), transparent 70%),
+    radial-gradient(ellipse 18% 35% at 55% 70%, rgb(233 225 207 / .06), transparent 70%),
+    radial-gradient(ellipse 25% 45% at 85% 55%, rgb(233 225 207 / .07), transparent 70%);
+  filter: blur(18px);
+  animation: fog 38s linear infinite;
+}
+.fog i + i { animation-duration: 56s; animation-direction: reverse; opacity: .8; bottom: -26vh; }
+@keyframes fog { to { transform: translateX(25%); } }
+
+/* palco: logo + texto, acima do breu */
+.soon__stage {
+  position: relative; z-index: 4;
+  min-height: 100svh;
+  display: grid; place-items: center; align-content: center; gap: clamp(28px, 6vh, 64px);
+  padding: 48px var(--gutter);
+  pointer-events: none;            /* a lanterna continua passando por cima */
+}
+.soon__stage a, .soon__stage .hero__stack { pointer-events: auto; }
+.soon .hero__stack { filter: drop-shadow(0 0 40px rgb(196 82 28 / .12)); }
+
+/* falha de luz: a logo pisca de vez em quando */
+.soon .hero__stack.is-flicker { animation: flicker .9s steps(1, end); }
+@keyframes flicker {
+  0% { opacity: 1; } 8% { opacity: .15; } 14% { opacity: .9; } 22% { opacity: .05; }
+  30% { opacity: .8; } 38% { opacity: .3; } 46%, 100% { opacity: 1; }
+}
+
+.soon__copy { text-align: center; }
+.soon__title {
+  margin: 0 0 8px; font-family: var(--serif); font-weight: 900; letter-spacing: -0.01em;
+  font-size: clamp(1.5rem, 3.2vw, 2.25rem); line-height: 1.1; color: var(--bone);
+}
+.soon__sub { margin: 0; color: var(--ash); font-size: var(--step-0); }
+.soon__sub a { color: var(--bone); text-underline-offset: 3px; }
+.soon__sub a:hover { color: #fff; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fog i { animation: none; }
+}

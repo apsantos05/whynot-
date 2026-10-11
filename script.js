@@ -8,101 +8,59 @@
   $$('[data-bind="instagramHandle"]').forEach((el) => { el.textContent = C.instagramHandle; });
   $$('[data-href="instagram"]').forEach((el) => { el.href = C.instagram; });
 
-  /* ---------- logo 3D girando ----------
-     A seção é alta e o conteúdo fica "grudado" na tela. Conforme a pessoa rola:
-     1) a logo 3D aparece no centro, flutuando e girando sozinha;
-     2) a logo sobe e entram a mensagem e o botão de camarote. */
-  const reveal = $(".reveal");
-  if (reveal) setupReveal();
+  /* ---------- coming soon: lanterna + falha de luz ----------
+     A tela fica no breu e a "lanterna" acompanha o mouse (ou o dedo). Dentro do facho
+     aparecem frases escritas na parede. Sem mouse, a luz vagueia sozinha.
+     De tempos em tempos a logo pisca, como uma lâmpada falhando. */
+  if (document.body.classList.contains("soon")) setupSoon();
 
-  function setupReveal() {
-    // logo 3D: camadas empilhadas em profundidade (translateZ), face na frente e verso atrás
-    const logo = $(".logo3d", reveal);
-    const obj = document.createElement("div");
-    obj.className = "logo3d__obj";
-    logo.appendChild(obj);
-    const LAYERS = 18;
-    const lines = "<span>why not?</span><span>why not?</span><span>why not?</span>";
-    const mix = (t) => {
-      const a = [0xe2, 0xf1, 0xf5], b = [0x05, 0x0d, 0x10];
-      return "rgb(" + a.map((v, k) => Math.round(v + (b[k] - v) * Math.pow(t, 0.75))).join(",") + ")";
+  function setupSoon() {
+    const root = document.body.style;
+    const radius = () => Math.max(130, Math.min(innerWidth, innerHeight) * 0.24);
+    let tx = innerWidth / 2, ty = innerHeight * 0.45, x = tx, y = ty, r = radius();
+    let lastInput = -1e9;
+    const set = () => {
+      root.setProperty("--lx", `${x.toFixed(1)}px`);
+      root.setProperty("--ly", `${y.toFixed(1)}px`);
+      root.setProperty("--lr", `${r.toFixed(1)}px`);
     };
-    const layers = [];
-    for (let k = 0; k <= LAYERS + 1; k++) {
-      const el = document.createElement("div");
-      el.className = "logo3d__layer";
-      el.innerHTML = lines;
-      const back = k === LAYERS + 1;
-      if (k === 0 || back) el.classList.add("logo3d__face");
-      el.style.color = back ? "#e2f1f5" : k === 0 ? "#e2f1f5" : mix(k / LAYERS);
-      obj.appendChild(el);
-      layers.push({ el, k, back });
-    }
-    let fontPx = 100;
-    const placeLayers = () => {
-      fontPx = parseFloat(getComputedStyle(logo).fontSize);
-      const step = (fontPx * 0.24) / LAYERS;                    // profundidade total ≈ 0,24em
-      layers.forEach(({ el, k, back }) => {
-        el.style.transform = back
-          ? `translateZ(${(-step * LAYERS - 0.5).toFixed(2)}px) rotateY(180deg)`
-          : `translateZ(${(-step * k).toFixed(2)}px)`;
-      });
-    };
-
-    const copyLines = $$(".reveal__line > span", reveal);
-    const cta = $(".reveal__cta", reveal);
-    const BASE = "rotateZ(-11deg) skewX(-6deg)";
-
-    placeLayers();
-    document.fonts?.ready.then(placeLayers);
-    addEventListener("resize", placeLayers);
+    set();
+    addEventListener("resize", () => { r = radius(); set(); });
 
     if (reduceMotion) {
-      obj.style.transform = `rotateX(8deg) rotateY(-22deg) ${BASE}`;
+      // sem movimento: luz parada, um pouco maior
+      r = radius() * 1.6; set();
       return;
     }
 
-    const seg = (p, a, b) => Math.max(0, Math.min(1, (p - a) / (b - a)));
-    const out = (t) => 1 - Math.pow(1 - t, 3);
+    const follow = (e) => { tx = e.clientX; ty = e.clientY; lastInput = performance.now(); };
+    addEventListener("pointermove", follow, { passive: true });
+    addEventListener("pointerdown", follow, { passive: true });
 
-    const paint = (now) => {
-      const r = reveal.getBoundingClientRect();
-      const p = seg(-r.top / (r.height - innerHeight), 0, 1);
-
-      // 1) logo: entra, flutua e gira sem parar (independe da rolagem)
-      const show = out(seg(p, 0, 0.14));
-      const spin = (now * 0.04) % 360;                    // gira sozinha: 1 volta a cada 9 s
-      const tilt = 7 + Math.sin(now * 0.0008) * 6;
-      const bob = Math.sin(now * 0.0014) * fontPx * 0.07;
-      obj.style.transform = `translateY(${bob.toFixed(1)}px) rotateX(${tilt.toFixed(2)}deg) rotateY(${spin.toFixed(2)}deg) ${BASE}`;
-
-      // 2) a logo sobe e abre espaço para a mensagem
-      const end = out(seg(p, 0.7, 0.86));
-      const lift = end * Math.min(innerHeight * 0.2, 190);
-      logo.style.transform = `translateY(${(-lift).toFixed(1)}px) scale(${(0.6 + 0.4 * show - 0.22 * end).toFixed(4)})`;
-      logo.style.opacity = show.toFixed(3);
-
-      copyLines.forEach((el, i) => {
-        const t = out(seg(p, 0.74 + i * 0.05, 0.84 + i * 0.05));
-        el.style.transform = `translateY(${((1 - t) * 110).toFixed(1)}%)`;
-        el.style.opacity = t.toFixed(3);
-      });
-      const c = out(seg(p, 0.88, 0.96));
-      cta.style.opacity = c.toFixed(3);
-      cta.style.transform = `translateY(${((1 - c) * 24).toFixed(1)}px)`;
-      cta.style.pointerEvents = c > 0.6 ? "auto" : "none";
+    const tick = (now) => {
+      // 3 s sem mexer: a luz passa a vagar sozinha pela tela
+      if (now - lastInput > 3000) {
+        tx = innerWidth * (0.5 + 0.38 * Math.sin(now * 0.00031));
+        ty = innerHeight * (0.5 + 0.32 * Math.sin(now * 0.00047 + 1.3));
+      }
+      x += (tx - x) * 0.09;
+      y += (ty - y) * 0.09;
+      // a lanterna "respira" de leve, como chama
+      r = radius() * (1 + Math.sin(now * 0.004) * 0.015 + Math.sin(now * 0.0113) * 0.01);
+      set();
+      requestAnimationFrame(tick);
     };
+    requestAnimationFrame(tick);
 
-    // anima só enquanto a seção está na tela (a logo flutua mesmo sem rolar)
-    let on = false;
-    const loop = (now) => { if (!on) return; paint(now); requestAnimationFrame(loop); };
-    new IntersectionObserver(([e]) => {
-      const was = on;
-      on = e.isIntersecting;
-      if (on && !was) requestAnimationFrame(loop);
-    }).observe(reveal);
-    addEventListener("scroll", () => paint(performance.now()), { passive: true });
-    paint(performance.now());
+    // falha de luz na logo, em intervalos irregulares
+    const logo = $(".hero__stack");
+    const flicker = () => {
+      logo.classList.remove("is-flicker");
+      void logo.offsetWidth;
+      logo.classList.add("is-flicker");
+      setTimeout(flicker, 4000 + Math.random() * 7000);
+    };
+    setTimeout(flicker, 2500);
   }
 
   /* ---------- logo viva ----------
@@ -113,12 +71,20 @@
   const stack = $(".hero__stack");
   // menos camadas em telas pequenas (celular mais leve), mesma profundidade total
   const layers = matchMedia("(max-width: 640px)").matches ? 12 : 20;
+  // cores da extrusão: no tema "em breve", osso → brasa → breu; senão, gelo → breu
+  const soon = document.body.classList.contains("soon");
   const ramp = (() => {
-    const a = [0xc6, 0xdd, 0xe3], b = [0x03, 0x09, 0x0b];
-    return Array.from({ length: layers }, (_, i) => {
-      const t = Math.pow(i / (layers - 1), 0.8);
-      return "rgb(" + a.map((v, k) => Math.round(v + (b[k] - v) * t)).join(",") + ")";
-    });
+    const stops = soon
+      ? [[0, [0xd8, 0xcd, 0xb6]], [0.3, [0xb0, 0x4a, 0x1a]], [0.65, [0x3a, 0x12, 0x06]], [1, [0x05, 0x04, 0x04]]]
+      : [[0, [0xc6, 0xdd, 0xe3]], [1, [0x03, 0x09, 0x0b]]];
+    const at = (t) => {
+      let i = 0;
+      while (i < stops.length - 2 && t > stops[i + 1][0]) i++;
+      const [t0, c0] = stops[i], [t1, c1] = stops[i + 1];
+      const k = (t - t0) / (t1 - t0);
+      return "rgb(" + c0.map((v, j) => Math.round(v + (c1[j] - v) * k)).join(",") + ")";
+    };
+    return Array.from({ length: layers }, (_, i) => at(Math.pow(i / (layers - 1), 0.8)));
   })();
   // text-shadow: usado só no modo sem animação
   const shadow = (dx, dy) =>
