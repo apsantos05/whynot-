@@ -85,7 +85,7 @@ a { color: inherit; }
 @keyframes cue { to { top: 100%; } }
 @media (prefers-reduced-motion: reduce) { .scroll-cue i::after { animation: none; top: 30%; } }
 
-/* ---------- line-up: nomes passando sozinhos + logo 3D girando ----------
+/* ---------- logo 3D girando (seção controlada pelo scroll) ----------
    O estado padrão aqui é o FINAL; o script aplica o começo e anima conforme a rolagem. */
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
@@ -96,25 +96,6 @@ a { color: inherit; }
   overflow: hidden;
 }
 
-/* nomes ao fundo */
-.names {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column; justify-content: space-evenly;
-  pointer-events: none;
-  /* some nas bordas de cima e de baixo */
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
-          mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
-}
-.names__row {
-  display: flex; white-space: nowrap; will-change: transform;
-  font-family: var(--serif); font-weight: 900; letter-spacing: -0.02em; line-height: 1;
-  font-size: clamp(2.2rem, min(10.5vh, 15vw), 7.5rem);
-}
-.names__row span { padding-right: .55em; }
-.names__row:nth-child(odd)  span { color: rgb(127 163 173 / .16); }
-.names__row:nth-child(even) span { color: transparent; -webkit-text-stroke: 1px rgb(226 241 245 / .28); }
-.names__row span.is-main { color: rgb(226 241 245 / .34); -webkit-text-stroke: 0; }
-
 /* logo 3D: pilha de camadas em profundidade real (translateZ) */
 .logo3d {
   position: relative; z-index: 1;
@@ -123,7 +104,7 @@ a { color: inherit; }
   font-size: clamp(3rem, min(16vw, 15vh), 8rem); line-height: .92; letter-spacing: -0.035em;
   will-change: transform;
 }
-/* halo escuro atrás da logo pra ela destacar dos nomes */
+/* halo escuro atrás da logo */
 .logo3d::before {
   content: ""; position: absolute; inset: -45% -35%; z-index: -1;
   background: radial-gradient(closest-side, rgb(3 9 11 / .92), rgb(3 9 11 / .6) 55%, transparent);
@@ -259,7 +240,7 @@ a { color: inherit; }
 }
 .chip:hover { box-shadow: inset 0 0 0 1.5px var(--ice); background: rgb(226 241 245 / .06); }
 
-/* botão de camarote: azul-petróleo, diferente do ingresso (cheio claro) */
+/* botão de camarote: azul-petróleo */
 .reveal__note:empty { display: none; }
 .btn.btn--tide {
   background: var(--tide); color: var(--ice);

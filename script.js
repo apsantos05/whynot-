@@ -8,47 +8,14 @@
   $$('[data-bind="instagramHandle"]').forEach((el) => { el.textContent = C.instagramHandle; });
   $$('[data-href="instagram"]').forEach((el) => { el.href = C.instagram; });
 
-  // ingresso antecipado: botão principal (só aparece quando há link)
-  const ticket = C.ingressos || {};
-  // prévia: ?previa=ingresso mostra o botão mesmo sem link (só pra visualizar o layout)
-  const preview = !ticket.url && new URLSearchParams(location.search).get("previa") === "ingresso";
-  if (ticket.url || preview) {
-    const tb = $("#ticket-btn");
-    tb.href = ticket.url || "#";
-    tb.hidden = false;
-    if (preview) {
-      tb.removeAttribute("target");
-      tb.addEventListener("click", (e) => { e.preventDefault(); alert("Prévia: o link de vendas ainda não foi configurado."); });
-    }
-    if (ticket.vendidoPor) $("#cta-note").textContent = `Ingressos via ${ticket.vendidoPor}.`;
-  }
-
-  /* ---------- line-up: nomes flutuando + logo 3D girando ----------
+  /* ---------- logo 3D girando ----------
      A seção é alta e o conteúdo fica "grudado" na tela. Conforme a pessoa rola:
-     1) os nomes dos DJs atravessam o fundo em faixas, em sentidos alternados;
-     2) a logo 3D aparece no centro, flutuando e girando sozinha;
-     3) a logo sobe e entram a mensagem e os botões de ingresso e camarote. */
+     1) a logo 3D aparece no centro, flutuando e girando sozinha;
+     2) a logo sobe e entram a mensagem e o botão de camarote. */
   const reveal = $(".reveal");
-  if (reveal) setupLineup();
+  if (reveal) setupReveal();
 
-  function setupLineup() {
-    const esc = (v) => String(v).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-    const lineup = C.lineup || [];
-    $("#lineup-list").innerHTML = lineup.map((d) => `<li>${esc(d.nome)}</li>`).join("");
-
-    // faixas de nomes: cada uma começa num DJ diferente e repete 3x pra dar a volta sem emenda
-    const namesEl = $(".names", reveal);
-    const rows = Array.from({ length: 5 }, (_, r) => {
-      const order = lineup.map((_, i) => lineup[(i + r * 2) % lineup.length]);
-      const seq = order.map((d) => `<span${d.principal ? ' class="is-main"' : ""}>${esc(d.nome)}</span>`).join("");
-      const el = document.createElement("div");
-      el.className = "names__row";
-      el.innerHTML = seq + seq + seq;
-      namesEl.appendChild(el);
-      return { el, dir: r % 2 ? 1 : -1, speed: 0.7 + (r % 3) * 0.2, seq: 1, r };
-    });
-    const measureRows = () => rows.forEach((row) => { row.seq = row.el.scrollWidth / 3 || 1; });
-
+  function setupReveal() {
     // logo 3D: camadas empilhadas em profundidade (translateZ), face na frente e verso atrás
     const logo = $(".logo3d", reveal);
     const obj = document.createElement("div");
@@ -87,16 +54,14 @@
     const BASE = "rotateZ(-11deg) skewX(-6deg)";
 
     placeLayers();
-    measureRows();
-    document.fonts?.ready.then(() => { placeLayers(); measureRows(); });
-    addEventListener("resize", () => { placeLayers(); measureRows(); });
+    document.fonts?.ready.then(placeLayers);
+    addEventListener("resize", placeLayers);
 
     if (reduceMotion) {
       obj.style.transform = `rotateX(8deg) rotateY(-22deg) ${BASE}`;
       return;
     }
 
-    const NAME_SPEED = 0.07;                              // px por ms (~50–80 px/s por faixa)
     const seg = (p, a, b) => Math.max(0, Math.min(1, (p - a) / (b - a)));
     const out = (t) => 1 - Math.pow(1 - t, 3);
 
@@ -104,25 +69,14 @@
       const r = reveal.getBoundingClientRect();
       const p = seg(-r.top / (r.height - innerHeight), 0, 1);
 
-      // 1) nomes: passam sozinhos o tempo todo, como um letreiro (não dependem da rolagem);
-      //    só ficam mais apagados no fim, pra mensagem e o botão aparecerem bem
-      const nIn = 1 - 0.7 * out(seg(p, 0.72, 0.9));
-      for (const row of rows) {
-        const off = row.dir * now * NAME_SPEED * row.speed;
-        const x = -row.seq + (((off % row.seq) + row.seq) % row.seq);
-        const y = Math.sin(now * 0.0006 + row.r) * 10;
-        row.el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
-        row.el.style.opacity = nIn.toFixed(3);
-      }
-
-      // 2) logo: entra, flutua e gira sem parar (independe da rolagem)
+      // 1) logo: entra, flutua e gira sem parar (independe da rolagem)
       const show = out(seg(p, 0, 0.14));
       const spin = (now * 0.04) % 360;                    // gira sozinha: 1 volta a cada 9 s
       const tilt = 7 + Math.sin(now * 0.0008) * 6;
       const bob = Math.sin(now * 0.0014) * fontPx * 0.07;
       obj.style.transform = `translateY(${bob.toFixed(1)}px) rotateX(${tilt.toFixed(2)}deg) rotateY(${spin.toFixed(2)}deg) ${BASE}`;
 
-      // 3) a logo sobe e abre espaço para a mensagem
+      // 2) a logo sobe e abre espaço para a mensagem
       const end = out(seg(p, 0.7, 0.86));
       const lift = end * Math.min(innerHeight * 0.2, 190);
       logo.style.transform = `translateY(${(-lift).toFixed(1)}px) scale(${(0.6 + 0.4 * show - 0.22 * end).toFixed(4)})`;
