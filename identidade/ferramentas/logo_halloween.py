@@ -156,3 +156,28 @@ def svg(width_px, canvas=None, bg=False):
 open(OUT + "/logo-why-not-halloween.svg", "w").write(svg(1600))
 open(OUT + "/logo-why-not-halloween-fundo.svg", "w").write(svg(880, (1080, 1080), bg=True))
 print("ok", W, H, dot)
+
+# ---- camadas separadas para o PSD (logo inclinado) ----
+import os
+def layer_svg(inner, size=2160, width_px=1800, angle=-8, bg=False):
+    s = width_px / W
+    tx = (size - W * s) / 2 - bx0 * s
+    ty = (size - H * s) / 2 + by1 * s
+    g = (f'<g transform="rotate({angle} {size/2} {size/2})"><g transform="translate({tx:.2f} {ty:.2f}) scale({s:.5f} {-s:.5f})">{inner}</g></g>')
+    back = ''
+    if bg:
+        back = ('<defs><radialGradient id="bg" cx=".5" cy=".5" r=".62"><stop offset="0" stop-color="#2b140a"/>'
+                '<stop offset=".45" stop-color="#140b07"/><stop offset="1" stop-color="#0b0706"/></radialGradient></defs>'
+                f'<rect width="{size}" height="{size}" fill="#0b0706"/><rect width="{size}" height="{size}" fill="url(#bg)"/>')
+        g = ''
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{size}" height="{size}" viewBox="0 0 {size} {size}">{back}{defs}{g}</svg>')
+
+L = OUT + "/layers"; os.makedirs(L, exist_ok=True)
+open(f"{L}/00_fundo.svg", "w").write(layer_svg("", bg=True))
+for k in range(N, 0, -1):
+    dx, dy = -k * step, -k * step
+    inner = f'<g transform="translate({dx:.1f} {dy:.1f})" fill="{RAMP[k-1]}"><path d="{d_text}"/>{pumpkin_sil(RAMP[k-1])}</g>'
+    open(f"{L}/{13-k:02d}_extrusao_{k:02d}.svg", "w").write(layer_svg(inner))
+open(f"{L}/13_letras_osso.svg", "w").write(layer_svg(f'<path d="{d_text}" fill="{FACE}"/>'))
+open(f"{L}/14_brilho_abobora.svg", "w").write(layer_svg(aura))
+open(f"{L}/15_abobora.svg", "w").write(layer_svg(pumpkin_face()))
