@@ -11,7 +11,7 @@
   /* ---------- coming soon: lanterna + falha de luz ----------
      A tela fica no breu e a "lanterna" acompanha o mouse (ou o dedo). Dentro do facho
      aparecem frases escritas na parede. Sem mouse, a luz vagueia sozinha.
-     De tempos em tempos a logo pisca, como uma lâmpada falhando. */
+     A cada 10 s a logo pisca, como uma lâmpada falhando. */
   if (document.body.classList.contains("soon")) setupSoon();
 
   function setupSoon() {
@@ -52,15 +52,14 @@
     };
     requestAnimationFrame(tick);
 
-    // falha de luz na logo, em intervalos irregulares
+    // falha de luz na logo: pisca a cada 10 s
     const logo = $(".hero__stack");
     const flicker = () => {
       logo.classList.remove("is-flicker");
       void logo.offsetWidth;
       logo.classList.add("is-flicker");
-      setTimeout(flicker, 4000 + Math.random() * 7000);
     };
-    setTimeout(flicker, 2500);
+    setInterval(flicker, 10000);
   }
 
   /* ---------- logo viva ----------
