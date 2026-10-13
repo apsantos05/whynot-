@@ -2,6 +2,10 @@
    why not? — EDITE AQUI
    ============================================================ */
 window.WHYNOT = {
+  // Grupo VIP no WhatsApp (botão "Entrar no grupo VIP" da página inicial).
+  // Enquanto o link estiver vazio, o botão não aparece.
+  grupo: "",
+
   // Camarotes e lounges (página camarotes.html): cada espaço do mapa abre o WhatsApp
   // com uma mensagem pronta. {espaco} vira "Camarote 01", "Lounge 04" etc.
   camarotes: {

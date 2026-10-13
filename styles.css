@@ -437,3 +437,12 @@ body.soon .hero__stack { color: var(--bone); }
   .bat { translate: 70vw 0; }
   .hw__bats .bat:not(:first-child) { display: none; }
 }
+
+/* botão do grupo VIP: osso com extrusão em brasa, no tom da logo */
+.soon__copy .btn { margin-top: clamp(20px, 3.5vh, 32px); }
+.btn.btn--ember {
+  background: var(--bone); color: var(--void);
+  box-shadow: -2px 2px 0 #b04a1a, -4px 4px 0 #3a1206, 0 0 32px rgb(196 82 28 / .25);
+}
+.btn.btn--ember:hover { box-shadow: -3px 3px 0 #b04a1a, -6px 6px 0 #3a1206, 0 0 40px rgb(196 82 28 / .4); }
+.btn.btn--ember:active { box-shadow: 0 0 0 #b04a1a; }

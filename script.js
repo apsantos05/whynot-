@@ -8,6 +8,10 @@
   $$('[data-bind="instagramHandle"]').forEach((el) => { el.textContent = C.instagramHandle; });
   $$('[data-href="instagram"]').forEach((el) => { el.href = C.instagram; });
 
+  // botão do grupo VIP: só aparece quando o link está preenchido no config
+  const grupoBtn = $("#grupo-btn");
+  if (grupoBtn && C.grupo) { grupoBtn.href = C.grupo; grupoBtn.hidden = false; }
+
   /* ---------- coming soon: lanterna + falha de luz ----------
      A tela fica no breu e a "lanterna" acompanha o mouse (ou o dedo). Dentro do facho
      aparecem frases escritas na parede. Sem mouse, a luz vagueia sozinha.
