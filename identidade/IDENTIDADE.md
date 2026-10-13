@@ -60,6 +60,10 @@ Versão 1.0 · outubro de 2026 · edição 01 (sexta, 09.10, Bally Club)
 
 Arquivo do logo original: `assets/logo/logo-why-not.png` (1080×1080, fundo preto).
 
+### Variação Halloween ("osso/brasa")
+Mesmo wordmark e mesma extrusão em 12 degraus, só muda o tom: letra cor de **osso** `#efe4d0`, extrusão em **brasa** (`#e6c9a3` → `#1a0e08`), fundo `#0b0706` com brilho `#2b140a`. O único detalhe temático é o **pingo do "?" trocado por uma abóbora acesa**, também extrudada. Usar só em peças de Halloween.
+Arquivos: `assets/logo/halloween/` (SVG vetorial transparente, SVG/PNG 1080×1080 com fundo, PNG transparente 3200 px). Gerador: `ferramentas/logo_halloween.py`.
+
 ---
 
 ## 4. Cores
