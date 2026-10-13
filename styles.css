@@ -392,24 +392,31 @@ body.soon .hero__stack { color: var(--bone); }
 .pk--b { left: clamp(78px, 15vw, 250px); width: clamp(54px, 8vw, 110px); aspect-ratio: 200 / 180; rotate: 8deg; }
 .pk--c { right: clamp(8px, 5vw, 80px); width: clamp(80px, 13vw, 170px); aspect-ratio: 200 / 180; rotate: 4deg; }
 /* entrada: ao abrir o site, cada abóbora brota do chão (uma de cada vez)
-   e só depois a vela acende lá dentro */
-.pk { animation: pk-rise 1.1s cubic-bezier(.3, 1.5, .5, 1) var(--in) backwards; }
-.pk--a { --in: .5s; }
-.pk--b { --in: .85s; }
-.pk--c { --in: 1.2s; }
+   e só depois a vela acende lá dentro. O script põe .pk-in no body quando a
+   página está de fato visível, então a pessoa sempre vê a entrada. */
+.pk--a { --in: .2s; }
+.pk--b { --in: .55s; }
+.pk--c { --in: .9s; }
+.js body:not(.pk-in) .pk { opacity: 0; transform: translateY(110%); }
+.js body:not(.pk-in) .pk .pk-fire { opacity: 0; }
+.pk-in .pk { animation: pk-rise 1.1s cubic-bezier(.3, 1.5, .5, 1) var(--in) backwards; }
 @keyframes pk-rise {
   0%   { transform: translateY(110%) scale(.7, 1.15); opacity: 0; }
   55%  { opacity: 1; }
   70%  { transform: translateY(-6%) scale(1.06, .94); }
   100% { transform: none; }
 }
-.pk .pk-fire {
+.pk .pk-fire { animation: candle 1.6s steps(1, end) infinite; }
+.pk-in .pk .pk-fire {
   animation:
     pk-light .5s ease-out calc(var(--in) + .9s) backwards,
     candle 1.6s steps(1, end) calc(var(--in) + 1.4s) infinite;
 }
-.pk--b .pk-fire { animation-duration: .5s, 2.1s; }
-.pk--c .pk-fire { animation-duration: .5s, 1.9s; }
+.pk--b .pk-fire { animation-duration: 2.1s; }
+.pk--c .pk-fire { animation-duration: 1.9s; }
+.pk-in .pk--b .pk-fire { animation-duration: .5s, 2.1s; }
+.pk-in .pk--c .pk-fire { animation-duration: .5s, 1.9s; }
+@keyframes pk-fade { from { opacity: 0; } }
 @keyframes pk-light {
   0% { opacity: 0; } 30% { opacity: .9; } 45% { opacity: .2; } 100% { opacity: 1; }
 }
@@ -422,7 +429,10 @@ body.soon .hero__stack { color: var(--bone); }
 @media (max-width: 480px) { .pk--b { display: none; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .hw__spider, .bat, .pk, .pk .pk-fire { animation: none; }
+  .hw__spider, .bat, .pk .pk-fire, .pk-in .pk .pk-fire { animation: none; }
+  /* sem movimento: as abóboras só acendem devagar no lugar */
+  .js body:not(.pk-in) .pk { transform: none; }
+  .pk-in .pk { animation: pk-fade 1s ease var(--in) backwards; }
   .hw__spider { translate: 0 80px; }
   .bat { translate: 70vw 0; }
   .hw__bats .bat:not(:first-child) { display: none; }

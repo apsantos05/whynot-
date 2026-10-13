@@ -15,6 +15,7 @@
   if (document.body.classList.contains("soon")) setupSoon();
 
   function setupSoon() {
+    pumpkinsIn();
     const root = document.body.style;
     const radius = () => Math.max(130, Math.min(innerWidth, innerHeight) * 0.24);
     let tx = innerWidth / 2, ty = innerHeight * 0.45, x = tx, y = ty, r = radius();
@@ -60,6 +61,29 @@
       logo.classList.add("is-flicker");
     };
     setInterval(flicker, 10000);
+  }
+
+  /* ---------- abóboras: entrada ----------
+     A entrada só começa quando a página está visível e as fontes carregaram
+     (ou depois de 1,2 s, o que vier antes). Também repete quando a pessoa
+     volta pro site pelo botão "voltar" do navegador. */
+  function pumpkinsIn() {
+    const body = document.body;
+    const go = () => {
+      if (document.hidden) {
+        document.addEventListener("visibilitychange", go, { once: true });
+        return;
+      }
+      body.classList.remove("pk-in");
+      void body.offsetWidth;
+      body.classList.add("pk-in");
+    };
+    const ready = Promise.race([
+      document.fonts ? document.fonts.ready : Promise.resolve(),
+      new Promise((r) => setTimeout(r, 1200)),
+    ]);
+    ready.then(() => requestAnimationFrame(go));
+    addEventListener("pageshow", (e) => { if (e.persisted) go(); });
   }
 
   /* ---------- logo viva ----------
