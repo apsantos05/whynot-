@@ -1,4 +1,5 @@
-"""Gera o logo why not? Halloween (osso/brasa) como SVG vetorial."""
+"""Gera o logo why not? Halloween (osso/brasa) como SVG vetorial: abóbora acesa no lugar do "o".
+Uso: python3 logo_halloween.py <Fraunces variável .ttf/.woff2> <pasta de saída>"""
 import sys, re
 from fontTools.ttLib import TTFont
 from fontTools.varLib.instancer import instantiateVariableFont
@@ -49,12 +50,12 @@ x = 0; parts = []; dot = None; BBL = []
 for info, pos in zip(buf.glyph_infos, buf.glyph_positions):
     g = order[info.codepoint]
     cs = contours(g)
-    if g == "question":
-        # o pingo é o contorno mais baixo
-        lows = sorted(cs, key=lambda c: bounds(c)[1])
-        dotc = lows[0]
-        b = bounds(dotc); dot = ((b[0] + b[2]) / 2 + x, (b[1] + b[3]) / 2, b[2] - b[0])
-        cs = [c for c in cs if c is not dotc]
+    if g == "o":
+        # a abóbora entra no lugar do "o"
+        ob = bounds([op for c in cs for op in c])
+        dot = (ob[0] + x, ob[1], ob[2] - ob[0], ob[3] - ob[1])
+        x += pos.x_advance
+        continue
     for c in cs:
         parts.append(to_d(c, x + pos.x_offset))
         bb = bounds(c)
@@ -78,8 +79,10 @@ RAMP = ["#e6c9a3", "#e0b07e", "#d8975f", "#cc7f47", "#bb6a37", "#a4572c",
 step = upem / 80.0
 N = len(RAMP)
 
-cx, cy, dw = dot
-R = dw * 0.84  # raio aproximado da abóbora (maior que o pingo)
+ox0, oy0, ow, oh = dot
+R = ow * 1.1 / 2.08          # largura da abóbora ≈ largura do "o" (um pouco maior)
+cx = ox0 + ow / 2
+cy = oy0 - ow * 0.02 + 0.9 * R  # assenta na linha de base
 
 def pumpkin_sil(fill):
     # silhueta: três gomos + cabo (coordenadas em unidades de fonte, y para cima → invertido depois)
@@ -94,7 +97,7 @@ def pumpkin_face():
              f'<ellipse cx="{cx + r*0.42:.1f}" cy="{cy:.1f}" rx="{r*0.62:.1f}" ry="{r*0.84:.1f}" fill="url(#gomo)"/>'
              f'<ellipse cx="{cx:.1f}" cy="{cy:.1f}" rx="{r*0.6:.1f}" ry="{r*0.9:.1f}" fill="url(#gomoc)"/>')
     stem = (f'<path d="M{cx - r*0.12:.1f} {cy + r*0.8:.1f} L{cx - r*0.06:.1f} {cy + r*1.22:.1f} '
-            f'L{cx + r*0.2:.1f} {cy + r*1.3:.1f} L{cx + r*0.14:.1f} {cy + r*0.8:.1f} Z" fill="#3a2a16"/>')
+            f'L{cx + r*0.2:.1f} {cy + r*1.3:.1f} L{cx + r*0.14:.1f} {cy + r*0.8:.1f} Z" fill="#6b5a2e"/>')
     # olhos triangulares e boca serrilhada (y para cima)
     eyes = (f'<path d="M{cx - r*0.46:.1f} {cy + r*0.12:.1f} L{cx - r*0.12:.1f} {cy + r*0.12:.1f} L{cx - r*0.29:.1f} {cy + r*0.44:.1f} Z" fill="url(#luz)"/>'
             f'<path d="M{cx + r*0.12:.1f} {cy + r*0.12:.1f} L{cx + r*0.46:.1f} {cy + r*0.12:.1f} L{cx + r*0.29:.1f} {cy + r*0.44:.1f} Z" fill="url(#luz)"/>')
@@ -119,7 +122,7 @@ layers = []
 for k in range(N, 0, -1):
     dx, dy = -k * step, -k * step  # esquerda e para baixo (y da fonte sobe)
     layers.append(f'<g transform="translate({dx:.1f} {dy:.1f})" fill="{RAMP[k-1]}"><path d="{d_text}"/>{pumpkin_sil(RAMP[k-1])}</g>')
-aura = f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{R*2.6:.1f}" fill="url(#aura)"/>'
+aura = f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{R*2.0:.1f}" fill="url(#aura)"/>'
 front = f'<path d="{d_text}" fill="{FACE}"/>' + aura + pumpkin_face()
 body = "".join(layers) + front
 
