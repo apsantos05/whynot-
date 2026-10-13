@@ -1,0 +1,161 @@
+"""why not? · no one leaves — peças de teaser em camadas (SVG por camada -> PNG -> PSD).
+Uso: python3 build.py <pasta fontes> <pasta logo/layers> <saida>"""
+import sys, os, json, asyncio, base64
+from playwright.async_api import async_playwright
+
+FONTS, LOGO, OUT = sys.argv[1:4]
+os.makedirs(OUT, exist_ok=True)
+
+def b64(p): return base64.b64encode(open(p, "rb").read()).decode()
+FACES = f"""<style>
+@font-face{{font-family:'FrauncesV';font-style:italic;font-weight:100 900;src:url(data:font/woff2;base64,{b64(FONTS+'/fs/package/files/fraunces-latin-full-italic.woff2')}) format('woff2')}}
+@font-face{{font-family:'FrauncesV';font-style:normal;font-weight:100 900;src:url(data:font/woff2;base64,{b64(FONTS+'/fs/package/files/fraunces-latin-full-normal.woff2')}) format('woff2')}}
+@font-face{{font-family:'SpaceMono';font-weight:400;src:url(data:font/woff2;base64,{b64(FONTS+'/sm/package/files/space-mono-latin-400-normal.woff2')}) format('woff2')}}
+@font-face{{font-family:'SpaceMono';font-weight:700;src:url(data:font/woff2;base64,{b64(FONTS+'/sm/package/files/space-mono-latin-700-normal.woff2')}) format('woff2')}}
+</style>"""
+
+OSSO, MEDIO, BASE = "#efe4d0", "#c4a582", "#0b0706"
+
+def svg(w, h, inner, defs=""):
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}">'
+            f'<defs>{defs}</defs>{FACES}{inner}</svg>')
+
+def bg(w, h, gx, gy, r):
+    d = (f'<radialGradient id="g" gradientUnits="userSpaceOnUse" cx="{gx}" cy="{gy}" r="{r}">'
+         '<stop offset="0" stop-color="#2e160a"/><stop offset=".45" stop-color="#150b07"/><stop offset="1" stop-color="#0b0706"/></radialGradient>')
+    return svg(w, h, f'<rect width="{w}" height="{h}" fill="{BASE}"/><rect width="{w}" height="{h}" fill="url(#g)"/>', d)
+
+def nevoa(w, h, y):
+    d = '<filter id="b" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="60"/></filter>'
+    els = "".join(f'<ellipse cx="{cx}" cy="{y+dy}" rx="{rx}" ry="{ry}" fill="#efe4d0" opacity="{o}"/>'
+                  for cx, dy, rx, ry, o in [(w*.2, 0, 380, 70, .05), (w*.62, 30, 460, 80, .06), (w*.9, -20, 300, 60, .04), (w*.4, 60, 420, 60, .05)])
+    return svg(w, h, f'<g filter="url(#b)">{els}</g>', d)
+
+def vela(w, h, cx, top, alt=210):
+    """vela fina cor de osso com chama e halo de brasa (topo da vela = top)."""
+    d = ('<radialGradient id="halo"><stop offset="0" stop-color="#ffb35c" stop-opacity=".42"/>'
+         '<stop offset=".35" stop-color="#e0782c" stop-opacity=".14"/><stop offset="1" stop-color="#e0782c" stop-opacity="0"/></radialGradient>'
+         '<linearGradient id="chama" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff4d6"/>'
+         '<stop offset=".5" stop-color="#ffc861"/><stop offset="1" stop-color="#e9792b"/></linearGradient>'
+         '<linearGradient id="cera" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#bfae92"/>'
+         '<stop offset=".45" stop-color="#efe4d0"/><stop offset="1" stop-color="#8f7d62"/></linearGradient>'
+         '<linearGradient id="sombra" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b0706" stop-opacity="0"/>'
+         '<stop offset="1" stop-color="#0b0706" stop-opacity=".9"/></linearGradient>'
+         '<filter id="bl"><feGaussianBlur stdDeviation="2.5"/></filter>')
+    cw = 34
+    inner = (f'<circle cx="{cx}" cy="{top-38}" r="300" fill="url(#halo)"/>'
+             f'<rect x="{cx-cw/2}" y="{top}" width="{cw}" height="{alt}" rx="3" fill="url(#cera)"/>'
+             f'<path d="M{cx-cw/2} {top+4} q6 14 2 30 q-1 6 3 4 q4 -10 1 -30 z" fill="#efe4d0" opacity=".9"/>'
+             f'<rect x="{cx-cw/2}" y="{top+alt*.45}" width="{cw}" height="{alt*.55}" fill="url(#sombra)"/>'
+             f'<line x1="{cx}" y1="{top}" x2="{cx+1}" y2="{top-12}" stroke="#2a1a10" stroke-width="2.5"/>'
+             f'<path d="M{cx} {top-92} C{cx+16} {top-58} {cx+17} {top-32} {cx} {top-12} C{cx-17} {top-32} {cx-14} {top-58} {cx} {top-92} Z" fill="url(#chama)" filter="url(#bl)"/>'
+             f'<ellipse cx="{cx}" cy="{top-30}" rx="5" ry="11" fill="#fff8e8" opacity=".9"/>')
+    return svg(w, h, inner, d)
+
+def grao(w, h):
+    d = '<filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>'
+    return svg(w, h, f'<rect width="{w}" height="{h}" filter="url(#n)" opacity=".07"/>', d)
+
+def img(w, h, href, x, y, iw, ih):
+    return svg(w, h, f'<image href="data:image/png;base64,{b64(href)}" x="{x}" y="{y}" width="{iw}" height="{ih}"/>')
+
+def texto(w, h, s, x, y, size, family, color, weight=400, italic=False, anchor="middle", ls=0, caps=False):
+    st = f"font-family:{family};font-size:{size}px;font-weight:{weight};{'font-style:italic;' if italic else ''}letter-spacing:{ls}em"
+    return svg(w, h, f'<text x="{x}" y="{y}" fill="{color}" text-anchor="{anchor}" style="{st}">{s}</text>')
+
+# ---------- documentos (coordenadas em 1x; render em 2x) ----------
+LOGO_RETO = OUT + "/_logo_reto.png"
+LOGO_INCL = os.path.dirname(LOGO) + "/composite_inclinado.png"
+
+def T(name, s, x, y, size, fam, color, ps, **k):
+    return {"type": "text", "name": name, "svg": None, "args": (s, x, y, size, fam, color), "kw": k,
+            "meta": {"text": s, "font": ps, "size": size, "color": color, "x": x, "y": y,
+                     "anchor": k.get("anchor", "middle"), "ls": k.get("ls", 0)}}
+
+docs = {}
+W, H = 1080, 1350
+docs["01_feed_no-one-leaves"] = (W, H, [
+    ("Fundo", bg(W, H, 540, 980, 760)),
+    ("Névoa", nevoa(W, H, 1150)),
+    ("Vela", vela(W, H, 540, 930)),
+    ("Logo why not? Halloween", "LOGO_RETO:390:150:300"),
+    T("Título · no one leaves.", "no one leaves.", 540, 640, 132, "FrauncesV", OSSO, "Fraunces-Italic", italic=True, weight=400),
+    T("Info · data", "31.10 — LOCAL EM BREVE", 540, 1262, 26, "SpaceMono", MEDIO, "SpaceMono-Bold", weight=700, ls=.24),
+    ("Grão", grao(W, H)),
+])
+W, H = 1080, 1920
+docs["02_story_quem-entra-fica"] = (W, H, [
+    ("Fundo", bg(W, H, 540, 1250, 900)),
+    ("Névoa", nevoa(W, H, 1500)),
+    ("Vela", vela(W, H, 540, 1200, 240)),
+    T("Topo · why not? halloween", "WHY NOT? · HALLOWEEN", 540, 290, 30, "SpaceMono", MEDIO, "SpaceMono-Bold", weight=700, ls=.24),
+    T("Frase · linha 1", "quem entra,", 540, 700, 150, "FrauncesV", OSSO, "Fraunces-Italic", italic=True),
+    T("Frase · linha 2", "fica.", 540, 860, 150, "FrauncesV", OSSO, "Fraunces-Italic", italic=True),
+    T("Assinatura · no one leaves", "no one leaves. · 31.10", 540, 1580, 44, "FrauncesV", MEDIO, "Fraunces-Italic", italic=True),
+    ("Grão", grao(W, H)),
+])
+W, H = 1080, 1080
+docs["00_lockup_no-one-leaves"] = (W, H, [
+    ("Fundo", bg(W, H, 540, 540, 700)),
+    ("Logo why not? Halloween (inclinado)", "LOGO_INCL:0:-60:1080"),
+    T("Nome · no one leaves.", "no one leaves.", 540, 790, 92, "FrauncesV", OSSO, "Fraunces-Italic", italic=True),
+    T("Info · 31.10", "31.10", 540, 870, 30, "SpaceMono", MEDIO, "SpaceMono-Bold", weight=700, ls=.3),
+])
+
+async def render(jobs):
+    async with async_playwright() as p:
+        b = await p.chromium.launch(); pg = await b.new_page(device_scale_factor=2)
+        for src, dst in jobs:
+            open(dst[:-4] + ".svg", "w").write(src)
+            await pg.goto("file://" + dst[:-4] + ".svg")
+            await pg.wait_for_timeout(150)
+            el = await pg.query_selector("svg")
+            await el.screenshot(path=dst, omit_background=True)
+            os.remove(dst[:-4] + ".svg")
+        await b.close()
+
+# logo reto: recorta o PNG transparente existente
+from PIL import Image
+lg = Image.open(os.path.dirname(LOGO) + "/logo-why-not-halloween.png"); lg.save(LOGO_RETO)
+
+jobs, manifest = [], {}
+for doc, (w, h, layers) in docs.items():
+    d = f"{OUT}/{doc}"; os.makedirs(d, exist_ok=True)
+    man = {"width": w * 2, "height": h * 2, "layers": []}
+    for i, L in enumerate(layers):
+        if isinstance(L, dict):
+            a, k = L["args"], L["kw"]
+            src = texto(w, h, *a, **k)
+            f = f"{d}/{i:02d}.png"; jobs.append((src, f))
+            m = dict(L["meta"]); m["x"] *= 2; m["y"] *= 2; m["size"] *= 2
+            man["layers"].append({"name": L["name"], "png": f, "text": m})
+        else:
+            name, src = L
+            if src.startswith("LOGO_"):
+                key, x, y, iw = src.split(":"); x, y, iw = float(x), float(y), float(iw)
+                path = LOGO_RETO if key == "LOGO_RETO" else LOGO_INCL
+                im = Image.open(path); ih = iw * im.height / im.width
+                if key == "LOGO_INCL":  # composite tem fundo: usa só camadas sem fundo
+                    path = OUT + "/_logo_incl_sem_fundo.png"
+                    if not os.path.exists(path):
+                        import glob
+                        fs = sorted(glob.glob(LOGO + "/*.png"))[1:]
+                        c = Image.open(fs[0]).convert("RGBA")
+                        for f2 in fs[1:]: c = Image.alpha_composite(c, Image.open(f2).convert("RGBA"))
+                        c.save(path)
+                src = img(w, h, path, x, y, iw, ih)
+            f = f"{d}/{i:02d}.png"; jobs.append((src, f))
+            man["layers"].append({"name": name, "png": f, "blend": "screen" if name in ("Névoa",) else None})
+    manifest[doc] = man
+
+asyncio.run(render(jobs))
+# prévia composta
+for doc, man in manifest.items():
+    c = None
+    for L in man["layers"]:
+        im = Image.open(L["png"]).convert("RGBA")
+        c = im if c is None else Image.alpha_composite(c, im)
+    c.save(f"{OUT}/{doc}/_composite.png")
+    c.resize((man["width"] // 2, man["height"] // 2)).save(f"{OUT}/{doc}.png")
+json.dump(manifest, open(OUT + "/manifest.json", "w"), ensure_ascii=False, indent=1)
+print("ok", list(manifest))
