@@ -14,3 +14,6 @@ Festa de Halloween da why not?: noite black tie com fantasia, iluminada por vela
 | `teaser/00_lockup_no-one-leaves.psd` | 1080×1080 | Logo + nome |
 | `teaser/01_feed_no-one-leaves.psd` | 1080×1350 | Mistério (local em breve) |
 | `teaser/02_story_quem-entra-fica.psd` | 1080×1920 | Mistério |
+
+## Modelos para foto real (`modelos-com-foto/`)
+PSDs prontos para receber foto: arraste a foto para cima da camada **FOTO AQUI**. Acima dela já estão o escurecimento de topo e base (para o texto ler), a vinheta e o **Tom brasa** (camada de cor a 40%, que deixa qualquer foto no clima preto/osso/brasa). Ajuste a opacidade do tom a gosto. Grão: se quiser, Filtro › Ruído › Adicionar ruído (2–3%, monocromático) numa camada cinza em Sobrepor.

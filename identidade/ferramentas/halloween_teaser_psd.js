@@ -9,6 +9,7 @@ for (const [doc, m] of Object.entries(man)) {
   const children = m.layers.map(L => {
     const layer = { name: L.name, imageData: load(L.png), left: 0, top: 0 };
     if (L.blend) layer.blendMode = L.blend;
+    if (L.opacity != null && L.opacity !== 1) layer.opacity = L.opacity;
     if (L.text) {
       const t = L.text;
       layer.text = {
