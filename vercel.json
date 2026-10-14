@@ -26,6 +26,10 @@
       "destination": "https://whynotcrm.vercel.app/minha-conta/:path*"
     },
     {
+      "source": "/api/conta",
+      "destination": "https://whynotcrm.vercel.app/api/conta"
+    },
+    {
       "source": "/api/checkout",
       "destination": "https://whynotcrm.vercel.app/api/checkout"
     },
