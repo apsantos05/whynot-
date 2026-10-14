@@ -31,7 +31,7 @@
       for (const f of festas) {
         const a = document.createElement("a");
         a.className = "btn btn--ember";
-        a.href = f.url;
+        a.href = `/ingressos/${encodeURIComponent(f.ref)}`; // a página de vendas fica neste domínio (vercel.json repassa para o CRM)
         a.textContent = varias ? `Ingresso · ${f.nome}${f.data ? ` · ${dia(f.data)}` : ""}` : "Comprar ingresso";
         ingressos.append(a);
       }
