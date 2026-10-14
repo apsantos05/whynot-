@@ -115,6 +115,20 @@ def foto_layer(w, h, photo, s, px, py, name):
     c.alpha_composite(Image.fromarray(rgba, "RGBA"), (int(px*2), int(py*2)))
     p = f"{OUT}/_{name}.png"; c.save(p); return p
 
+
+PK = "/tmp/claude-0/-home-claude-whynot-/85f2d3d2-8d73-51f7-b638-521bd0946f03/scratchpad/hwf/photo-1633977334114-3c912e72daef.png"
+def abobora(w, h, cx, cy, width, blur, bright, name):
+    im = Image.open(PK).convert("RGB").crop((215, 400, 625, 730))
+    im = im.point(lambda v: v*bright)
+    sc = width*2/im.width; im = im.resize((int(im.width*sc), int(im.height*sc)), Image.LANCZOS)
+    if blur: im = im.filter(ImageFilter.GaussianBlur(blur*2))
+    iw, ih = im.size; yy, xx = np.mgrid[0:ih, 0:iw]
+    d = np.sqrt(((xx-iw/2)/(iw*.46))**2 + ((yy-ih*.53)/(ih*.47))**2)
+    a = np.clip((1-d)/.35, 0, 1)
+    rgba = np.dstack([np.asarray(im), (a*255).astype(np.uint8)])
+    c = Image.new("RGBA", (w*2, h*2), (0,0,0,0))
+    c.alpha_composite(Image.fromarray(rgba, "RGBA"), (int(cx*2-iw/2), int(cy*2-ih/2)))
+    p = f"{OUT}/_{name}.png"; c.save(p); return p
 PH = "/tmp/claude-0/-home-claude-whynot-/85f2d3d2-8d73-51f7-b638-521bd0946f03/scratchpad/hwf/photo-1640085461451-e3dc47415dd1.png"
 docs = {}
 W, H = 1080, 1350
@@ -123,12 +137,14 @@ FP = foto_layer(W, H, PH, s, (W-774*s)/2, 205-275*s, "foto_feed")
 docs["1410_no-one-leaves_feed"] = (W, H, [
     ("Fundo", bg(W, H, 540, 380, 700)),
     ("FOTO · vela (lhon karwan / Unsplash)", "IMG:" + FP),
+    ("Abóbora longe (no escuro)", "IMG:" + abobora(1080, 1350, 870, 800, 200, 1.5, .42, "ab_longe_feed")),
+    ("Abóbora perto (desfocada)", "IMG:" + abobora(1080, 1350, 150, 940, 470, 5, .58, "ab_perto_feed")),
     ("Escurecer topo e base (leitura do texto)", escurecer(W, H, .22, .30)),
     ("Vinheta", vinheta(W, H)),
     ("Tom brasa (cor · 40%)", tom(W, H)),
     ("Logo why not? Halloween", "LOGO_RETO:430:60:220"),
     T("Título · no one leaves.", "no one leaves.", 540, 1180, 128, "FrauncesV", OSSO, "Fraunces-Italic", italic=True),
-    T("Info · data", "31.10 — LOCAL EM BREVE", 540, 1272, 26, "SpaceMono", MEDIO, "SpaceMono-Bold", weight=700, ls=.24),
+    T("Info · data", "COMING SOON", 540, 1272, 28, "SpaceMono", MEDIO, "SpaceMono-Bold", weight=700, ls=.42),
     ("Grão", grao(W, H)),
 ])
 W, H = 1080, 1920
@@ -137,12 +153,14 @@ FP2 = foto_layer(W, H, PH, s, (W-774*s)/2, 360-275*s, "foto_story")
 docs["1410_no-one-leaves_story"] = (W, H, [
     ("Fundo", bg(W, H, 540, 560, 900)),
     ("FOTO · vela (lhon karwan / Unsplash)", "IMG:" + FP2),
+    ("Abóbora longe (no escuro)", "IMG:" + abobora(1080, 1920, 880, 1120, 220, 1.5, .42, "ab_longe_story")),
+    ("Abóbora perto (desfocada)", "IMG:" + abobora(1080, 1920, 150, 1250, 560, 5, .58, "ab_perto_story")),
     ("Escurecer topo e base (leitura do texto)", escurecer(W, H, .2, .34)),
     ("Vinheta", vinheta(W, H)),
     ("Tom brasa (cor · 40%)", tom(W, H)),
     ("Logo why not? Halloween", "LOGO_RETO:420:230:240"),
     T("Título · no one leaves.", "no one leaves.", 540, 1560, 132, "FrauncesV", OSSO, "Fraunces-Italic", italic=True),
-    T("Info · data", "SÁBADO · 31.10 — LOCAL EM BREVE", 540, 1660, 26, "SpaceMono", MEDIO, "SpaceMono-Bold", weight=700, ls=.22),
+    T("Info · data", "COMING SOON", 540, 1660, 28, "SpaceMono", MEDIO, "SpaceMono-Bold", weight=700, ls=.42),
     ("Grão", grao(W, H)),
 ])
 async def render(jobs):
