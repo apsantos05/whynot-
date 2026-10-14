@@ -32,9 +32,10 @@ seq = [
     ('k', 0, 0, 0.60, ''),
     ('k', 0, 0, 4.76, ''),  # fundo do cartão final
 ]
+AUDIO_ONLY = os.environ.get('AUDIO_ONLY') == '1'
 os.makedirs(S + '/seg', exist_ok=True)
 lst = []
-for n, (t, src, ss, d, ex) in enumerate(seq):
+for n, (t, src, ss, d, ex) in enumerate(seq if not AUDIO_ONLY else []):
     out = f'{S}/seg/{n:02d}.mp4'
     if t == 'c':
         run(['ffmpeg', '-v', 'error', '-y', '-ss', str(ss), '-t', str(d), '-i', C[src], '-vf', GRADE + ex,
@@ -45,7 +46,7 @@ for n, (t, src, ss, d, ex) in enumerate(seq):
              '-c:v', 'libx264', '-crf', '14', '-preset', 'fast', '-pix_fmt', 'yuv420p', out])
     lst.append(out)
 open(S + '/seg/list.txt', 'w').write(''.join(f"file '{p}'\n" for p in lst))
-run(['ffmpeg', '-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', S + '/seg/list.txt', '-c', 'copy', S + '/base.mp4'])
+if not AUDIO_ONLY: run(['ffmpeg', '-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', S + '/seg/list.txt', '-c', 'copy', S + '/base.mp4'])
 
 # tempos (cumulativos) para textos e sons
 t = 0; marks = []
@@ -78,8 +79,7 @@ A = [  # (arquivo, inicio, volume, inicio_na_fonte, duracao)
     (R + 'laugh_deep.wav', 7.85, 0.85, 0, 2.6),
     (SND + '2022-04-16 Triple-C THICCC - Heavy Breathing.wav', marks[10] - 0.3, 0.35, 0, 0.9),
     (R + 'blow.wav', marks[11] - 0.12, 1.0, 0, 1.5),
-    (SND + '2023-02-15 Dancing in the Shallows - Reverse Cymbals.wav', None, 0.6, 0, None),
-    (SND + '2022-08-17 Approaching the Crash Site - Boom.wav', END, 0.9, 0, 3.5),
+    (SND + '2022-08-17 Approaching the Crash Site - Boom.wav', END, 1.4, 0, 3.5),  # LP abaixo
     (R + 'laugh_tail.wav', END + 2.2, 0.45, 0, 2.5),
 ]
 def dur(p):
@@ -90,8 +90,9 @@ for k, (p, st, vol, ss, d) in enumerate(A):
     if st is None:  # riser termina no cartão final
         d = min(dur(p), 2.6); ss = max(0, dur(p) - d); st = END - d
     ain += ['-ss', str(ss), '-t', str(d), '-i', p]
-    idx = 6 + k
+    idx = (1 if AUDIO_ONLY else 6) + k
     extra = ',afade=t=out:st=%f:d=1.4' % (TOTAL - 1.6) if k == 0 else ''
+    if st == END and 'Boom' in p: extra = ',lowpass=f=170,lowpass=f=170'
     af.append(f"[{idx}:a]aresample=48000,aformat=channel_layouts=stereo,volume={vol}{extra},adelay={int(st*1000)}|{int(st*1000)}[a{k}]")
 mix = ';'.join(af) + ';' + ''.join(f'[a{k}]' for k in range(len(A))) + \
       f"amix=inputs={len(A)}:normalize=0,alimiter=limit=0.89,loudnorm=I=-14:TP=-1.2,atrim=0:{TOTAL}[aout]"
@@ -101,5 +102,9 @@ cmd = ['ffmpeg', '-v', 'error', '-y', '-i', S + '/base.mp4'] + img(S + '/tx_quem
       ['-filter_complex', vf + ';' + mix, '-map', '[vout]', '-map', '[aout]', '-t', str(TOTAL),
        '-c:v', 'libx264', '-crf', '17', '-preset', 'slow', '-profile:v', 'high', '-pix_fmt', 'yuv420p', '-r', str(FPS),
        '-c:a', 'aac', '-b:a', '256k', '-movflags', '+faststart', S + '/reel_final.mp4']
-run(cmd)
+if AUDIO_ONLY:
+    run(['ffmpeg', '-v', 'error', '-y', '-i', S + '/reel_ig.mp4'] + ain + ['-filter_complex', mix.replace('[%d:a]' % 6, '[%d:a]' % 6),
+         '-map', '0:v', '-map', '[aout]', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '256k', '-movflags', '+faststart', S + '/reel_v2.mp4'])
+else:
+    run(cmd)
 print('ok', S + '/reel_final.mp4')
