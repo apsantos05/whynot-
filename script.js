@@ -12,6 +12,35 @@
   const grupoBtn = $("#grupo-btn");
   if (grupoBtn && C.grupo) { grupoBtn.href = C.grupo; grupoBtn.hidden = false; }
 
+  // botões "Comprar ingresso": um para cada festa em planejamento/confirmada no CRM
+  const ingressos = $("#ingressos");
+  if (ingressos && C.crm) carregarIngressos();
+
+  async function carregarIngressos() {
+    try {
+      const res = await fetch(`${C.crm.replace(/\/$/, "")}/api/festas-publicas`);
+      if (!res.ok) return;
+      const { festas } = await res.json();
+      if (!festas?.length) return;
+      const dia = (iso) => {
+        if (!iso) return "";
+        const [y, m, d] = iso.split("-").map(Number);
+        return new Date(y, m - 1, d).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
+      };
+      const varias = festas.length > 1;
+      for (const f of festas) {
+        const a = document.createElement("a");
+        a.className = "btn btn--ember";
+        a.href = f.url;
+        a.textContent = varias ? `Ingresso · ${f.nome}${f.data ? ` · ${dia(f.data)}` : ""}` : "Comprar ingresso";
+        ingressos.append(a);
+      }
+      ingressos.hidden = false;
+    } catch {
+      // sem conexão com o CRM: o site segue sem o botão
+    }
+  }
+
   /* ---------- coming soon: lanterna + falha de luz ----------
      A tela fica no breu e a "lanterna" acompanha o mouse (ou o dedo). Dentro do facho
      aparecem frases escritas na parede. Sem mouse, a luz vagueia sozinha.

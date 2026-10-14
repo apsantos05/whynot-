@@ -438,6 +438,12 @@ body.soon .hero__stack { color: var(--bone); }
   .hw__bats .bat:not(:first-child) { display: none; }
 }
 
+/* botões da página inicial: ingresso(s) em cima, grupo VIP embaixo */
+.soon__ctas { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: clamp(20px, 3.5vh, 32px); position: relative; z-index: 5; }
+.soon__ctas .btn, .soon__copy .soon__ctas .btn { margin-top: 0; }
+.ingressos { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.ingressos[hidden], .soon__ctas [hidden] { display: none; }
+
 /* botão do grupo VIP: osso com extrusão em brasa, no tom da logo */
 .soon__copy .btn { margin-top: clamp(20px, 3.5vh, 32px); }
 .btn.btn--ember {

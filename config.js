@@ -2,6 +2,10 @@
    why not? — EDITE AQUI
    ============================================================ */
 window.WHYNOT = {
+  // CRM da why not?: o site busca lá as festas em "planejamento" ou "confirmada"
+  // e cria sozinho um botão "Comprar ingresso" para cada uma. Vazio = sem botões.
+  crm: "https://whynotcrm.vercel.app",
+
   // Grupo VIP no WhatsApp (botão "Entrar no grupo VIP" da página inicial).
   // Enquanto o link estiver vazio, o botão não aparece.
   grupo: "https://chat.whatsapp.com/JyuTK7VBfeEC5RWdLkNObn",
