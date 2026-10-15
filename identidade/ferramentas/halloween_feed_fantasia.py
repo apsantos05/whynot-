@@ -24,17 +24,24 @@ ph = ph.crop((cx - cw // 2, 0, cx + cw // 2, 1160)).resize((W, H), Image.LANCZOS
 g = ImageOps.grayscale(ph)
 g = g.point(lambda v: max(0, v - 10) * 1.05)
 ph = ImageOps.colorize(g, black=(9, 6, 5), mid=(122, 86, 58), white=(228, 214, 190), midpoint=118)
+EYE_Y = 720
 K = 0.74  # máscara menor, mais respiro no escuro
 sw, sh = round(W * K), round(H * K); ph = ph.resize((sw, sh), Image.LANCZOS)
 m = Image.new('L', (sw, sh), 0); ImageDraw.Draw(m).ellipse((90, 90, sw - 90, sh - 90), fill=255); m = m.filter(ImageFilter.GaussianBlur(160))
 foto = Image.new('RGBA', (W, H), (0, 0, 0, 0)); fl = ph.convert('RGBA'); fl.putalpha(m)
-foto.alpha_composite(fl, ((W - sw) // 2, 330))
+foto.alpha_composite(fl, ((W - sw) // 2, 420))
 add('FOTO · máscara (Unsplash)', foto)
 
 # brilho brasa atrás da máscara
 gm = Image.new('L', (W, H), 0); ImageDraw.Draw(gm).ellipse((W/2 - 700, 650, W/2 + 600, 1500), fill=120)
 gm = gm.filter(ImageFilter.GaussianBlur(260)); gl = Image.new('RGBA', (W, H), (0, 0, 0, 0)); gl.paste((122, 58, 22, 255), (0, 0), gm)
 add('Brilho brasa (tela)', gl, blend='screen', opacity=0.6)
+
+# olho observando, bem no fundo
+import eye as EYE
+ey = EYE.eye(W=1500, H=480, r_iris=150).filter(ImageFilter.GaussianBlur(5))
+eyl = Image.new('RGBA', (W, H), (0, 0, 0, 0)); eyl.alpha_composite(ey, ((W - 1500) // 2, EYE_Y - 240))
+add('Olho observando (fundo)', eyl, opacity=0.42)
 
 # escurecer base p/ leitura
 gr = Image.linear_gradient('L').resize((W, H)); gr = gr.point(lambda v: 0 if v < 120 else min(255, (v - 120) * 2.2))
@@ -52,10 +59,12 @@ css = (f"@font-face{{font-family:'Fr';font-style:italic;font-weight:100 900;src:
        "html,body{margin:0;width:2160px;height:2700px;background:transparent}"
        ".c{position:absolute;left:0;right:0;text-align:center}")
 LOGO_W, LOGO_Y = 620, 170
-T1_Y, T2_Y, TS = 1820, 2040, 230
+T1_Y, T2_Y, TS = 1840, 2060, 230
+NOL_Y = 372
 INFO_Y, SOON_Y = 2370, 2470
 items = {
     'logo': f"<img src='data:image/png;base64,{b64(SC + '/hwb/out/_logo_reto.png')}' style='position:absolute;left:{(W-LOGO_W)//2}px;top:{LOGO_Y}px;width:{LOGO_W}px'>",
+    'nol': f"<div class=c style=\"top:{NOL_Y}px;font-family:Fr;font-style:italic;font-size:78px;color:#efe4d0;opacity:.9\">no one leaves.</div>",
     't1': f"<div class=c style=\"top:{T1_Y}px;font-family:Fr;font-style:italic;font-size:{TS}px;color:#efe4d0;line-height:1;text-shadow:0 0 40px rgba(196,165,130,.25)\">sem fantasia,</div>",
     't2': f"<div class=c style=\"top:{T2_Y}px;font-family:Fr;font-style:italic;font-size:{TS}px;color:#efe4d0;line-height:1;text-shadow:0 0 40px rgba(196,165,130,.25)\">não entra.</div>",
     'info': f"<div class=c style=\"top:{INFO_Y}px;font-family:SM;font-weight:700;font-size:46px;letter-spacing:.32em;text-indent:.32em;color:#c4a582\">FANTASIA OBRIGATÓRIA · 6 DJS</div>",
@@ -69,6 +78,7 @@ with sync_playwright() as p:
     br.close()
 im = lambda k: Image.open(f'{L}/_{k}.png').convert('RGBA')
 add('Logo why not? halloween', im('logo'))
+add('Slogan · no one leaves.', im('nol'), text={'text': 'no one leaves.', 'font': 'Fraunces-Italic', 'size': 78, 'color': '#efe4d0', 'x': W/2, 'y': NOL_Y + 62, 'ls': 0, 'anchor': 'middle'})
 add('Título · sem fantasia,', im('t1'), text={'text': 'sem fantasia,', 'font': 'Fraunces-Italic', 'size': TS, 'color': '#efe4d0', 'x': W/2, 'y': T1_Y + TS*0.8, 'ls': 0, 'anchor': 'middle'})
 add('Título · não entra.', im('t2'), text={'text': 'não entra.', 'font': 'Fraunces-Italic', 'size': TS, 'color': '#efe4d0', 'x': W/2, 'y': T2_Y + TS*0.8, 'ls': 0, 'anchor': 'middle'})
 add('Info · FANTASIA OBRIGATÓRIA · 6 DJS', im('info'), text={'text': 'FANTASIA OBRIGATÓRIA · 6 DJS', 'font': 'SpaceMono-Bold', 'size': 46, 'color': '#c4a582', 'x': W/2, 'y': INFO_Y + 46, 'ls': .32, 'anchor': 'middle'})
