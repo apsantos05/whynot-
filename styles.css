@@ -546,6 +546,21 @@ body.page-lounges {
 .lg-tip.is-on { opacity: 1; }
 .page-lounges .foot { color: var(--ash); }
 
+/* lounges já reservados: apagados, riscados e sem clique */
+.lg-spot.is-reserved { cursor: not-allowed; }
+.lg-spot.is-reserved rect, .lg-spot.is-reserved circle,
+.lg-spot.is-reserved:hover rect, .lg-spot.is-reserved:hover circle {
+  fill: rgb(233 225 207 / .05); stroke: rgb(233 225 207 / .25); stroke-dasharray: 6 6;
+  filter: none; animation: none;
+}
+.lg-spot.is-reserved text { fill: rgb(233 225 207 / .35); }
+.lg-chip.is-reserved {
+  color: rgb(233 225 207 / .4); cursor: not-allowed; pointer-events: none;
+  box-shadow: inset 0 0 0 1.5px rgb(233 225 207 / .15);
+  text-decoration: line-through; text-decoration-color: rgb(233 225 207 / .4);
+}
+.lg-chip small { margin-left: 6px; font-weight: 500; font-size: .78em; text-decoration: none; display: inline-block; }
+
 /* botão "Reserve seu lounge" na home: contorno em osso com brilho de brasa */
 .btn.btn--outline-ember {
   background: transparent; color: var(--bone);

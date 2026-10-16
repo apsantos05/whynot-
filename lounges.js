@@ -14,8 +14,19 @@
     return `https://wa.me/${cfg.whatsapp}?text=${encodeURIComponent(msg)}`;
   };
 
+  const reservados = new Set((cfg.reservados || []).map((n) => `Lounge ${n}`));
+
   $$("[data-espaco]").forEach((el) => {
     const espaco = el.dataset.espaco;
+    if (reservados.has(espaco)) {
+      // reservado: sem link, apagado e com aviso
+      el.classList.add("is-reserved");
+      el.setAttribute("aria-disabled", "true");
+      el.setAttribute("aria-label", `${espaco} já reservado`);
+      if (el.classList.contains("lg-chip")) el.innerHTML = `${espaco} <small>reservado</small>`;
+      else el.setAttribute("tabindex", "0");   // continua focável no mapa pra mostrar o aviso
+      return;
+    }
     el.setAttribute("href", link(espaco));
     el.setAttribute("aria-label", `Reservar ${espaco} pelo WhatsApp`);
     el.setAttribute("target", "_blank");
@@ -29,7 +40,7 @@
     const shape = spot.querySelector("rect, circle");
     const box = shape.getBoundingClientRect();
     const host = map.getBoundingClientRect();
-    tip.textContent = `${spot.dataset.espaco} · reservar`;
+    tip.textContent = `${spot.dataset.espaco} · ${spot.classList.contains("is-reserved") ? "reservado" : "reservar"}`;
     tip.style.left = `${box.right - host.left + 12}px`;
     tip.style.top = `${box.top - host.top + box.height / 2}px`;
     tip.classList.add("is-on");
