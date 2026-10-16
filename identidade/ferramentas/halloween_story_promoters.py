@@ -13,22 +13,21 @@ def add(name, im, blend=None, opacity=1, text=None):
     if text: d['text'] = text
     layers.append(d)
 add('Fundo', Image.new('RGBA', (W, H), (11, 7, 6, 255)))
-EY = 1250
-gm = Image.new('L', (W, H), 0); ImageDraw.Draw(gm).ellipse((W/2-900, EY-560, W/2+900, EY+560), fill=150); gm = gm.filter(ImageFilter.GaussianBlur(300))
-gl = Image.new('RGBA', (W, H), (0, 0, 0, 0)); gl.paste((122, 58, 22, 255), (0, 0), gm); add('Brilho brasa (tela)', gl, blend='screen', opacity=0.7)
-ey = EYE.eye(W=1900, H=620, r_iris=190).filter(ImageFilter.GaussianBlur(3))
-fm = Image.new('L', ey.size, 0); ImageDraw.Draw(fm).ellipse((60, 120, ey.width-60, ey.height-120), fill=255); fm = fm.filter(ImageFilter.GaussianBlur(95))
-ey.putalpha(ImageChops.multiply(ey.split()[3], fm))
-el = Image.new('RGBA', (W, H), (0, 0, 0, 0)); el.alpha_composite(ey, ((W-1900)//2, EY-310)); add('Olho observando', el, opacity=0.8)
+ph = Image.open(os.path.join(S, 'palhaco_olhos.png')).convert('RGB')
+ph = ph.resize((W, round(ph.height * W / ph.width)), Image.LANCZOS)
+fo = Image.new('RGBA', (W, H), (11, 7, 6, 255)); fo.paste(ph, (0, 0))
+fm = Image.linear_gradient('L').resize((W, H)).point(lambda v: 255 if v < 150 else max(0, 255 - (v - 150) * 6))
+fl = Image.new('RGBA', (W, H), (0, 0, 0, 0)); fl.paste(fo, (0, 0), fm)
+add('FOTO · olhos do palhaço (Higgsfield)', fl)
 vg = Image.new('L', (W, H), 0); ImageDraw.Draw(vg).ellipse((-500, -300, W+500, H+300), fill=255); vg = vg.filter(ImageFilter.GaussianBlur(420))
 add('Vinheta', Image.composite(Image.new('RGBA', (W, H), (255, 255, 255, 255)), Image.new('RGBA', (W, H), (36, 24, 18, 255)), vg), blend='multiply')
 CSS = (f"@font-face{{font-family:'FrV';font-weight:100 900;src:url(data:font/woff2;base64,{b64(F+'/fs/package/files/fraunces-latin-full-normal.woff2')}) format('woff2')}}"
        f"@font-face{{font-family:'Fr';font-style:italic;font-weight:100 900;src:url(data:font/woff2;base64,{b64(F+'/fs/package/files/fraunces-latin-full-italic.woff2')}) format('woff2')}}"
        f"@font-face{{font-family:'SM';font-weight:700;src:url(data:font/woff2;base64,{b64(F+'/sm/package/files/space-mono-latin-700-normal.woff2')}) format('woff2')}}"
        f"html,body{{margin:0;width:{W}px;height:{H}px;background:transparent}}.c{{position:absolute;left:0;right:0;text-align:center}}")
-T = dict(logo_y=300, h1_y=1720, n_y=2000, p_y=2440, info_y=2700, cta_y=2900, foot_y=3230)
+T = dict(logo_y=1640, h1_y=1880, n_y=2080, p_y=2500, info_y=2760, cta_y=2950, foot_y=3290)
 items = {
- 'logo': f"<img src='data:image/png;base64,{b64(O+'/hwb/out/_logo_reto.png')}' style='position:absolute;left:{(W-640)//2}px;top:{T['logo_y']}px;width:640px'>",
+ 'logo': f"<img src='data:image/png;base64,{b64(O+'/hwb/out/_logo_reto.png')}' style='position:absolute;left:{(W-560)//2}px;top:{T['logo_y']}px;width:560px'>",
  'h1': f"<div class=c style=\"top:{T['h1_y']}px;font-family:Fr;font-style:italic;font-size:128px;color:#efe4d0;text-shadow:0 0 40px rgba(196,165,130,.25)\">estamos de olho em você.</div>",
  'n': f"<div class=c style=\"top:{T['n_y']}px;font-family:FrV;font-weight:900;font-variation-settings:'opsz' 144;font-size:440px;line-height:1;color:#efe4d0\">25</div>",
  'p': f"<div class=c style=\"top:{T['p_y']}px;font-family:Fr;font-style:italic;font-size:150px;color:#efe4d0\">promoters.</div>",
