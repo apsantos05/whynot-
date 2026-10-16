@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lounges · why not?</title>
+  <meta name="description" content="Reserve seu lounge na why not? pelo mapa da The Week JK.">
+  <meta property="og:title" content="Reserve seu lounge · why not?">
+  <meta property="og:description" content="Escolha seu lounge no mapa e reserve pelo WhatsApp.">
+  <meta property="og:image" content="assets/logo.jpg">
+  <meta name="theme-color" content="#050404">
+  <link rel="icon" href="assets/logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Hanken+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=37">
+</head>
+<body class="page-lounges">
+  <header class="lg-top">
+    <a href="./" class="lg-top__mark" aria-label="why not? — voltar para o início">why not?</a>
+    <a href="./" class="lg-top__link">Início</a>
+  </header>
+
+  <main class="lg">
+    <div class="lg__intro">
+      <h1 class="lg__title">Reserve seu lounge</h1>
+      <p class="lg__lead">Toque no lounge que você quer no mapa da The Week JK. A conversa abre no WhatsApp com a mensagem pronta, e a gente te passa valores e disponibilidade.</p>
+
+      <div class="lg__chips" role="group" aria-label="Lounges">
+        <a class="lg-chip" data-espaco="Lounge 1">Lounge 1</a>
+        <a class="lg-chip" data-espaco="Lounge 2">Lounge 2</a>
+        <a class="lg-chip" data-espaco="Lounge 3">Lounge 3</a>
+        <a class="lg-chip" data-espaco="Lounge 4">Lounge 4</a>
+        <a class="lg-chip" data-espaco="Lounge 5">Lounge 5</a>
+        <a class="lg-chip" data-espaco="Lounge 6">Lounge 6</a>
+        <a class="lg-chip" data-espaco="Lounge 7">Lounge 7</a>
+      </div>
+    </div>
+
+    <figure class="lg-map">
+      <!-- planta da The Week JK redesenhada (sem escala); só os lounges são clicáveis -->
+      <svg viewBox="0 0 750 1802" role="img" aria-labelledby="lg-map-title">
+        <title id="lg-map-title">Mapa da The Week JK com os lounges 1 a 7</title>
+
+        <!-- contexto (não clicável) -->
+        <g class="lg-ctx">
+          <rect class="lg-ground" x="0" y="0" width="750" height="1802"/>
+
+          <rect class="lg-road" x="0" y="72" width="750" height="133"/>
+          <line class="lg-road__line" x1="0" y1="138" x2="750" y2="138"/>
+          <text class="lg-label lg-label--road" x="375" y="144">Avenida JK</text>
+
+          <rect class="lg-gate" x="350" y="205" width="85" height="127"/>
+          <text class="lg-label lg-label--small" x="392" y="268" transform="rotate(-90 392 268)">Entrada</text>
+
+          <rect class="lg-ext" x="0" y="332" width="750" height="183"/>
+          <text class="lg-label" x="375" y="430">Área externa</text>
+
+          <rect class="lg-room" x="483" y="519" width="267" height="363"/>
+          <text class="lg-label" x="616" y="706">Cozinha</text>
+
+          <rect class="lg-room" x="488" y="895" width="262" height="175"/>
+          <text class="lg-label" x="619" y="988">Banheiros</text>
+
+          <rect class="lg-stage" x="190" y="1254" width="308" height="234" rx="6"/>
+          <text class="lg-label lg-label--stage" x="344" y="1382">Palco</text>
+
+          <line class="lg-door" x1="0" y1="1617" x2="750" y2="1617"/>
+          <rect class="lg-out" x="0" y="1617" width="750" height="185"/>
+          <text class="lg-label" x="375" y="1690">Entrada</text>
+        </g>
+
+        <!-- lounges (clicáveis) -->
+        <g class="lg-spots">
+          <a class="lg-spot" data-espaco="Lounge 1"><rect x="27" y="520" width="150" height="79"/><text x="102" y="568">1</text></a>
+          <a class="lg-spot" data-espaco="Lounge 2"><rect x="27" y="599" width="150" height="77"/><text x="102" y="646">2</text></a>
+          <a class="lg-spot" data-espaco="Lounge 3"><rect x="27" y="676" width="150" height="78"/><text x="102" y="723">3</text></a>
+          <a class="lg-spot" data-espaco="Lounge 4"><rect x="27" y="754" width="150" height="77"/><text x="102" y="801">4</text></a>
+          <a class="lg-spot" data-espaco="Lounge 5"><rect x="27" y="831" width="150" height="77"/><text x="102" y="878">5</text></a>
+          <a class="lg-spot" data-espaco="Lounge 6"><rect x="27" y="908" width="150" height="77"/><text x="102" y="955">6</text></a>
+          <a class="lg-spot" data-espaco="Lounge 7"><circle cx="78" cy="1047" r="54"/><text x="78" y="1056">7</text></a>
+        </g>
+      </svg>
+      <p class="lg-tip" id="lg-tip" aria-hidden="true"></p>
+    </figure>
+  </main>
+
+  <footer class="foot">
+    <a data-href="instagram" data-bind="instagramHandle"></a>
+  </footer>
+
+  <script src="config.js?v=36"></script>
+  <script src="lounges.js?v=36"></script>
+</body>
+</html>

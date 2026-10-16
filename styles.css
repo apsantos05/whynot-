@@ -260,7 +260,7 @@ body.soon {
   --ember:#c4521c;   /* brasa: só em brilho e na extrusão */
   --lx: 50vw; --ly: 45vh; --lr: 190px;   /* posição e raio da lanterna (o script atualiza) */
   background: var(--void); color: var(--bone);
-  min-height: 100svh; overflow: hidden;
+  min-height: 100svh; overflow-x: hidden;
 }
 body.soon .hero__stack { color: var(--bone); }
 
@@ -452,3 +452,103 @@ body.soon .hero__stack { color: var(--bone); }
 }
 .btn.btn--ember:hover { box-shadow: -3px 3px 0 #b04a1a, -6px 6px 0 #3a1206, 0 0 40px rgb(196 82 28 / .4); }
 .btn.btn--ember:active { box-shadow: 0 0 0 #b04a1a; }
+
+/* =====================================================================
+   PÁGINA DE LOUNGES (The Week JK) — mesmo clima escuro da home
+   ===================================================================== */
+body.page-lounges {
+  --void: #050404; --bone: #e9e1cf; --ash: #8d8577; --ember: #c4521c;
+  background:
+    radial-gradient(ellipse 60% 40% at 70% 30%, rgb(196 82 28 / .07), transparent 70%),
+    var(--void);
+  color: var(--bone);
+}
+.lg-top { display: flex; justify-content: space-between; align-items: center; padding: 20px var(--gutter); }
+.lg-top__mark {
+  font-family: var(--serif); font-weight: 900; font-size: var(--step-1); text-decoration: none; color: var(--bone);
+  text-shadow: -1px 1px 0 #b04a1a, -2px 2px 0 #6a240b, -3px 3px 0 #2a0d04;
+}
+.lg-top__link { color: var(--ash); font-size: var(--step--1); }
+.lg-top__link:hover { color: var(--bone); }
+
+.lg {
+  width: min(100%, 1040px); margin: 0 auto; padding: clamp(8px, 3vh, 32px) var(--gutter) 56px;
+  display: grid; gap: 32px; align-items: start;
+}
+@media (min-width: 860px) {
+  .lg { grid-template-columns: 1fr minmax(0, 440px); column-gap: 64px; }
+  .lg__intro { position: sticky; top: 32px; }
+}
+.lg__title {
+  margin: 0 0 14px; font-family: var(--serif); font-weight: 900; letter-spacing: -0.02em;
+  font-size: clamp(2.3rem, 6vw, 4rem); line-height: .98;
+  text-shadow: -1px 1px 0 #d8cdb6, -2px 2px 0 #b04a1a, -3px 3px 0 #8a3510, -4px 4px 0 #5a1d06,
+               -5px 5px 0 #3a1206, -6px 6px 0 #1a0803;
+}
+.lg__lead { margin: 0 0 26px; color: var(--ash); font-size: var(--step-1); line-height: 1.45; max-width: 30rem; }
+.lg__chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.lg-chip {
+  display: inline-flex; padding: 12px 18px; border-radius: 999px; text-decoration: none;
+  color: var(--bone); font-weight: 700;
+  box-shadow: inset 0 0 0 1.5px rgb(196 82 28 / .7);
+  transition: background .15s, box-shadow .15s;
+}
+.lg-chip:hover, .lg-chip:focus-visible { background: rgb(196 82 28 / .18); box-shadow: inset 0 0 0 1.5px var(--ember), 0 0 24px rgb(196 82 28 / .3); }
+
+/* mapa */
+.lg-map { position: relative; margin: 0; }
+.lg-map svg { display: block; width: 100%; height: auto; }
+.lg-ground { fill: #0b0807; stroke: rgb(233 225 207 / .18); stroke-width: 2; }
+.lg-road { fill: #151010; }
+.lg-road__line { stroke: rgb(233 225 207 / .35); stroke-width: 4; stroke-dasharray: 34 26; }
+.lg-gate { fill: #1b1412; stroke: rgb(233 225 207 / .25); stroke-width: 2; }
+.lg-ext { fill: rgb(233 225 207 / .04); stroke: rgb(233 225 207 / .22); stroke-width: 2; }
+.lg-room { fill: rgb(233 225 207 / .035); stroke: rgb(233 225 207 / .28); stroke-width: 2.5; }
+.lg-stage { fill: rgb(233 225 207 / .06); stroke: rgb(233 225 207 / .55); stroke-width: 5; }
+.lg-door { stroke: rgb(233 225 207 / .45); stroke-width: 5; }
+.lg-out { fill: #151010; }
+.lg-label {
+  font-family: var(--sans); font-weight: 700; font-size: 22px; letter-spacing: .02em;
+  fill: rgb(233 225 207 / .5); text-anchor: middle; pointer-events: none;
+}
+.lg-label--road { fill: rgb(233 225 207 / .7); paint-order: stroke; stroke: #151010; stroke-width: 18px; }
+.lg-label--small { font-size: 18px; }
+.lg-label--stage { font-family: var(--serif); font-weight: 900; font-size: 44px; fill: rgb(233 225 207 / .75); }
+
+.lg-spot { cursor: pointer; outline: none; }
+.lg-spot rect, .lg-spot circle {
+  fill: rgb(196 82 28 / .2); stroke: var(--ember); stroke-width: 4;
+  transition: fill .2s, filter .2s;
+}
+.lg-spot text {
+  font-family: var(--serif); font-weight: 900; font-size: 36px; text-anchor: middle;
+  fill: var(--bone); pointer-events: none;
+}
+.lg-spot:hover rect, .lg-spot:hover circle,
+.lg-spot:focus-visible rect, .lg-spot:focus-visible circle {
+  fill: rgb(196 82 28 / .55); filter: drop-shadow(0 0 14px rgb(196 82 28 / .8));
+}
+/* brilho de vela: os lounges pulsam de leve pra mostrar que dá pra clicar */
+@media (prefers-reduced-motion: no-preference) {
+  .lg-spot rect, .lg-spot circle { animation: lg-pulse 3.2s ease-in-out infinite; }
+  .lg-spot:nth-child(2n) rect { animation-delay: .8s; }
+  .lg-spot:nth-child(3n) rect { animation-delay: 1.6s; }
+}
+@keyframes lg-pulse { 50% { fill: rgb(196 82 28 / .32); } }
+
+.lg-tip {
+  position: absolute; margin: 0; translate: 0 -50%;
+  padding: 8px 12px; border-radius: 999px; white-space: nowrap; pointer-events: none;
+  background: var(--bone); color: var(--void); font-weight: 700; font-size: var(--step--1);
+  opacity: 0; transition: opacity .15s; z-index: 2;
+}
+.lg-tip.is-on { opacity: 1; }
+.page-lounges .foot { color: var(--ash); }
+
+/* botão "Reserve seu lounge" na home: contorno em osso com brilho de brasa */
+.btn.btn--outline-ember {
+  background: transparent; color: var(--bone);
+  box-shadow: inset 0 0 0 1.5px var(--bone), 0 0 24px rgb(196 82 28 / .25);
+}
+.btn.btn--outline-ember:hover { background: rgb(196 82 28 / .14); box-shadow: inset 0 0 0 1.5px var(--bone), 0 0 36px rgb(196 82 28 / .45); }
+.btn.btn--outline-ember:active { box-shadow: inset 0 0 0 1.5px var(--ash); }
