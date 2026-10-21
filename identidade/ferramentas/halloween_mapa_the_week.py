@@ -47,7 +47,7 @@ svg.append(f"<circle cx='110' cy='1075' r='54' fill='rgba(196,165,130,.13)' stro
 svg.append(f"<ellipse cx='373' cy='1468' rx='300' ry='220' fill='url(#glow)'/>")
 svg.append(f"<rect x='220' y='1352' width='307' height='233' rx='10' fill='rgba(196,165,130,.2)' stroke='{O}' stroke-width='5'/>")
 svg.append(f"<text x='373' y='1462' text-anchor='middle' dominant-baseline='central' font-family='Fr' font-style='italic' font-size='58' fill='{O}'>palco</text>")
-svg.append(lbl(373,1520,'6 DJS',13,A,.35))
+svg.append(lbl(373,1520,'360° · 6 DJS',13,A,.3))
 # entrada (lado oposto)
 svg.append(f"<line x1='30' y1='1715' x2='780' y2='1715' stroke='{O}' stroke-width='6'/>")
 svg.append(f"<rect x='75' y='1732' width='150' height='40' rx='20' fill='{O}'/>"); svg.append(lbl(150,1753,'ENTRADA',13,'#0b0706',.25))
