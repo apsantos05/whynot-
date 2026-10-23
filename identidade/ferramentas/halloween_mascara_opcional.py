@@ -23,14 +23,16 @@ def build(doc, W, H, L):
         if text: d['text'] = text
         layers.append(d)
     add('Fundo', Image.new('RGBA', (W, H), (11, 7, 6, 255)))
-    from PIL import ImageOps
-    ph = Image.open(PH).convert('RGB'); ph = ph.crop((1015-480, 0, 1015+480, 1160))
-    g0 = ImageOps.grayscale(ph).point(lambda v: max(0, v - 10) * 1.05)
-    ph = ImageOps.colorize(g0, black=(9, 6, 5), mid=(122, 86, 58), white=(228, 214, 190), midpoint=118)
+    from PIL import ImageEnhance
+    from PIL import ImageEnhance
+    ph = Image.open(S + '/mao.png').convert('RGB')
     pw = L['ph_w']; ph = ph.resize((pw, round(ph.height * pw / ph.width)), Image.LANCZOS)
-    m = Image.new('L', ph.size, 0); ImageDraw.Draw(m).ellipse((120, 60, ph.width - 120, ph.height - 60), fill=255); m = m.filter(ImageFilter.GaussianBlur(200))
-    fo = Image.new('RGBA', (W, H), (0, 0, 0, 0)); fl = ph.convert('RGBA'); fl.putalpha(m); fo.alpha_composite(fl, ((W - pw) // 2, L['ph_y']))
-    add('FOTO · porta (Unsplash)', fo)
+    fo = Image.new('RGBA', (W, H), (0, 0, 0, 255)); m = Image.new('L', ph.size, 255); dm = ImageDraw.Draw(m)
+    for y in range(ph.height - 400, ph.height): dm.line((0, y, ph.width, y), fill=int(255 * (ph.height - y) / 400))
+    if L['ph_y'] > 0:
+        for y in range(0, 350): dm.line((0, y, ph.width, y), fill=int(255 * y / 350))
+    fo.paste(ph, ((W - pw) // 2, L['ph_y']), m)
+    add('FOTO · mão com máscara (Higgsfield)', fo)
     gm = Image.new('L', (W, H), 0); cy = L['ph_y'] + int(ph.height * 0.45)
     ImageDraw.Draw(gm).ellipse((W/2 - 520, cy - 520, W/2 + 520, cy + 420), fill=130); gm = gm.filter(ImageFilter.GaussianBlur(240))
     gl = Image.new('RGBA', (W, H), (0, 0, 0, 0)); gl.paste((122, 58, 22, 255), (0, 0), gm)
@@ -78,9 +80,9 @@ def build(doc, W, H, L):
     return {doc: {'width': W, 'height': H, 'layers': layers}}
 
 man = {}
-man.update(build('2310_feed_mascara-opcional', 2160, 2700, dict(ph_w=1300, ph_y=380, dark_from=1500, logo_w=560, logo_y=140, nol_y=315, nol_s=66,
+man.update(build('2310_feed_mascara-opcional', 2160, 2700, dict(ph_w=2160, ph_y=-420, dark_from=1500, logo_w=560, logo_y=140, nol_y=315, nol_s=66,
        date_y=1640, date_s=180, sub_y=1880, sub_s=150, info_y=2160, info_s=36, foot_y=2470)))
-man.update(build('2310_story_mascara-opcional', 2160, 3840, dict(ph_w=1700, ph_y=700, dark_from=2150, logo_w=640, logo_y=300, nol_y=500, nol_s=76,
+man.update(build('2310_story_mascara-opcional', 2160, 3840, dict(ph_w=2160, ph_y=200, dark_from=2150, logo_w=640, logo_y=300, nol_y=500, nol_s=76,
        date_y=2300, date_s=200, sub_y=2570, sub_s=170, info_y=2900, info_s=40, foot_y=3230)))
 json.dump(man, open(S + '/manifest.json', 'w'), indent=1, ensure_ascii=False)
 print('ok')
