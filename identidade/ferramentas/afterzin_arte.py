@@ -34,7 +34,7 @@ def beams(W, H, top):
     s = ''
     for ang, op, w in [(-38, .10, 7), (-22, .16, 5), (-8, .22, 4), (8, .22, 4), (22, .16, 5), (38, .10, 7)]:
         s += (f"<div style='position:absolute;left:50%;top:{top}px;width:{W*.06:.0f}px;height:{H*1.25:.0f}px;transform-origin:50% 0;"
-              f"transform:translateX(-50%) rotate({ang}deg);background:linear-gradient(to bottom,rgba(236,236,236,{op*1.6:.2f}),rgba(236,236,236,0) 85%);"
+              f"transform:translateX(-50%) rotate({ang}deg);background:linear-gradient(to bottom,rgba(236,236,236,{op*.55:.2f}),rgba(236,236,236,0) 85%);"
               f"filter:blur({w*6}px)'></div>")
     s += (f"<div style='position:absolute;left:0;right:0;bottom:0;height:{H*.42:.0f}px;background:radial-gradient(ellipse at 50% 100%,rgba(40,43,47,.9),transparent 70%)'></div>")
     return s
@@ -58,7 +58,6 @@ def names(size, gap):
 
 # STORY — área segura 250 topo / 330 base
 render('2011_story_afterzin', 1080, 1920, bg(1080, 1920, 760) + f"""
-<div class='c big' style='top:880px;font-size:620px;opacity:.9'>01h</div>
 <img class='img' src='data:image/png;base64,{b64(WN)}' style='top:262px;width:250px'>
 <div class='c sm' style='top:400px;font-size:22px;color:{DEST}'>ACABOU O VINTAGE CULTURE?</div>
 <img class='img' src='data:image/png;base64,{b64(AZ)}' style='top:470px;width:900px;transform:translateX(-50%) rotate(-6deg)'>
@@ -74,7 +73,6 @@ render('2011_story_afterzin', 1080, 1920, bg(1080, 1920, 760) + f"""
 
 # FEED 4:5
 render('2011_feed_afterzin', 1080, 1350, bg(1080, 1350, 420) + f"""
-<div class='c big' style='top:520px;font-size:520px;opacity:.9'>01h</div>
 <img class='img' src='data:image/png;base64,{b64(WN)}' style='top:70px;width:220px'>
 <div class='c sm' style='top:190px;font-size:20px;color:{DEST}'>ACABOU O VINTAGE CULTURE?</div>
 <img class='img' src='data:image/png;base64,{b64(AZ)}' style='top:255px;width:860px;transform:translateX(-50%) rotate(-6deg)'>
