@@ -15,7 +15,7 @@ BALLY = A + '/assets/bally_logo_grafite.png'
 BASE, DEST, MED, LINE = '#08090a', '#ececec', '#a9adb1', '#2c2f33'
 
 # nome, arquivo recortado, centro do rosto (fração da largura), altura da cabeça (fração da altura)
-DJS = [('Mexikanno', E1 + 'mex.png', .38, .25), ('Caio Alves', A + '/fotos/caio.png', .51, .39),
+DJS = [('Mexikanno', E1 + 'mex.png', .38, .25), ('Kaio Alves', A + '/fotos/kaio.png', .51, .39),
        ('Coiote', E1 + 'coiote.png', .47, .23), ('ALOIRA', A + '/fotos/aloira.png', .40, .20),
        ('Maka', E1 + 'maka.png', .48, .31)]
 

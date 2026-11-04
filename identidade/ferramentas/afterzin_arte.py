@@ -11,7 +11,7 @@ WN = R + '/assets/logo/grafite/logo-why-not-grafite.png'
 AZ = A + '/assets/wordmark-afterzin-grafite.png'
 BALLY = A + '/assets/bally_logo_grafite.png'
 BASE, DEST, MED, LINE = '#08090a', '#ececec', '#a9adb1', '#2c2f33'
-LINEUP = ['Mexikanno', 'Caio Alves', 'Coiote', 'ALOIRA', 'Maka']
+LINEUP = ['Mexikanno', 'Kaio Alves', 'Coiote', 'ALOIRA', 'Maka']
 
 CSS = f"""
 @font-face{{font-family:FrV;font-weight:100 900;src:url(data:font/woff2;base64,{b64(FD+'/fv/files/fraunces-latin-full-normal.woff2')})}}
