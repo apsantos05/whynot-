@@ -1,0 +1,8 @@
+q1_contagem-estreia.png — Sticker CONTAGEM REGRESSIVA ("quinta, por que não?" · 12/11 · 21h) no espaço vazio entre 960 e 1340px.
+q2_enquete-quinta.png — Sticker ENQUETE: "óbvio que sim" / "agora é" — entre 920 e 1360px.
+q3_marca-a-amiga.png — Sticker MENÇÃO ou LINK (grupo VIP) entre 1120 e 1460px.
+q4_open-gin.png — Sem sticker (ou link da lista entre 1100 e 1280px).
+q5_caixinha-musica.png — Sticker CAIXINHA DE PERGUNTAS entre 1030 e 1460px.
+a1_contagem-afterzin.png — Sticker CONTAGEM REGRESSIVA ("afterzin why not?" · 20/11 · 01h) entre 860 e 1340px.
+a2_enquete-vai-nos-dois.png — Sticker ENQUETE: "vou nos dois" / "só no after" — entre 940 e 1360px.
+a3_qual-dj.png — Sticker TESTE/QUIZ com os 5 nomes (ou enquete com 4 opções) entre 960 e 1460px.
