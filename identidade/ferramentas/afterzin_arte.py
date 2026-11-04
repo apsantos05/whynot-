@@ -29,8 +29,19 @@ body{{background:{BASE};overflow:hidden;position:relative}}
 .big{{font-family:FrV;font-weight:900;font-variation-settings:'opsz' 144;color:#191b1e;line-height:1;letter-spacing:-.04em}}
 """
 
+def beams(W, H, top):
+    # feixes de luz de palco saindo do alto, desfocados (grafite)
+    s = ''
+    for ang, op, w in [(-38, .10, 7), (-22, .16, 5), (-8, .22, 4), (8, .22, 4), (22, .16, 5), (38, .10, 7)]:
+        s += (f"<div style='position:absolute;left:50%;top:{top}px;width:{W*.06:.0f}px;height:{H*1.25:.0f}px;transform-origin:50% 0;"
+              f"transform:translateX(-50%) rotate({ang}deg);background:linear-gradient(to bottom,rgba(236,236,236,{op*1.6:.2f}),rgba(236,236,236,0) 85%);"
+              f"filter:blur({w*6}px)'></div>")
+    s += (f"<div style='position:absolute;left:0;right:0;bottom:0;height:{H*.42:.0f}px;background:radial-gradient(ellipse at 50% 100%,rgba(40,43,47,.9),transparent 70%)'></div>")
+    return s
+
 def bg(W, H, cy):
-    return (f"<div style='position:absolute;inset:0;background:radial-gradient(circle at 50% {cy}px,#24272b 0,#121416 {W*.4:.0f}px,{BASE} {W*.85:.0f}px)'></div>")
+    return (f"<div style='position:absolute;inset:0;background:radial-gradient(circle at 50% {cy}px,#24272b 0,#121416 {W*.4:.0f}px,{BASE} {W*.85:.0f}px)'></div>"
+            + beams(W, H, -60))
 
 def render(name, W, H, html):
     with sync_playwright() as p:
