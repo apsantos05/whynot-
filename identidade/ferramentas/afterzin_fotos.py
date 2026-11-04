@@ -14,26 +14,24 @@ AZ = A + '/assets/wordmark-afterzin-grafite.png'
 BALLY = A + '/assets/bally_logo_grafite.png'
 BASE, DEST, MED, LINE = '#08090a', '#ececec', '#a9adb1', '#2c2f33'
 
-# nome, arquivo recortado, fração da altura do recorte a manter (cabeça → cintura)
-DJS = [('Mexikanno', E1 + 'mex.png', .62), ('Caio Alves', A + '/fotos/caio.png', 1.0),
-       ('Coiote', E1 + 'coiote.png', .60), ('ALOIRA', A + '/fotos/aloira.png', .50),
-       ('Maka', E1 + 'maka.png', .80)]
+# nome, arquivo recortado, centro do rosto (fração da largura), altura da cabeça (fração da altura)
+DJS = [('Mexikanno', E1 + 'mex.png', .38, .25), ('Caio Alves', A + '/fotos/caio.png', .51, .39),
+       ('Coiote', E1 + 'coiote.png', .47, .23), ('ALOIRA', A + '/fotos/aloira.png', .40, .20),
+       ('Maka', E1 + 'maka.png', .48, .31)]
 
-def prep(path, keep):
+def prep(path, hf):
     im = Image.open(path).convert('RGBA'); im = im.crop(im.getchannel('A').getbbox())
-    im = im.crop((0, 0, im.width, round(im.height * keep)))
+    im = im.crop((0, 0, im.width, round(im.height * min(1, hf * 3.4))))   # cabeça → cintura
     a = im.getchannel('A'); g = ImageOps.grayscale(im.convert('RGB'))
     g = ImageOps.autocontrast(g, cutoff=1); g = ImageEnhance.Contrast(g).enhance(1.2)
     lo, hi = (8, 9, 10), (236, 236, 236)
     rgb = Image.merge('RGB', [g.point(lambda v, l=lo[i], h=hi[i]: round(l + (h - l) * v / 255)) for i in range(3)])
-    rgb.putalpha(a)
-    # esfuma a base
-    fade = Image.linear_gradient('L').resize(rgb.size).point(lambda v: 255 if v < 150 else max(0, 255 - (v - 150) * 2.4))
+    fade = Image.linear_gradient('L').resize(rgb.size).point(lambda v: 255 if v < 140 else max(0, 255 - (v - 140) * 2.2))
     rgb.putalpha(ImageChops.multiply(a, fade))
-    rgb.thumbnail((900, 1100), Image.LANCZOS)
-    buf = io.BytesIO(); rgb.save(buf, 'PNG'); return base64.b64encode(buf.getvalue()).decode(), rgb.size
+    full_h = im.height / min(1, hf * 3.4)
+    buf = io.BytesIO(); rgb.save(buf, 'PNG'); return base64.b64encode(buf.getvalue()).decode(), rgb.size, full_h
 
-P = [prep(p, k) for _, p, k in DJS]
+P = [prep(p, hf) for _, p, _, hf in DJS]
 
 CSS = f"""
 @font-face{{font-family:FrV;font-weight:100 900;src:url(data:font/woff2;base64,{b64(FD+'/fv/files/fraunces-latin-full-normal.woff2')})}}
@@ -53,19 +51,19 @@ body{{background:{BASE};overflow:hidden;position:relative}}
 def bg(W, H, cy):
     return (f"<div style='position:absolute;inset:0;background:radial-gradient(circle at 50% {cy}px,#1d2023 0,#101214 {W*.42:.0f}px,{BASE} {W*.9:.0f}px)'></div>")
 
-def row(W, base_y, h_center, h_side, h_out, spread):
-    # ordem visual: Mex, Caio, Coiote(centro), ALOIRA, Maka; o centro na frente
-    xs = [W / 2 - 2 * spread, W / 2 - spread, W / 2, W / 2 + spread, W / 2 + 2 * spread]
-    hs = [h_out, h_side, h_center, h_side, h_out]
+def row(W, head_top, head_h, spread):
+    # uma fileira, rostos todos na mesma altura e sem se sobrepor; ombros podem se cruzar
+    xs = [W / 2 + (k - 2) * spread for k in range(5)]
     z = [1, 2, 3, 2, 1]
     html = ''
-    for i, ((name, _, _), (data, (w, h))) in enumerate(zip(DJS, P)):
-        hh = hs[i]; ww = w * hh / h
-        html += (f"<img class='dj' src='data:image/png;base64,{data}' style='left:{xs[i]:.0f}px;top:{base_y-hh:.0f}px;height:{hh:.0f}px;z-index:{z[i]}'>")
+    for k, ((name, _, cx, hf), (data, (w, h), full_h)) in enumerate(zip(DJS, P)):
+        sc = head_h / (hf * full_h); ww, hh = w * sc, h * sc
+        html += (f"<img src='data:image/png;base64,{data}' style='position:absolute;left:{xs[k]-cx*ww:.0f}px;top:{head_top:.0f}px;"
+                 f"width:{ww:.0f}px;height:{hh:.0f}px;z-index:{z[k]}'>")
     return html, xs
 
 def names(xs, y, fs):
-    return ''.join(f"<div class='nm' style='left:{x:.0f}px;top:{y}px;font-size:{fs}px;z-index:9'>{n}</div>" for (n, _, _), x in zip(DJS, xs))
+    return ''.join(f"<div class='nm' style='left:{x:.0f}px;top:{y}px;font-size:{fs}px;z-index:9'>{n}</div>" for (n, _, _, _), x in zip(DJS, xs))
 
 def render(name, W, H, html):
     with sync_playwright() as p:
@@ -78,7 +76,7 @@ def render(name, W, H, html):
     im = Image.blend(im, ImageChops.overlay(im, n), .16); im.save(f'{OUT}/{name}.png'); print(name, im.size)
 
 # FEED 4:5
-r, xs = row(1080, 960, 470, 470, 420, 208)
+r, xs = row(1080, 470, 140, 205)
 render('2011_feed_afterzin', 1080, 1350, bg(1080, 1350, 640) + f"""
 <img class='img' src='data:image/png;base64,{b64(WN)}' style='top:56px;width:200px'>
 <div class='c sm' style='top:158px;font-size:19px;color:{DEST}'>ACABOU O VINTAGE CULTURE?</div>
@@ -93,7 +91,7 @@ render('2011_feed_afterzin', 1080, 1350, bg(1080, 1350, 640) + f"""
 """)
 
 # STORY — área segura 250 topo / 330 base
-r, xs = row(1080, 1290, 590, 600, 540, 205)
+r, xs = row(1080, 760, 160, 205)
 render('2011_story_afterzin', 1080, 1920, bg(1080, 1920, 1000) + f"""
 <img class='img' src='data:image/png;base64,{b64(WN)}' style='top:250px;width:220px'>
 <div class='c sm' style='top:360px;font-size:21px;color:{DEST}'>ACABOU O VINTAGE CULTURE?</div>
