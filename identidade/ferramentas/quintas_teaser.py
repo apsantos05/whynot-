@@ -99,3 +99,36 @@ render('2_feed_quinta-por-que-nao', 1080, 1350, bg(1080, 520) + f"""
 <div class='c sm' style='top:1055px;font-size:28px;color:{DEST}'>QUINTAS · 22H</div>
 <img class='img' src='data:image/png;base64,{b64(BALLY)}' style='top:1130px;width:200px;opacity:.9'>
 """)
+
+# ---------- 3) FILEIRA (3 posts que formam uma imagem no grid) — 3240x1350, corta em 3 de 1080x1350 ----------
+QPQ = Q + '/assets/wordmark-quinta-por-que-nao.png'
+def tile(x0, html):  # helper p/ posicionar dentro de cada post
+    return f"<div style='position:absolute;left:{x0}px;top:0;width:1080px;height:1350px'>{html}</div>"
+
+W3 = 3240
+html = (f"<div style='position:absolute;inset:0;background:radial-gradient(ellipse 1700px 700px at 50% 620px,#261f33 0,#130f1a 55%,{BASE} 100%)'></div>"
+        f"<img src='data:image/png;base64,{b64(QPQ)}' style='position:absolute;left:150px;top:470px;width:2940px;transform:rotate(-4deg);z-index:3'>"
+        + tile(0, f"""
+<img class='img' src='data:image/png;base64,{b64(WN)}' style='top:90px;width:260px'>
+<div class='c sm' style='top:205px;font-size:20px'>× BALLY CLUB</div>
+<div class='c bk' style='top:930px;font-size:104px'>toda quinta.</div>
+<div class='c fr' style='top:1050px;font-size:58px;color:{MED}'>todo mês.</div>""")
+        + tile(1080, f"""
+<div class='c sm' style='top:150px;font-size:26px;color:{DEST}'>ESTREIA · QUINTA · 12.11</div>
+<div class='c fr' style='top:930px;font-size:58px'>coquetel de lançamento</div>
+<div class='c bk' style='top:1010px;font-size:150px'>21h</div>""")
+        + tile(2160, f"""
+<img class='img' src='data:image/png;base64,{b64(BALLY)}' style='top:95px;width:230px;opacity:.95'>
+{duo(930, 64, 20)}
+<div class='c sm' style='top:1150px;font-size:18px'>LISTA SÓ PELO GRUPO · LINK NA BIO</div>"""))
+with sync_playwright() as p:
+    br = p.chromium.launch(); pg = br.new_page(viewport={'width': W3, 'height': 1350}, device_scale_factor=2)
+    pg.set_content(f"<style>{CSS}body{{width:{W3}px;height:1350px}}</style>{html}")
+    pg.evaluate('document.fonts.ready.then(()=>0)'); pg.wait_for_timeout(500)
+    pg.screenshot(path=f'{OUT}/_t.png'); br.close()
+im = Image.open(f'{OUT}/_t.png').convert('RGB'); os.remove(f'{OUT}/_t.png')
+random.seed(11); n = Image.effect_noise(im.size, 24).convert('RGB')
+im = Image.blend(im, ImageChops.overlay(im, n), .14)
+im.save(f'{OUT}/3_fileira_PREVIEW-completa.png')
+for k, nome in enumerate(['3a_fileira_esquerda_POSTAR-POR-ULTIMO', '3b_fileira_meio_POSTAR-EM-2o', '3c_fileira_direita_POSTAR-PRIMEIRO']):
+    im.crop((k * 2160, 0, (k + 1) * 2160, 2700)).save(f'{OUT}/{nome}.png'); print(nome)
