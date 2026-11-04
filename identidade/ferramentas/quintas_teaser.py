@@ -107,7 +107,8 @@ def tile(x0, html):  # helper p/ posicionar dentro de cada post
 
 W3 = 3240
 html = (f"<div style='position:absolute;inset:0;background:radial-gradient(ellipse 1700px 700px at 50% 620px,#261f33 0,#130f1a 55%,{BASE} 100%)'></div>"
-        f"<img src='data:image/png;base64,{b64(QPQ)}' style='position:absolute;left:150px;top:470px;width:2940px;transform:rotate(-4deg);z-index:3'>"
+        "".join(f"<img src='data:image/png;base64,{b64(Q + '/assets/wm-parte-' + n + '.png')}' style='position:absolute;left:{cx}px;top:{cy}px;width:{w}px;transform:translate(-50%,-50%) rotate(-4deg);z-index:3'>"
+                for n, cx, cy, w in [('quinta', 540, 700, 860), ('porque', 1620, 625, 900), ('nao', 2700, 550, 640)])
         + tile(0, f"""
 <img class='img' src='data:image/png;base64,{b64(WN)}' style='top:90px;width:260px'>
 <div class='c sm' style='top:205px;font-size:20px'>× BALLY CLUB</div>
