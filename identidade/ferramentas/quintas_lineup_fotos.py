@@ -15,9 +15,9 @@ BALLY = Q + '/assets/bally_logo_lavanda.png'
 BASE, DEST, MED, LINE = '#09080c', '#ece6f4', '#b1a6c4', '#3a3348'
 
 # nome, recorte, centro do rosto (fração da largura), topo da cabeça e altura da cabeça (frações da altura)
-DJS = [('Mari Ferro', QF + 'mari.png', .37, 0, .175), ('Maycon', E1 + 'maycon.png', .48, 0, .30),
-       ('Coiote', E1 + 'coiote.png', .47, 0, .23), ('Charles', E1 + 'possani.png', .48, 0, .28),
-       ('Camuri', QF + 'camuri.png', .46, 0, .21), ('Mexikanno', E1 + 'mex.png', .38, 0, .25)]
+DJS = [('Mari Ferro', QF + 'mari.png', .35, 0, .175), ('Maycon', E1 + 'maycon.png', .47, 0, .30),
+       ('Coiote', E1 + 'coiote.png', .47, 0, .23), ('Charles', E1 + 'possani.png', .45, 0, .28),
+       ('Camuri', QF + 'camuri.png', .50, 0, .21), ('Mexikanno', E1 + 'mex.png', .36, 0, .25)]
 DESTAQUE = 'Coiote'   # fica no meio, um pouco maior e na frente
 
 def prep(path, top, hf):
@@ -71,7 +71,7 @@ def row(W, head_top, head_h, spread):
     for k, ((name, _, cx, _, _), (data, (w, h), head_px)) in enumerate(zip(DJS, P)):
         hh_ = head_h * (1.1 if k == di else 1); top = head_top - (head_h * .1 if k == di else 0)
         sc = hh_ / head_px; ww, hh = w * sc, h * sc
-        z = 4 if k == di else 3 - abs(k - di) if abs(k - di) < 3 else 1
+        z = 10 - abs(k - di)   # quanto mais perto do destaque, mais na frente
         html += (f"<img src='data:image/png;base64,{data}' style='position:absolute;left:{xs[k]-cx*ww:.0f}px;top:{top:.0f}px;"
                  f"width:{ww:.0f}px;height:{hh:.0f}px;z-index:{z}'>")
     return html, xs
