@@ -116,7 +116,7 @@ elif KIND == 'linha':   # 2 artes que fecham a fileira da line-up: contagem (dir
 <div class='c bk' style='top:360px;font-size:560px;line-height:1'>3</div>
 <div class='c bk' style='top:870px;font-size:96px'>dias.</div>
 <div class='rule' style='top:1030px;width:480px'></div>
-<div class='c fr' style='top:1060px;font-size:46px;color:{MED}'>hoje, às 18h, sai a line-up.</div>
+<div class='c fr' style='top:1060px;font-size:46px;color:{MED}'>a line-up tá aqui do lado →</div>
 <img class='img' src='data:image/png;base64,{b64(BALLY)}' style='top:1195px;width:160px;opacity:.9'>
 """)
     render('feed_3_frase', 1080, 1350, bg(1080, 640) + f"""
