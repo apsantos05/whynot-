@@ -157,3 +157,14 @@ elif KIND == 'coquetel':   # 2 stories chamando pro coquetel de lançamento
 <div class='rule' style='top:1240px;width:560px'></div>
 <div class='c fr' style='top:1270px;font-size:44px;color:{MED}'>lista VIP pra elas, nome pelo grupo ↓</div>
 """)
+elif KIND == 'link':   # story de link de venda, sem line-up (espaço pro sticker de link)
+    render('story_link-ingresso_sem-line-up', 1080, 1920, bg(1080, 760) + f"""
+<img class='img' src='data:image/png;base64,{b64(WN)}' style='top:260px;width:230px'>
+<div class='c sm' style='top:380px;font-size:24px;color:{DEST}'>QUINTA · {D} · 21H</div>
+<img class='img' src='data:image/png;base64,{b64(QW)}' style='top:450px;width:680px;transform:translateX(-50%) rotate(-6deg)'>
+<div class='c fr' style='top:650px;font-size:84px'>por que não?</div>
+<div class='rule' style='top:820px;width:520px'></div>
+<div class='c bk' style='top:870px;font-size:132px'>garanta<br>o seu.</div>
+<div class='c fr' style='top:1150px;font-size:50px;color:{MED}'>ingressos no site da Bally ↓</div>
+<div class='c sm' style='top:1540px;font-size:18px'>COQUETEL 21H · OPEN GIN 22H ÀS 23H · LISTA VIP PRA ELAS</div>
+""")
