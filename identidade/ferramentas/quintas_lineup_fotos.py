@@ -89,7 +89,7 @@ def render(name, W, H, html):
     random.seed(11); n = Image.effect_noise(im.size, 24).convert('RGB')
     Image.blend(im, ImageChops.overlay(im, n), .14).save(f'{OUT}/{name}.png'); print(f'{OUT}/{name}.png')
 
-r, xs = row(1080, 480, 120, 170)
+r, xs = row(1080, 480, 116, 160)
 render('feed_line-up', 1080, 1350, bg(1080, 640) + f"""
 <img class='img' src='data:image/png;base64,{b64(WN)}' style='top:56px;width:200px'>
 <div class='c sm' style='top:158px;font-size:20px;color:{DEST}'>QUINTA · {D} · 21H · ESTREIA</div>

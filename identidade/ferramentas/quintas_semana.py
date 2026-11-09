@@ -108,3 +108,24 @@ elif KIND == 'lineup':
 <div class='rule' style='top:1340px;width:520px'></div>
 {duo(1370, 56, 19)}
 """)
+elif KIND == 'linha':   # 2 artes que fecham a fileira da line-up: contagem (direita) e frase (esquerda)
+    render('feed_1_contagem', 1080, 1350, bg(1080, 600) + f"""
+<img class='img' src='data:image/png;base64,{b64(WN)}' style='top:70px;width:220px'>
+<div class='c sm' style='top:180px;font-size:22px;color:{DEST}'>ESTREIA · QUINTA · {D}</div>
+<div class='c sm' style='top:330px;font-size:26px'>FALTAM</div>
+<div class='c bk' style='top:360px;font-size:560px;line-height:1'>3</div>
+<div class='c bk' style='top:870px;font-size:96px'>dias.</div>
+<div class='rule' style='top:1030px;width:480px'></div>
+<div class='c fr' style='top:1060px;font-size:46px;color:{MED}'>hoje, às 18h, sai a line-up.</div>
+<img class='img' src='data:image/png;base64,{b64(BALLY)}' style='top:1195px;width:160px;opacity:.9'>
+""")
+    render('feed_3_frase', 1080, 1350, bg(1080, 640) + f"""
+<img class='img' src='data:image/png;base64,{b64(WN)}' style='top:70px;width:220px'>
+<div class='c sm' style='top:180px;font-size:22px;color:{DEST}'>A PARTIR DE {D} · TODA QUINTA</div>
+<div class='c bk' style='top:350px;font-size:170px'>quinta<br>é a nova<br>sexta.</div>
+<div class='rule' style='top:900px;width:480px'></div>
+<div class='c fr' style='top:930px;font-size:46px'>coquetel às 21h · open gin 22h às 23h</div>
+<div class='c fr' style='top:1000px;font-size:46px;color:{MED}'>lista VIP pra elas, nome pelo grupo.</div>
+<div class='c sm' style='top:1100px;font-size:20px'>LINK NA BIO</div>
+<img class='img' src='data:image/png;base64,{b64(BALLY)}' style='top:1195px;width:160px;opacity:.9'>
+""")
