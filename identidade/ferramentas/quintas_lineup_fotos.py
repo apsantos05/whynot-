@@ -117,3 +117,30 @@ render('story_line-up', 1080, 1920, bg(1080, 1000) + f"""
 <div class='c fr' style='top:1378px;font-size:44px;z-index:9'>coquetel de lançamento às 21h</div>
 {duo(1450, 52, 18)}
 """)
+
+# BANNER DO SITE 1024x600 (renderiza em 2x e salva também em 1024x600)
+def row_at(cx0, head_top, head_h, spread):
+    n = len(DJS); xs = [cx0 + (k - (n - 1) / 2) * spread for k in range(n)]
+    di = [d[0] for d in DJS].index(DESTAQUE); html = ''
+    for k, ((name, _, cx, _, _), (data, (w, h), head_px)) in enumerate(zip(DJS, P)):
+        hh_ = head_h * (1.1 if k == di else 1); top = head_top - (head_h * .1 if k == di else 0)
+        sc = hh_ / head_px; ww, hh = w * sc, h * sc
+        html += (f"<img src='data:image/png;base64,{data}' style='position:absolute;left:{xs[k]-cx*ww:.0f}px;top:{top:.0f}px;"
+                 f"width:{ww:.0f}px;height:{hh:.0f}px;z-index:{10-abs(k-di)}'>")
+    return html, xs
+
+r, xs = row_at(712, 150, 72, 100)
+render('site_line-up_1024x600@2x', 1024, 600, f"<div style='position:absolute;inset:0;background:radial-gradient(circle at 690px 300px,#261f33 0,#130f1a 330px,{BASE} 700px)'></div>" + f"""
+<img src='data:image/png;base64,{b64(WN)}' style='position:absolute;left:60px;top:70px;width:150px'>
+<div class='sm' style='position:absolute;left:60px;top:150px;font-size:13px;color:{DEST};text-indent:0'>QUINTA · {D} · 21H</div>
+<img src='data:image/png;base64,{b64(QW)}' style='position:absolute;left:46px;top:190px;width:330px;transform:rotate(-6deg)'>
+<div class='fr' style='position:absolute;left:120px;top:290px;font-size:40px'>por que não?</div>
+<div style='position:absolute;left:60px;top:378px;width:300px;height:1px;background:linear-gradient(90deg,{MED},transparent);opacity:.6'></div>
+<div class='fr' style='position:absolute;left:60px;top:398px;font-size:24px'>coquetel de lançamento às 21h</div>
+<div class='fr' style='position:absolute;left:60px;top:436px;font-size:24px;color:{MED}'>open gin 22h às 23h · lista VIP pra elas</div>
+<img src='data:image/png;base64,{b64(BALLY)}' style='position:absolute;left:60px;top:500px;width:110px;opacity:.9'>
+{r}
+{''.join(f"<div class='nm' style='left:{x:.0f}px;top:478px;font-size:19px;z-index:21'>{n}</div>" for (n, *_), x in zip(DJS, xs))}
+""")
+Image.open(f'{OUT}/site_line-up_1024x600@2x.png').resize((1024, 600), Image.LANCZOS).save(f'{OUT}/site_line-up_1024x600.png')
+Image.open(f'{OUT}/site_line-up_1024x600.png').convert('RGB').save(f'{OUT}/site_line-up_1024x600.jpg', quality=92)
