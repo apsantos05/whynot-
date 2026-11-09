@@ -129,3 +129,31 @@ elif KIND == 'linha':   # 2 artes que fecham a fileira da line-up: contagem (dir
 <div class='c sm' style='top:1100px;font-size:20px'>LINK NA BIO</div>
 <img class='img' src='data:image/png;base64,{b64(BALLY)}' style='top:1195px;width:160px;opacity:.9'>
 """)
+elif KIND == 'coquetel':   # 2 stories chamando pro coquetel de lançamento
+    render('story_coquetel_1_convite', 1080, 1920, bg(1080, 900) + f"""
+<div style='position:absolute;left:90px;right:90px;top:300px;bottom:380px;border:1.5px solid {MED};opacity:.55'></div>
+<div style='position:absolute;left:110px;right:110px;top:320px;bottom:400px;border:1px solid {LINE}'></div>
+<img class='img' src='data:image/png;base64,{b64(WN)}' style='top:400px;width:230px'>
+<div class='c sm' style='top:520px;font-size:22px'>CONVIDA PARA O</div>
+<div class='c fr' style='top:600px;font-size:92px;line-height:1.05'>coquetel de<br>lançamento</div>
+<div class='c sm' style='top:830px;font-size:22px'>DA</div>
+<img class='img' src='data:image/png;base64,{b64(QW)}' style='top:880px;width:600px;transform:translateX(-50%) rotate(-6deg)'>
+<div class='c fr' style='top:1060px;font-size:66px'>por que não?</div>
+<div class='rule' style='top:1190px;width:420px'></div>
+<div class='c sm' style='top:1225px;font-size:30px;color:{DEST}'>QUINTA · {D} · 21H</div>
+<div class='c sm' style='top:1280px;font-size:22px'>BALLY CLUB</div>
+<div class='c fr' style='top:1360px;font-size:40px;color:{MED}'>traje: vem do seu jeito.</div>
+""")
+    render('story_coquetel_2_programacao', 1080, 1920, bg(1080, 820) + f"""
+<img class='img' src='data:image/png;base64,{b64(WN)}' style='top:260px;width:230px'>
+<div class='c sm' style='top:380px;font-size:24px;color:{DEST}'>ESTREIA · QUINTA · {D}</div>
+<div class='c bk' style='top:460px;font-size:190px'>chega<br>cedo.</div>
+<div class='rule' style='top:880px;width:560px'></div>
+<div style='position:absolute;left:170px;right:170px;top:920px;font-family:Fr;font-style:italic;color:{DEST};font-size:58px;line-height:1.75'>
+  <div style='display:flex;justify-content:space-between;align-items:baseline'><span style='font-family:SM;font-style:normal;font-weight:700;font-size:34px;color:{MED};letter-spacing:.1em'>21H</span><span>coquetel</span></div>
+  <div style='display:flex;justify-content:space-between;align-items:baseline'><span style='font-family:SM;font-style:normal;font-weight:700;font-size:34px;color:{MED};letter-spacing:.1em'>22H</span><span>open gin</span></div>
+  <div style='display:flex;justify-content:space-between;align-items:baseline'><span style='font-family:SM;font-style:normal;font-weight:700;font-size:34px;color:{MED};letter-spacing:.1em'>23H</span><span>a pista é sua</span></div>
+</div>
+<div class='rule' style='top:1240px;width:560px'></div>
+<div class='c fr' style='top:1270px;font-size:44px;color:{MED}'>lista VIP pra elas, nome pelo grupo ↓</div>
+""")
