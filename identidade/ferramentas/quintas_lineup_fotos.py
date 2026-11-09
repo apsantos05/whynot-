@@ -145,3 +145,18 @@ render('site_line-up_1024x600@2x', 1024, 600, f"<div style='position:absolute;in
 """)
 Image.open(f'{OUT}/site_line-up_1024x600@2x.png').resize((1024, 600), Image.LANCZOS).save(f'{OUT}/site_line-up_1024x600.png')
 Image.open(f'{OUT}/site_line-up_1024x600.png').convert('RGB').save(f'{OUT}/site_line-up_1024x600.jpg', quality=92)
+
+# STORY DE LINK DE VENDA (espaço livre pro sticker de link do site da Bally)
+r, xs = row(1080, 640, 118, 165)
+render('story_link-ingresso', 1080, 1920, bg(1080, 820) + f"""
+<img class='img' src='data:image/png;base64,{b64(WN)}' style='top:250px;width:210px'>
+<div class='c sm' style='top:355px;font-size:22px;color:{DEST}'>QUINTA · {D} · 21H</div>
+<img class='img' src='data:image/png;base64,{b64(QW)}' style='top:400px;width:560px;transform:translateX(-50%) rotate(-6deg);z-index:5'>
+<div class='c fr' style='top:560px;font-size:62px;z-index:5'>por que não?</div>
+{r}
+<div style='position:absolute;left:0;right:0;top:930px;height:120px;background:linear-gradient(to bottom,transparent,{BASE} 75%);-webkit-mask-image:linear-gradient(to right,transparent,#000 20%,#000 80%,transparent);z-index:8'></div>
+{names(xs, 985, 28)}
+<div class='c' style='top:1075px;font-size:110px;z-index:9;font-family:FrV;font-weight:900;font-variation-settings:"opsz" 144;color:{DEST};letter-spacing:-.015em;line-height:1'>garanta o seu.</div>
+<div class='c fr' style='top:1210px;font-size:46px;color:{MED};z-index:9'>ingressos no site da Bally ↓</div>
+<div class='c sm' style='top:1560px;font-size:18px'>LISTA VIP PRA ELAS PELO GRUPO</div>
+""")
