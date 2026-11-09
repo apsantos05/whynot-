@@ -15,9 +15,10 @@ BALLY = Q + '/assets/bally_logo_lavanda.png'
 BASE, DEST, MED, LINE = '#09080c', '#ece6f4', '#b1a6c4', '#3a3348'
 
 # nome, recorte, centro do rosto (fração da largura), topo da cabeça e altura da cabeça (frações da altura)
-DJS = [('Mari Ferro', QF + 'mari.png', .39, .01, .18), ('Maycon', E1 + 'maycon.png', .48, 0, .30),
-       ('Charles', E1 + 'possani.png', .48, 0, .28), ('Camuri', QF + 'camuri.png', .46, 0, .21),
-       ('Mexikanno', E1 + 'mex.png', .38, 0, .25)]
+DJS = [('Mari Ferro', QF + 'mari.png', .37, 0, .175), ('Maycon', E1 + 'maycon.png', .48, 0, .30),
+       ('Coiote', E1 + 'coiote.png', .47, 0, .23), ('Charles', E1 + 'possani.png', .48, 0, .28),
+       ('Camuri', QF + 'camuri.png', .46, 0, .21), ('Mexikanno', E1 + 'mex.png', .38, 0, .25)]
+DESTAQUE = 'Coiote'   # fica no meio, um pouco maior e na frente
 
 def prep(path, top, hf):
     im = Image.open(path).convert('RGBA')
@@ -64,12 +65,15 @@ def duo(top, fs, ss):
             f"<div class='v'></div><div><div class='t' style='font-size:{fs}px'>lista VIP</div><div class='s' style='font-size:{ss}px'>PARA ELAS</div></div></div>")
 
 def row(W, head_top, head_h, spread):
-    xs = [W / 2 + (k - 2) * spread for k in range(5)]
-    z = [1, 2, 3, 2, 1]; html = ''
-    for k, ((_, _, cx, _, _), (data, (w, h), head_px)) in enumerate(zip(DJS, P)):
-        sc = head_h / head_px; ww, hh = w * sc, h * sc
-        html += (f"<img src='data:image/png;base64,{data}' style='position:absolute;left:{xs[k]-cx*ww:.0f}px;top:{head_top:.0f}px;"
-                 f"width:{ww:.0f}px;height:{hh:.0f}px;z-index:{z[k]}'>")
+    n = len(DJS); xs = [W / 2 + (k - (n - 1) / 2) * spread for k in range(n)]
+    di = [d[0] for d in DJS].index(DESTAQUE)
+    html = ''
+    for k, ((name, _, cx, _, _), (data, (w, h), head_px)) in enumerate(zip(DJS, P)):
+        hh_ = head_h * (1.1 if k == di else 1); top = head_top - (head_h * .1 if k == di else 0)
+        sc = hh_ / head_px; ww, hh = w * sc, h * sc
+        z = 4 if k == di else 3 - abs(k - di) if abs(k - di) < 3 else 1
+        html += (f"<img src='data:image/png;base64,{data}' style='position:absolute;left:{xs[k]-cx*ww:.0f}px;top:{top:.0f}px;"
+                 f"width:{ww:.0f}px;height:{hh:.0f}px;z-index:{z}'>")
     return html, xs
 
 def names(xs, y, fs):
@@ -85,7 +89,7 @@ def render(name, W, H, html):
     random.seed(11); n = Image.effect_noise(im.size, 24).convert('RGB')
     Image.blend(im, ImageChops.overlay(im, n), .14).save(f'{OUT}/{name}.png'); print(f'{OUT}/{name}.png')
 
-r, xs = row(1080, 470, 140, 205)
+r, xs = row(1080, 480, 120, 170)
 render('feed_line-up', 1080, 1350, bg(1080, 640) + f"""
 <img class='img' src='data:image/png;base64,{b64(WN)}' style='top:56px;width:200px'>
 <div class='c sm' style='top:158px;font-size:20px;color:{DEST}'>QUINTA · {D} · 21H · ESTREIA</div>
@@ -93,14 +97,14 @@ render('feed_line-up', 1080, 1350, bg(1080, 640) + f"""
 <div class='c fr' style='top:350px;font-size:56px;z-index:5'>por que não?</div>
 {r}
 <div style='position:absolute;left:0;right:0;top:860px;height:140px;background:linear-gradient(to bottom,transparent,{BASE} 70%);-webkit-mask-image:linear-gradient(to right,transparent,#000 20%,#000 80%,transparent);z-index:8'></div>
-{names(xs, 930, 34)}
+{names(xs, 932, 29)}
 <div class='rule' style='top:1010px;width:460px;z-index:9'></div>
 <div class='c fr' style='top:1030px;font-size:38px;z-index:9'>coquetel de lançamento às 21h</div>
 {duo(1095, 46, 16)}
 <img class='img' src='data:image/png;base64,{b64(BALLY)}' style='top:1225px;width:150px;opacity:.9'>
 """)
 
-r, xs = row(1080, 760, 160, 205)
+r, xs = row(1080, 770, 132, 170)
 render('story_line-up', 1080, 1920, bg(1080, 1000) + f"""
 <img class='img' src='data:image/png;base64,{b64(WN)}' style='top:250px;width:220px'>
 <div class='c sm' style='top:360px;font-size:22px;color:{DEST}'>QUINTA · {D} · 21H · ESTREIA</div>
@@ -108,7 +112,7 @@ render('story_line-up', 1080, 1920, bg(1080, 1000) + f"""
 <div class='c fr' style='top:610px;font-size:72px;z-index:5'>por que não?</div>
 {r}
 <div style='position:absolute;left:0;right:0;top:1180px;height:160px;background:linear-gradient(to bottom,transparent,{BASE} 70%);-webkit-mask-image:linear-gradient(to right,transparent,#000 20%,#000 80%,transparent);z-index:8'></div>
-{names(xs, 1262, 38)}
+{names(xs, 1262, 31)}
 <div class='rule' style='top:1350px;width:480px;z-index:9'></div>
 <div class='c fr' style='top:1378px;font-size:44px;z-index:9'>coquetel de lançamento às 21h</div>
 {duo(1450, 52, 18)}
