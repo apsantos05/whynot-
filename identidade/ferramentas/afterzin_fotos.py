@@ -84,7 +84,7 @@ render('2011_feed_afterzin', 1080, 1350, bg(1080, 1350, 640) + f"""
 {r}
 <div style='position:absolute;left:0;right:0;top:860px;height:140px;background:linear-gradient(to bottom,transparent,{BASE} 70%);z-index:8'></div>
 {names(xs, 930, 34)}
-<div class='c sm' style='top:1035px;font-size:30px;color:{DEST};z-index:9'>SEXTA · 20.11 · 01H</div>
+<div class='c sm' style='top:1037px;font-size:27px;color:{DEST};z-index:9'>SEXTA PRA SÁBADO · 21.11 · 01H</div>
 <div class='c fr' style='top:1088px;font-size:34px;color:{MED};z-index:9'>o show acaba à meia-noite. a noite, não.</div>
 <img class='img' src='data:image/png;base64,{b64(BALLY)}' style='top:1170px;width:170px;opacity:.9'>
 <div class='c sm' style='top:1275px;font-size:16px'>INGRESSOS NO SITE DA BALLY OU NA PORTARIA</div>
@@ -101,6 +101,7 @@ render('2011_story_afterzin', 1080, 1920, bg(1080, 1920, 1000) + f"""
 {names(xs, 1262, 38)}
 <div class='rule' style='top:1350px;width:460px;z-index:9'></div>
 <div class='c fr' style='top:1380px;font-size:44px;z-index:9'>o show acaba à meia-noite.<br><span style='color:{MED}'>a noite, não.</span></div>
-<div class='c sm' style='top:1515px;font-size:30px;color:{DEST}'>SEXTA · 20.11 · 01H · BALLY CLUB</div>
-<div class='c sm' style='top:1565px;font-size:18px'>INGRESSOS NO SITE DA BALLY OU NA PORTARIA</div>
+<div class='c sm' style='top:1505px;font-size:28px;color:{DEST}'>SEXTA PRA SÁBADO · 21.11 · 01H</div>
+<div class='c sm' style='top:1550px;font-size:22px'>BALLY CLUB</div>
+<div class='c sm' style='top:1590px;font-size:16px'>INGRESSOS NO SITE DA BALLY OU NA PORTARIA</div>
 """)

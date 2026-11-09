@@ -12,7 +12,7 @@ PAL = {
   'q': dict(base='#09080c', dest='#ece6f4', med='#b1a6c4', line='#3a3348', glow='#261f33', mid='#130f1a',
             logo=R + '/assets/logo/lavanda/logo-why-not-lavanda.png', tag='QUINTA, POR QUE NÃO? · BALLY CLUB'),
   'a': dict(base='#08090a', dest='#ececec', med='#a9adb1', line='#2c2f33', glow='#1f2225', mid='#111315',
-            logo=R + '/assets/logo/grafite/logo-why-not-grafite.png', tag='AFTERZIN · 20.11 · 01H · BALLY CLUB'),
+            logo=R + '/assets/logo/grafite/logo-why-not-grafite.png', tag='AFTERZIN · SEXTA PRA SÁBADO · 01H · BALLY'),
 }
 
 def css(p):
@@ -73,7 +73,7 @@ STORIES = [
 <div class='c fr' style='top:1380px;font-size:40px'>ativa o lembrete ↑</div>""", 'Sticker CONTAGEM REGRESSIVA ("afterzin why not?" · 20/11 · 01h) entre 860 e 1340px.'),
 
  ('a2_enquete-vai-nos-dois', 'a', """
-<div class='c sm' style='top:470px;font-size:24px;color:VAR_DEST'>SEXTA · 20.11</div>
+<div class='c sm' style='top:470px;font-size:24px;color:VAR_DEST'>SEXTA PRA SÁBADO · 21.11</div>
 <div class='c bk' style='top:540px;font-size:118px'>vai no show<br>e depois?</div>
 <div class='c fr md' style='top:830px;font-size:46px'>o after é na Bally, a partir da 01h.</div>""", 'Sticker ENQUETE: "vou nos dois" / "só no after" — entre 940 e 1360px.'),
 
