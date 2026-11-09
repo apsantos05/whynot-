@@ -136,9 +136,10 @@ render('site_line-up_1024x600@2x', 1024, 600, f"<div style='position:absolute;in
 <img src='data:image/png;base64,{b64(QW)}' style='position:absolute;left:46px;top:190px;width:330px;transform:rotate(-6deg)'>
 <div class='fr' style='position:absolute;left:120px;top:290px;font-size:40px'>por que não?</div>
 <div style='position:absolute;left:60px;top:378px;width:300px;height:1px;background:linear-gradient(90deg,{MED},transparent);opacity:.6'></div>
-<div class='fr' style='position:absolute;left:60px;top:398px;font-size:24px'>coquetel de lançamento às 21h</div>
-<div class='fr' style='position:absolute;left:60px;top:436px;font-size:24px;color:{MED}'>open gin 22h às 23h · lista VIP pra elas</div>
-<img src='data:image/png;base64,{b64(BALLY)}' style='position:absolute;left:60px;top:500px;width:110px;opacity:.9'>
+<div class='fr' style='position:absolute;left:60px;top:394px;font-size:24px'>coquetel de lançamento às 21h</div>
+<div class='fr' style='position:absolute;left:60px;top:432px;font-size:24px;color:{MED}'>open gin 22h às 23h</div>
+<div class='fr' style='position:absolute;left:60px;top:466px;font-size:24px;color:{MED}'>lista VIP pra elas</div>
+<img src='data:image/png;base64,{b64(BALLY)}' style='position:absolute;left:60px;top:520px;width:100px;opacity:.9'>
 {r}
 {''.join(f"<div class='nm' style='left:{x:.0f}px;top:478px;font-size:19px;z-index:21'>{n}</div>" for (n, *_), x in zip(DJS, xs))}
 """)
