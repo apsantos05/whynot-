@@ -76,32 +76,39 @@ def render(name, W, H, html):
     im = Image.blend(im, ImageChops.overlay(im, n), .16); im.save(f'{OUT}/{name}.png'); print(name, im.size)
 
 # FEED 4:5
-r, xs = row(1080, 470, 140, 205)
-render('2011_feed_afterzin', 1080, 1350, bg(1080, 1350, 640) + f"""
+def feed(name, kick, date):
+  r, xs = row(1080, 470, 140, 205)
+  render(name, 1080, 1350, bg(1080, 1350, 640) + f"""
 <img class='img' src='data:image/png;base64,{b64(WN)}' style='top:56px;width:200px'>
-<div class='c sm' style='top:158px;font-size:19px;color:{DEST}'>ACABOU O VINTAGE CULTURE?</div>
+<div class='c sm' style='top:158px;font-size:19px;color:{DEST}'>{kick}</div>
 <img class='img' src='data:image/png;base64,{b64(AZ)}' style='top:205px;width:760px;transform:translateX(-50%) rotate(-6deg);z-index:5'>
 {r}
 <div style='position:absolute;left:0;right:0;top:860px;height:140px;background:linear-gradient(to bottom,transparent,{BASE} 70%);z-index:8'></div>
 {names(xs, 930, 34)}
-<div class='c sm' style='top:1037px;font-size:27px;color:{DEST};z-index:9'>SEXTA PRA SÁBADO · 21.11 · 01H</div>
+<div class='c sm' style='top:1037px;font-size:27px;color:{DEST};z-index:9'>{date}</div>
 <div class='c fr' style='top:1088px;font-size:34px;color:{MED};z-index:9'>o show acaba à meia-noite. a noite, não.</div>
 <img class='img' src='data:image/png;base64,{b64(BALLY)}' style='top:1170px;width:170px;opacity:.9'>
 <div class='c sm' style='top:1275px;font-size:16px'>INGRESSOS NO SITE DA BALLY OU NA PORTARIA</div>
 """)
 
 # STORY — área segura 250 topo / 330 base
-r, xs = row(1080, 760, 160, 205)
-render('2011_story_afterzin', 1080, 1920, bg(1080, 1920, 1000) + f"""
+def story(name, kick, date):
+  r, xs = row(1080, 760, 160, 205)
+  render(name, 1080, 1920, bg(1080, 1920, 1000) + f"""
 <img class='img' src='data:image/png;base64,{b64(WN)}' style='top:250px;width:220px'>
-<div class='c sm' style='top:360px;font-size:21px;color:{DEST}'>ACABOU O VINTAGE CULTURE?</div>
+<div class='c sm' style='top:360px;font-size:21px;color:{DEST}'>{kick}</div>
 <img class='img' src='data:image/png;base64,{b64(AZ)}' style='top:420px;width:900px;transform:translateX(-50%) rotate(-6deg);z-index:5'>
 {r}
 <div style='position:absolute;left:0;right:0;top:1180px;height:160px;background:linear-gradient(to bottom,transparent,{BASE} 70%);z-index:8'></div>
 {names(xs, 1262, 38)}
 <div class='rule' style='top:1350px;width:460px;z-index:9'></div>
 <div class='c fr' style='top:1380px;font-size:44px;z-index:9'>o show acaba à meia-noite.<br><span style='color:{MED}'>a noite, não.</span></div>
-<div class='c sm' style='top:1505px;font-size:28px;color:{DEST}'>SEXTA PRA SÁBADO · 21.11 · 01H</div>
+<div class='c sm' style='top:1505px;font-size:28px;color:{DEST}'>{date}</div>
 <div class='c sm' style='top:1550px;font-size:22px'>BALLY CLUB</div>
 <div class='c sm' style='top:1590px;font-size:16px'>INGRESSOS NO SITE DA BALLY OU NA PORTARIA</div>
 """)
+
+feed('2011_feed_afterzin', 'ACABOU O VINTAGE CULTURE?', 'SEXTA PRA SÁBADO · 21.11 · 01H')
+story('2011_story_afterzin', 'ACABOU O VINTAGE CULTURE?', 'SEXTA PRA SÁBADO · 21.11 · 01H')
+feed('2011_feed_afterzin_E-HOJE', 'É HOJE · ACABOU O VINTAGE? VEM.', 'HOJE · A PARTIR DA 01H · BALLY CLUB')
+story('2011_story_afterzin_E-HOJE', 'É HOJE · ACABOU O VINTAGE? VEM.', 'HOJE · A PARTIR DA 01H')
