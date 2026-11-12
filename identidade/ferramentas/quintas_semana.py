@@ -40,7 +40,7 @@ def bg(W, cy):
 
 def duo(top, fs, ss):
     return (f"<div class='duo' style='top:{top}px'><div><div class='t' style='font-size:{fs}px'>open gin</div><div class='s' style='font-size:{ss}px'>22H ÀS 23H</div></div>"
-            f"<div class='v'></div><div><div class='t' style='font-size:{fs}px'>lista VIP</div><div class='s' style='font-size:{ss}px'>PARA ELAS</div></div></div>")
+            f"<div class='v'></div><div><div class='t' style='font-size:{fs}px'>lista VIP</div><div class='s' style='font-size:{ss}px'>PRA ELAS ATÉ 00H</div></div></div>")
 
 def render(name, W, H, html):
     with sync_playwright() as p:
@@ -72,13 +72,14 @@ if KIND == 'ehoje':
     render('story_e-hoje', 1080, 1920, bg(1080, 860) + f"""
 <img class='img' src='data:image/png;base64,{b64(WN)}' style='top:260px;width:230px'>
 <div class='c sm' style='top:380px;font-size:24px;color:{DEST}'>{kick}</div>
-<div class='c bk' style='top:500px;font-size:330px'>é hoje.</div>
-<img class='img' src='data:image/png;base64,{b64(QW)}' style='top:850px;width:640px;transform:translateX(-50%) rotate(-6deg)'>
-<div class='c fr' style='top:1040px;font-size:76px'>por que não?</div>
-{hora.format(t=1170, f=50)}
-<div class='rule' style='top:1265px;width:520px'></div>
-{duo(1300, 60, 20)}
-<div class='c sm' style='top:1480px;font-size:20px'>BALLY CLUB · LISTA PELO GRUPO, LINK NA BIO</div>
+<div class='c bk' style='top:500px;font-size:270px'>é hoje.</div>
+<img class='img' src='data:image/png;base64,{b64(QW)}' style='top:790px;width:600px;transform:translateX(-50%) rotate(-6deg)'>
+<div class='c fr' style='top:965px;font-size:70px'>por que não?</div>
+{hora.format(t=1085, f=48)}
+<div class='rule' style='top:1170px;width:520px'></div>
+{duo(1200, 58, 19)}
+<div class='c fr' style='top:1340px;font-size:40px;color:{MED}'>coloca seu nome na lista ↓</div>
+<div class='c sm' style='top:1560px;font-size:18px;color:{DEST}'>INGRESSOS ANTECIPADOS NO LINK DA BIO</div>
 """)
 elif KIND == 'lineup':
     djs = EXTRA
