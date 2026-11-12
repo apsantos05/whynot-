@@ -568,3 +568,131 @@ body.page-lounges {
 }
 .btn.btn--outline-ember:hover { background: rgb(196 82 28 / .14); box-shadow: inset 0 0 0 1.5px var(--bone), 0 0 36px rgb(196 82 28 / .45); }
 .btn.btn--outline-ember:active { box-shadow: inset 0 0 0 1.5px var(--ash); }
+
+/* =====================================================================
+   QUINTA, POR QUE NÃO? — Bally Club, toda quinta (página inicial)
+   Paleta "lavanda noturna" da identidade das quintas.
+   ===================================================================== */
+body.quinta {
+  --q-bg: #09080c;
+  --q-hi: #ece6f4;     /* destaque: letras e botões */
+  --q-mid: #b1a6c4;    /* texto secundário */
+  --q-line: #2e2738;   /* réguas e bordas */
+  --mono: "Space Mono", ui-monospace, monospace;
+  min-height: 100svh;
+  display: flex; flex-direction: column;
+  color: var(--q-hi);
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 38%, #1c1726 0%, transparent 70%),
+    var(--q-bg);
+  overflow-x: hidden;
+}
+.q-mono {
+  font-family: var(--mono); font-size: var(--step--1); letter-spacing: .28em;
+  text-transform: uppercase; color: var(--q-mid); margin: 0; font-weight: 400;
+}
+
+.q-top {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  padding: clamp(28px, 6vh, 56px) var(--gutter) 0;
+}
+.q-top__logo {
+  font-family: var(--serif); font-weight: 900; font-size: clamp(1.4rem, 3vw, 1.9rem); letter-spacing: -0.02em;
+  text-shadow: -1px 1px 0 #b1a6c4, -2px 2px 0 #7c6f94, -3px 3px 0 #4a3f5c, -4px 4px 0 #2a2236;
+}
+
+.q-stage {
+  flex: 1; width: min(100%, 980px); margin: 0 auto;
+  display: grid; justify-items: center; text-align: center;
+  padding: clamp(32px, 7vh, 72px) var(--gutter) 40px;
+}
+.q-quando { color: var(--q-hi); }
+
+/* "quinta," com a extrusão animada (mesmo efeito da logo) + "por que não?" em itálico */
+.q-title { margin: clamp(10px, 3vh, 28px) 0 0; display: grid; justify-items: center; font-weight: 400; }
+body.quinta .hero__stack {
+  font-size: clamp(4.4rem, 20vw, 11rem);
+  transform: rotate(-5deg) skewX(-4deg);
+  padding: 0.1em 0.25em 0.15em 0.35em;
+  color: var(--q-hi);
+}
+body.quinta .extrude:nth-child(2), body.quinta .extrude:nth-child(3) { margin-left: 0; }
+.q-title__sub {
+  display: block; margin-top: 0.12em;
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: clamp(2.2rem, 7.5vw, 4.6rem); line-height: 1; letter-spacing: -0.01em;
+}
+
+.q-perks {
+  display: grid; grid-template-columns: 1fr 1fr; width: min(100%, 560px);
+  margin: clamp(28px, 6vh, 52px) 0 clamp(26px, 5vh, 40px);
+  border-top: 1px solid var(--q-line); border-bottom: 1px solid var(--q-line);
+}
+.q-perks > div { display: grid; gap: 8px; padding: 20px 8px; }
+.q-perks > div + div { border-left: 1px solid var(--q-line); }
+.q-perks strong {
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: clamp(1.7rem, 5vw, 2.6rem); line-height: 1;
+}
+
+.q-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+.q-ctas [hidden] { display: none; }
+.btn.btn--lav {
+  background: var(--q-hi); color: var(--q-bg); margin-top: 0;
+  box-shadow: -2px 2px 0 #b1a6c4, -4px 4px 0 #4a3f5c, 0 0 32px rgb(177 166 196 / .2);
+}
+.btn.btn--lav:hover { box-shadow: -3px 3px 0 #b1a6c4, -6px 6px 0 #4a3f5c, 0 0 40px rgb(177 166 196 / .35); }
+.btn.btn--lav:active { box-shadow: 0 0 0 #b1a6c4; }
+.btn.btn--lav-outline {
+  background: transparent; color: var(--q-hi); margin-top: 0;
+  box-shadow: inset 0 0 0 1.5px var(--q-hi);
+}
+.btn.btn--lav-outline:hover { background: rgb(236 230 244 / .08); }
+.q-note { margin: 14px 0 0; font-family: var(--serif); font-style: italic; color: var(--q-mid); font-size: var(--step-1); }
+
+.q-semana { margin-top: clamp(40px, 8vh, 72px); width: 100%; display: grid; gap: 16px; justify-items: center; }
+.q-semana[hidden] { display: none; }
+.q-semana img {
+  width: 100%; max-width: 1024px; height: auto; border-radius: 14px;
+  border: 1px solid var(--q-line); box-shadow: 0 30px 80px -30px rgb(0 0 0 / .8);
+}
+
+.q-foot {
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  padding: 24px var(--gutter) 36px; color: var(--q-mid); font-size: var(--step--1);
+}
+.q-foot__bally { height: 40px; width: auto; opacity: .85; }
+.q-foot a { color: var(--q-mid); text-decoration: none; }
+.q-foot a:hover { color: var(--q-hi); }
+
+@media (max-width: 640px) {
+  .q-ctas { flex-direction: column; align-items: stretch; width: min(100%, 22rem); }
+  .q-mono { letter-spacing: .16em; font-size: .75rem; }
+}
+
+/* camarotes nas quintas: mesma paleta lavanda da página inicial */
+body.cam-quinta {
+  --abyss: #09080c; --ice: #ece6f4; --frost: #b1a6c4; --tide: #2e2738;
+  background: radial-gradient(ellipse 70% 45% at 50% 20%, #1c1726 0%, transparent 70%), #09080c;
+}
+.cam-quinta .topbar__mark, .cam-quinta .cam__title {
+  text-shadow: -1px 1px 0 #b1a6c4, -2px 2px 0 #7c6f94, -3px 3px 0 #4a3f5c, -4px 4px 0 #2a2236, -5px 5px 0 #17121e;
+}
+.cam__quando {
+  margin: 0 0 12px; font-family: "Space Mono", ui-monospace, monospace; font-size: var(--step--1);
+  letter-spacing: .28em; text-transform: uppercase; color: var(--frost);
+}
+.cam-quinta .spot:hover polygon, .cam-quinta .spot:focus-visible polygon { fill: rgb(236 230 244 / .22); stroke: var(--ice); }
+.cam-quinta .foot { display: flex; flex-direction: column; align-items: center; gap: 12px; color: var(--frost); }
+.cam__bally { height: 36px; width: auto; opacity: .85; }
+
+/* espaços já reservados */
+.spot.is-reserved { cursor: not-allowed; }
+.spot.is-reserved polygon, .spot.is-reserved:hover polygon {
+  fill: rgb(9 8 12 / .7); stroke: rgb(236 230 244 / .3); stroke-dasharray: 6 6;
+}
+.chip.is-reserved {
+  color: rgb(236 230 244 / .4); pointer-events: none; text-decoration: line-through;
+  box-shadow: inset 0 0 0 1.5px rgb(236 230 244 / .12);
+}
+.chip small { margin-left: 6px; font-weight: 500; font-size: .78em; text-decoration: none; display: inline-block; }

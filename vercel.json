@@ -45,5 +45,17 @@
       "source": "/_next/:path*",
       "destination": "https://whynotcrm.vercel.app/_next/:path*"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/lounges",
+      "destination": "/camarotes",
+      "permanent": false
+    },
+    {
+      "source": "/lounges.html",
+      "destination": "/camarotes",
+      "permanent": false
+    }
   ]
 }

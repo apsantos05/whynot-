@@ -41,6 +41,29 @@
     }
   }
 
+  /* ---------- quinta, por que não? (Bally Club) ----------
+     Horário e local vêm do config. O banner da line-up aparece até o dia da quinta
+     configurada (fuso de Brasília) e some sozinho depois, até entrar o da semana seguinte. */
+  if (document.body.classList.contains("quinta")) setupQuinta();
+
+  function setupQuinta() {
+    const q = C.quinta || {};
+    const quando = $("#q-quando");
+    if (quando && q.horario) quando.textContent = `toda quinta · ${q.horario} · ${(q.local || "Bally Club").toLowerCase()}`;
+
+    const sem = C.semana || {};
+    const box = $("#q-semana");
+    const img = $("#q-banner");
+    if (!box || !img || !sem.banner || !sem.data) return;
+    const hoje = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Sao_Paulo" }).format(new Date());
+    if (sem.data < hoje) return;   // quinta já passou: espera o banner novo
+    const [, m, d] = sem.data.split("-");
+    img.src = `${sem.banner}?v=${sem.data}`;
+    img.alt = `Line-up da quinta, por que não? do dia ${d}/${m} na Bally Club`;
+    $("#q-semana-titulo").textContent = sem.data === hoje ? "é hoje · line-up" : `line-up · quinta ${d}.${m}`;
+    box.hidden = false;
+  }
+
   /* ---------- coming soon: lanterna + falha de luz ----------
      A tela fica no breu e a "lanterna" acompanha o mouse (ou o dedo). Dentro do facho
      aparecem frases escritas na parede. Sem mouse, a luz vagueia sozinha.
@@ -127,10 +150,13 @@
   const stack = $(".hero__stack");
   // menos camadas em telas pequenas (celular mais leve), mesma profundidade total
   const layers = matchMedia("(max-width: 640px)").matches ? 12 : 20;
-  // cores da extrusão: no tema "em breve", osso → brasa → breu; senão, gelo → breu
+  // cores da extrusão: quintas = lavanda → breu; tema "em breve" = osso → brasa → breu; senão, gelo → breu
   const soon = document.body.classList.contains("soon");
+  const quinta = document.body.classList.contains("quinta");
   const ramp = (() => {
-    const stops = soon
+    const stops = quinta
+      ? [[0, [0xd9, 0xd0, 0xe8]], [0.35, [0x8f, 0x80, 0xa8]], [0.7, [0x2a, 0x22, 0x36]], [1, [0x09, 0x08, 0x0c]]]
+      : soon
       ? [[0, [0xd8, 0xcd, 0xb6]], [0.3, [0xb0, 0x4a, 0x1a]], [0.65, [0x3a, 0x12, 0x06]], [1, [0x05, 0x04, 0x04]]]
       : [[0, [0xc6, 0xdd, 0xe3]], [1, [0x03, 0x09, 0x0b]]];
     const at = (t) => {
