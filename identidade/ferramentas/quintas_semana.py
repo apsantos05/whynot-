@@ -40,7 +40,7 @@ def bg(W, cy):
 
 def duo(top, fs, ss):
     return (f"<div class='duo' style='top:{top}px'><div><div class='t' style='font-size:{fs}px'>open gin</div><div class='s' style='font-size:{ss}px'>22H ÀS 23H</div></div>"
-            f"<div class='v'></div><div><div class='t' style='font-size:{fs}px'>lista VIP</div><div class='s' style='font-size:{ss}px'>PRA ELAS ATÉ 00H</div></div></div>")
+            f"<div class='v'></div><div><div class='t' style='font-size:{fs}px'>lista VIP</div><div class='s' style='font-size:{ss}px'>ATÉ 00H</div></div></div>")
 
 def render(name, W, H, html):
     with sync_playwright() as p:
@@ -63,10 +63,10 @@ if KIND == 'ehoje':
 <div class='c sm' style='top:180px;font-size:22px;color:{DEST}'>{kick}</div>
 <div class='c bk' style='top:300px;font-size:300px'>é hoje.</div>
 <img class='img' src='data:image/png;base64,{b64(QW)}' style='top:610px;width:560px;transform:translateX(-50%) rotate(-6deg)'>
-<div class='c fr' style='top:775px;font-size:64px'>por que não?</div>
-{hora.format(t=885, f=44)}
-<div class='rule' style='top:960px;width:480px'></div>
-{duo(985, 54, 18)}
+<div class='c fr' style='top:805px;font-size:64px'>por que não?</div>
+{hora.format(t=905, f=44)}
+<div class='rule' style='top:978px;width:480px'></div>
+{duo(1000, 54, 18)}
 <img class='img' src='data:image/png;base64,{b64(BALLY)}' style='top:1170px;width:170px;opacity:.9'>
 """)
     render('story_e-hoje', 1080, 1920, bg(1080, 860) + f"""
@@ -74,11 +74,11 @@ if KIND == 'ehoje':
 <div class='c sm' style='top:380px;font-size:24px;color:{DEST}'>{kick}</div>
 <div class='c bk' style='top:500px;font-size:270px'>é hoje.</div>
 <img class='img' src='data:image/png;base64,{b64(QW)}' style='top:790px;width:600px;transform:translateX(-50%) rotate(-6deg)'>
-<div class='c fr' style='top:965px;font-size:70px'>por que não?</div>
-{hora.format(t=1085, f=48)}
-<div class='rule' style='top:1170px;width:520px'></div>
-{duo(1200, 58, 19)}
-<div class='c fr' style='top:1340px;font-size:40px;color:{MED}'>coloca seu nome na lista ↓</div>
+<div class='c fr' style='top:1015px;font-size:70px'>por que não?</div>
+{hora.format(t=1130, f=48)}
+<div class='rule' style='top:1212px;width:520px'></div>
+{duo(1240, 58, 19)}
+<div class='c fr' style='top:1375px;font-size:40px;color:{MED}'>coloca seu nome na lista ↓</div>
 <div class='c sm' style='top:1560px;font-size:18px;color:{DEST}'>INGRESSOS ANTECIPADOS NO LINK DA BIO</div>
 """)
 elif KIND == 'lineup':
