@@ -1,6 +1,6 @@
 """Intro 10s da logo why not? em vidro (takes gerados no Higgsfield/Kling 3.0 + SFX Mirelo).
 Monta: slogan -> cacos montam a logo (take1 invertido) -> segura -> explode (take2).
-Saídas: 16:9 com som, 9:16 com som, loop 16:9 sem slogan e sem som.
+Saídas: 16:9 com som, 9:16 com som, loop 16:9 sem som (mesmo vídeo, com slogan).
 Uso: python3 intro_logo_vidro.py <pasta fontes>"""
 import os, sys, base64, subprocess
 from playwright.sync_api import sync_playwright
@@ -50,18 +50,19 @@ def video_chain(lead, total):
             f"noise=alls=4:allf=t,format=yuv420p[base]")
 
 def audio_chain(n0):
-    # entradas n0..n0+3 = drone, montagem, impacto, explosao ; + 2 graves sintetizados
+    # entradas n0, n0+2, n0+3 = drone, impacto (grave puro), explosao. O único som de vidro quebrando
+    # entra no quadro do clarão (FLASH); antes disso só grave, tensão subindo e o impacto quando a logo trava.
     d = lambda t: int(max(0, t) * 1000)
-    return (f"[{n0}:a]asplit=2[d0][d1];"
+    return (f"[{n0}:a]asplit=3[d0][d1][d2];"
             f"[d0]afade=t=in:d=0.4,afade=t=out:st=3.2:d=0.8,volume=0.75,adelay={d(0)}:all=1[s0];"
-            # mesma textura grave subindo até a logo travar (tensão), corta seco no impacto
-            f"[d1]atrim=0.6:2.9,asetpts=PTS-STARTPTS,afade=t=in:d=0.6,volume='min(1.1,0.3+0.4*t)':eval=frame,afade=t=out:st=2.2:d=0.1,adelay={d(LOCK-2.3)}:all=1[s4];"
-            f"[{n0+1}:a]volume=3.0,adelay={d(LOCK-3.25)}:all=1[s1];"
-            f"[{n0+2}:a]atrim=start=0.35,asetpts=PTS-STARTPTS,volume=1.0,adelay={d(LOCK-0.05)}:all=1[s2];"
-            f"[{n0+3}:a]atrim=start=0.8,asetpts=PTS-STARTPTS,volume=1.3,afade=t=out:st=2.8:d=0.45,adelay={d(FLASH-0.1)}:all=1[s3];"
+            f"[d1]atrim=0.6:2.9,asetpts=PTS-STARTPTS,afade=t=in:d=0.6,volume='min(1.1,0.3+0.4*t)':eval=frame,afade=t=out:st=2.2:d=0.1,adelay={d(LOCK-2.3)}:all=1[s1];"
+            f"anoisesrc=d=2.2:c=pink:a=0.7:r=48000,highpass=f=400,lowpass=f=5000,volume='0.8*pow(t/2.2,2.5)':eval=frame,afade=t=out:st=2.14:d=0.06,adelay={d(LOCK-2.2)}:all=1[s2];"
+            f"[{n0+2}:a]atrim=start=0.38,asetpts=PTS-STARTPTS,volume=1.0,adelay={d(LOCK-0.02)}:all=1[s3];"
+            f"[{n0+3}:a]atrim=0.88:2.95,asetpts=PTS-STARTPTS,volume=1.6,afade=t=out:st=1.3:d=0.75,adelay={d(FLASH-0.02)}:all=1[s4];"
+            f"[d2]atrim=0.5:3.9,asetpts=PTS-STARTPTS,volume=0.4,afade=t=in:d=0.6,afade=t=out:st=2.4:d=1.0,adelay={d(FLASH+0.2)}:all=1[s5];"
             f"sine=f=46:d=1.6,volume='1.0*exp(-3.2*t)':eval=frame,adelay={d(LOCK)}:all=1[b1];"
             f"sine=f=40:d=2.0,volume='1.2*exp(-2.4*t)':eval=frame,adelay={d(FLASH)}:all=1[b2];"
-            f"[s0][s1][s2][s3][s4][b1][b2]amix=inputs=7:normalize=0:duration=longest,"
+            f"[s0][s1][s2][s3][s4][s5][b1][b2]amix=inputs=8:normalize=0:duration=longest,"
             f"aformat=sample_rates=48000:channel_layouts=stereo,alimiter=limit=0.9,atrim=0:10,apad=whole_dur=10,afade=t=out:st=9.55:d=0.45[mix]")
 
 IN = ['-i', F + '/take1_desmorona.mp4', '-i', F + '/take2_explosao.mp4']
@@ -84,7 +85,6 @@ run(IN + ['-loop', '1', '-t', '2.6', '-r', '24', '-i', A + '/slogan_9x16.png'] +
     f"[bg][fg]overlay=0:618[c];[2:v]{SLG}[sl];[c][sl]overlay=0:0:eof_action=pass,format=yuv420p[v];" + audio_chain(3),
     '-map', '[v]', '-map', '[mix]', '-t', '10'] + ENC + AENC + [D + '/whynot-intro_9x16.mp4'])
 
-# 3) loop 16:9: só a logo (monta, segura, explode), sem slogan e sem som, começa e termina no preto
-TL = A_D + B_D + C_D + 6.0417 / SP2
-run(IN + ['-filter_complex', video_chain(0, round(TL - 0.05, 2)).replace('[base]', '[v]'), '-map', '[v]', '-an'] + ENC + [D + '/whynot-intro_loop_16x9_sem-som.mp4'])
+# 3) loop 16:9 sem som: o mesmo vídeo de 10s (slogan -> logo -> explosão), começa e termina no preto
+run(['-i', D + '/whynot-intro_16x9.mp4', '-c:v', 'copy', '-an', '-movflags', '+faststart', D + '/whynot-intro_loop_16x9_sem-som.mp4'])
 print('ok')
