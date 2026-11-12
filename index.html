@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,900;1,9..144,400&family=Hanken+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=51">
+  <link rel="stylesheet" href="styles.css?v=52">
 </head>
 <body class="quinta">
   <header class="q-top">
@@ -29,6 +29,12 @@
       <span class="q-title__sub" aria-hidden="true">por que não?</span>
     </h1>
 
+    <!-- line-up da semana: troque o banner e a data em config.js -->
+    <section class="q-semana" id="q-semana" hidden aria-labelledby="q-semana-titulo">
+      <h2 class="q-mono q-semana__tag" id="q-semana-titulo">line-up desta quinta</h2>
+      <div class="q-semana__frame"><img id="q-banner" width="1024" height="600" alt=""></div>
+    </section>
+
     <div class="q-perks">
       <div><strong>open gin</strong><span class="q-mono">22h às 23h</span></div>
       <div><strong>lista VIP</strong><span class="q-mono">pra elas</span></div>
@@ -40,11 +46,6 @@
     </div>
     <p class="q-note">nome na lista só pelo grupo.</p>
 
-    <!-- line-up da semana: troque o banner e a data em config.js -->
-    <section class="q-semana" id="q-semana" hidden aria-labelledby="q-semana-titulo">
-      <h2 class="q-mono" id="q-semana-titulo">line-up desta quinta</h2>
-      <img id="q-banner" width="1024" height="600" alt="">
-    </section>
   </main>
 
   <footer class="q-foot">
