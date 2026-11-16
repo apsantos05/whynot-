@@ -11,7 +11,7 @@ LOGO = R + '/assets/logo/grafite/logo-why-not-grafite.png'
 BASE, DEST, MED = (8, 9, 10), '#ececec', '#a9adb1'
 W, H = 1024, 600
 # nome, hora, recorte, centro do rosto (fração da largura), altura da cabeça (fração da altura), destaque
-DJS = [('Mexikanno', '01h', E1 + 'mex.png', .38, .25, False), ('Marquez', '02h', F + 'marquez.png', .50, .35, False),
+DJS = [('Mexikanno', '01h', E1 + 'mex.png', .38, .25, False), ('Marquez', '02h', F + 'marquez.png', .50, .31, False),
        ('Paganotti', '03h', F + 'paganotti.png', .72, .32, True), ('Kaio Alves', '05h', F + 'kaio.png', .51, .39, True),
        ('Polão', '04h', F + 'polao.png', .38, .29, False), ('Possani', '06h', E1 + 'possani.png', .45, .28, False)]
 XS = [512 + (k - 2.5) * 158 for k in range(6)]
@@ -27,12 +27,15 @@ def fundo(sf):
     for i in ordem:
         nome, hora, arq, cx, hf, dest = DJS[i]
         im = Image.open(arq).convert('RGBA'); im = im.crop(im.getchannel('A').getbbox())
+        if 'marquez' in arq:   # fundo claro deixou um halo no cabelo: aperta a máscara
+            from PIL import ImageFilter as _F
+            im.putalpha(im.getchannel('A').filter(_F.MinFilter(7)).filter(_F.GaussianBlur(1.2)))
         head = (112 if dest else 88) * sf; sc = head / (hf * im.height); im = im.resize((round(im.width * sc), round(im.height * sc)), Image.LANCZOS)
         a = im.getchannel('A'); g = ImageOps.autocontrast(ImageOps.grayscale(im.convert('RGB')), cutoff=1); g = ImageEnhance.Contrast(g).enhance(1.12)
         if not dest: g = g.point(lambda v: round(v * .86))
         rgb = Image.merge('RGB', [g.point(lambda v, b=b: round(b + (236 - b) * v / 255)) for b in BASE])
         bg.paste(rgb, (round(XS[i] * sf - cx * im.width), (138 if dest else 162) * sf), a)
-    m = Image.linear_gradient('L').resize((w, h)).point(lambda v: 0 if v < 255 * .525 else min(255, round((v - 255 * .525) * 6.2)))
+    m = Image.linear_gradient('L').resize((w, h)).point(lambda v: round(255 * (lambda t: t * t * (3 - 2 * t))(min(1, max(0, (v / 255 - .47) / .24)))))
     return Image.composite(Image.new('RGB', (w, h), BASE), bg, m)
 
 CSS = f"""@font-face{{font-family:Fr;font-style:italic;font-weight:100 900;src:url(data:font/woff2;base64,{b64(FD+'/fv/files/fraunces-latin-full-italic.woff2')})}}
@@ -45,7 +48,7 @@ html = (f"<img src='data:image/png;base64,{b64(LOGO)}' style='position:absolute;
         f"<div class='t' style='right:44px;top:24px;font-size:56px;font-variation-settings:\"WONK\" 1'>afterzin.</div>"
         f"<div class='m' style='right:44px;top:88px;font-size:15px;color:{DEST}'>sexta pra sábado, 21.11, a partir da 01h, na Bally Club</div>")
 for (nome, hora, _, _, _, dest), x in zip(DJS, XS):
-    html += (f"<div class='t c' style='left:{x:.0f}px;top:{438 if dest else 445}px;font-size:{33 if dest else 24}px;{'' if dest else 'opacity:.82'}'>{nome}</div>"
+    html += (f"<div class='t c' style='left:{x:.0f}px;top:{438 if dest else 445}px;font-size:{31 if dest else 24}px;{'' if dest else 'opacity:.82'}'>{nome}</div>"
              f"<div class='m c' style='left:{x:.0f}px;top:486px;font-size:15px;color:{DEST if dest else MED}'>{hora}</div>")
 html += f"<div class='m c' style='left:512px;top:548px;font-size:14px'>ingressos aqui no site ou na portaria.</div>"
 with sync_playwright() as p:
