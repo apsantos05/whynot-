@@ -44,7 +44,57 @@
   /* ---------- quinta, por que não? (Bally Club) ----------
      Horário e local vêm do config. O banner da line-up aparece até o dia da quinta
      configurada (fuso de Brasília) e some sozinho depois, até entrar o da semana seguinte. */
-  if (document.body.classList.contains("quinta")) setupQuinta();
+  if (document.body.classList.contains("quinta")) { setupAfter(); setupQuinta(); }
+
+  /* ---------- afterzin: destaque até config.after.ate ----------
+     Ativo: vira o topo da página (com a logo viva) e a quinta desce, menor.
+     Depois do fim, o bloco sai e o site volta a ser só a quinta. */
+  function setupAfter() {
+    const a = C.after;
+    const box = $("#after");
+    if (!box) return;
+    const fim = a?.ate ? Date.parse(a.ate) : 0;
+    if (!a || !(fim > Date.now())) { box.remove(); return; }
+
+    box.hidden = false;
+    document.body.classList.add("com-after");
+    // a logo viva passa a ser o "afterzin"; o "quinta," fica com extrusão fixa
+    const q = $(".q-stack");
+    q.classList.remove("hero__stack");
+    $(".af__stack").classList.add("hero__stack");
+    $("#q-antes").hidden = false;
+
+    if (a.quando) $("#af-quando").textContent = a.quando;
+    if (a.nota) $("#af-nota").textContent = a.nota;
+    const btn = $("#af-ingresso");
+    if (a.ingressos) { btn.href = a.ingressos; btn.hidden = false; }
+
+    const ul = $("#af-lineup");
+    (a.lineup || []).forEach((n) => { const li = document.createElement("li"); li.textContent = n; ul.append(li); });
+    if (a.poster) {
+      const img = $("#af-poster");
+      img.src = a.poster;
+      img.alt = `afterzin why not? na Bally Club, ${a.quando || ""}. Line-up: ${(a.lineup || []).join(", ")}.`;
+    } else $(".af__poster").remove();
+
+    // relógio: conta até o início; durante o after mostra "rolando agora"
+    const ini = Date.parse(a.inicio);
+    const dig = $("#af-digitos"), rot = $("#af-relogio-rotulo");
+    const pad = (n) => String(n).padStart(2, "0");
+    const tick = () => {
+      const now = Date.now();
+      if (now >= fim) { box.remove(); document.body.classList.remove("com-after"); return; }
+      if (!(ini > now)) { rot.textContent = "rolando agora"; dig.innerHTML = '<b class="af__live">ao vivo na bally</b>'; return; }
+      let s = Math.floor((ini - now) / 1000);
+      const d = Math.floor(s / 86400); s %= 86400;
+      const h = Math.floor(s / 3600); s %= 3600;
+      const m = Math.floor(s / 60); s %= 60;
+      dig.innerHTML = [[d, "dias"], [h, "h"], [m, "min"], [s, "s"]]
+        .map(([v, u]) => `<span><b>${pad(v)}</b><small>${u}</small></span>`).join("");
+      setTimeout(tick, 1000 - (now % 1000));
+    };
+    tick();
+  }
 
   function setupQuinta() {
     const q = C.quinta || {};
@@ -52,6 +102,13 @@
     if (quando && q.horario) quando.textContent = `toda quinta · ${q.horario} · ${(q.local || "Bally Club").toLowerCase()}`;
 
     const sem = C.semana || {};
+    const hojeSP = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Sao_Paulo" }).format(new Date());
+    const esp = $("#q-especial");
+    if (esp && sem.especial && sem.data && sem.data >= hojeSP) {
+      const [, mm, dd] = sem.data.split("-");
+      esp.textContent = `${sem.data === hojeSP ? "hoje" : `quinta ${dd}.${mm}`} · ${sem.especial.replace(/^edição /, "")}`;
+      esp.hidden = false;
+    }
     const box = $("#q-semana");
     const img = $("#q-banner");
     if (!box || !img || !sem.banner || !sem.data) return;
@@ -153,8 +210,11 @@
   // cores da extrusão: quintas = lavanda → breu; tema "em breve" = osso → brasa → breu; senão, gelo → breu
   const soon = document.body.classList.contains("soon");
   const quinta = document.body.classList.contains("quinta");
+  const comAfter = document.body.classList.contains("com-after");
   const ramp = (() => {
-    const stops = quinta
+    const stops = comAfter
+      ? [[0, [0xd6, 0xd8, 0xda]], [0.35, [0x8a, 0x8e, 0x92]], [0.7, [0x26, 0x28, 0x2b]], [1, [0x08, 0x09, 0x0a]]]
+      : quinta
       ? [[0, [0xd9, 0xd0, 0xe8]], [0.35, [0x8f, 0x80, 0xa8]], [0.7, [0x2a, 0x22, 0x36]], [1, [0x09, 0x08, 0x0c]]]
       : soon
       ? [[0, [0xd8, 0xcd, 0xb6]], [0.3, [0xb0, 0x4a, 0x1a]], [0.65, [0x3a, 0x12, 0x06]], [1, [0x05, 0x04, 0x04]]]

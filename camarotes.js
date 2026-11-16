@@ -14,15 +14,20 @@
     hoje.setUTCDate(hoje.getUTCDate() + faltam);
     return `${String(hoje.getUTCDate()).padStart(2, "0")}/${String(hoje.getUTCMonth() + 1).padStart(2, "0")}`;
   };
-  const data = proximaQuinta();
+  // camarotes.html?festa=after → reserva para o after (nome e data vêm de config.after.camarote)
+  const after = new URLSearchParams(location.search).get("festa") === "after" && C.after?.camarote;
+  const festa = after ? after.nome : "quinta, por que não?";
+  const data = after ? after.data : proximaQuinta();
   const quando = document.getElementById("cam-quando");
-  if (quando) quando.textContent = `quinta, por que não? · ${data}`;
+  if (quando) quando.textContent = `${festa} · ${data}`;
+  if (after) document.title = `Camarotes · ${festa}`;
 
   // cada espaço (área do mapa ou botão da lista) vira um link de WhatsApp com mensagem pronta
   const link = (espaco) => {
     const msg = (cfg.mensagem || "")
       .replaceAll("{espaco}", espaco)
       .replaceAll("{local}", cfg.local || "")
+      .replaceAll("{festa}", festa)
       .replaceAll("{data}", data);
     return `https://wa.me/${cfg.whatsapp}?text=${encodeURIComponent(msg)}`;
   };

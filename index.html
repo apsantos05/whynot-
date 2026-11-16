@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>quinta, por que não? · why not? × Bally Club</title>
+  <title>why not? × Bally Club · afterzin e quinta, por que não?</title>
   <meta name="description" content="quinta, por que não? Toda quinta na Bally Club. Open gin, lista VIP pra elas e camarotes.">
   <meta property="og:title" content="quinta, por que não?">
   <meta property="og:description" content="why not? × Bally Club · toda quinta.">
@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,900;1,9..144,400&family=Hanken+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=52">
+  <link rel="stylesheet" href="styles.css?v=53">
 </head>
 <body class="quinta">
   <header class="q-top">
@@ -21,13 +21,39 @@
     <span class="q-mono">× bally club</span>
   </header>
 
+  <!-- AFTERZIN: destaque da semana. Datas e links em config.js (after). Some sozinho depois do fim. -->
+  <section class="af" id="after" hidden aria-labelledby="af-titulo">
+    <p class="q-mono af__kicker">acabou o vintage culture?</p>
+    <h1 class="af__title" id="af-titulo" aria-label="afterzin why not?">
+      <span class="af__stack" aria-hidden="true"><span class="extrude">afterzin</span></span>
+    </h1>
+    <p class="q-mono af__quando" id="af-quando">sexta pra sábado · 21.11 · 01h · bally club</p>
+    <p class="af__frase">o show acaba à <span class="nw">meia-noite.</span> a noite, não.</p>
+
+    <div class="af__relogio" id="af-relogio" aria-live="off">
+      <span class="q-mono" id="af-relogio-rotulo">começa em</span>
+      <div class="af__digitos" id="af-digitos"></div>
+    </div>
+
+    <div class="q-ctas">
+      <a class="btn btn--af" id="af-ingresso" target="_blank" rel="noopener" hidden>Garantir ingresso</a>
+      <a class="btn btn--af-outline" id="af-camarote" href="camarotes.html?festa=after">Camarote no after</a>
+    </div>
+    <p class="q-note af__note" id="af-nota">ingressos no site da bally ou na portaria.</p>
+
+    <ul class="af__lineup" id="af-lineup" aria-label="Line-up do afterzin"></ul>
+    <div class="af__poster"><img id="af-poster" width="1080" height="1350" alt="" loading="lazy"></div>
+  </section>
+
   <main class="q-stage">
+    <p class="q-mono q-antes" id="q-antes" hidden>antes, na quinta</p>
     <p class="q-mono q-quando" id="q-quando">toda quinta · 22h · bally club</p>
 
-    <h1 class="q-title" aria-label="quinta, por que não?">
-      <span class="hero__stack" aria-hidden="true"><span class="extrude">quinta,</span></span>
+    <h2 class="q-title" aria-label="quinta, por que não?">
+      <span class="hero__stack q-stack" aria-hidden="true"><span class="extrude">quinta,</span></span>
       <span class="q-title__sub" aria-hidden="true">por que não?</span>
-    </h1>
+    </h2>
+    <p class="q-especial" id="q-especial" hidden></p>
 
     <!-- line-up da semana: troque o banner e a data em config.js -->
     <section class="q-semana" id="q-semana" hidden aria-labelledby="q-semana-titulo">
@@ -53,7 +79,7 @@
     <a data-href="instagram" data-bind="instagramHandle"></a>
   </footer>
 
-  <script src="config.js?v=50"></script>
-  <script src="script.js?v=50"></script>
+  <script src="config.js?v=53"></script>
+  <script src="script.js?v=53"></script>
 </body>
 </html>
