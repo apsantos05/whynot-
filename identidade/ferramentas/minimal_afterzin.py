@@ -7,7 +7,8 @@ from playwright.sync_api import sync_playwright
 
 R = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FD, ST = sys.argv[1], sys.argv[2]
-OUT = R + '/afterzin-2011/minimal'; os.makedirs(OUT, exist_ok=True)
+OUT = os.environ.get('OUT', R + '/afterzin-2011/minimal'); os.makedirs(OUT, exist_ok=True)
+VAR = sys.argv[3] if len(sys.argv) > 3 else 'fraunces'   # fonte de apoio: mono | fraunces | archivo | shoulders
 LOGO = R + '/assets/logo/grafite/logo-why-not-grafite.png'
 BASE, DEST, MED = (8, 9, 10), '#ececec', '#a9adb1'
 b64 = lambda p: base64.b64encode(open(p, 'rb').read()).decode()
@@ -35,10 +36,25 @@ CSS = f"""@font-face{{font-family:Fr;font-style:italic;font-weight:100 900;src:u
 .h{{position:absolute;left:72px;font-family:SM;font-weight:700;letter-spacing:.14em;white-space:nowrap}}
 .r{{position:absolute;left:72px;height:1px;width:130px;background:{MED};opacity:.55}}
 .d{{color:{MED};opacity:.78}}"""
+N = FD + '/novas/node_modules/'
+ff = lambda nome, arq, extra='': f"@font-face{{font-family:{nome};font-weight:100 900;{extra}src:url(data:font/woff2;base64,{b64(arq)})}}"
+SEC = {
+ 'mono': '',
+ 'fraunces': ff('FrR', FD + '/fv/files/fraunces-latin-full-normal.woff2') +
+   ".m{font-family:FrR;font-weight:400;letter-spacing:.012em;text-transform:none;transform:scale(1.42);transform-origin:left top;font-variation-settings:\"opsz\" 14,\"WONK\" 0}"
+   ".h{font-family:FrR;font-weight:500;letter-spacing:.02em;font-feature-settings:\"tnum\",\"lnum\";transform:scale(1.14);transform-origin:left top}",
+ 'archivo': ff('Arc', N + '@fontsource-variable/archivo/files/archivo-latin-standard-normal.woff2', 'font-stretch:62% 125%;') +
+   ".m{font-family:Arc;font-weight:600;font-stretch:125%;letter-spacing:.15em;transform:scale(.92);transform-origin:left top}"
+   ".h{font-family:Arc;font-weight:700;font-stretch:125%;letter-spacing:.04em;transform:scale(.96);transform-origin:left top}",
+ 'shoulders': ff('BS', N + '@fontsource/big-shoulders-display/files/big-shoulders-display-latin-800-normal.woff2') +
+   ".m{font-family:BS;font-weight:800;letter-spacing:.13em;transform:scale(1.42);transform-origin:left top}"
+   ".h{font-family:BS;font-weight:800;letter-spacing:.07em;transform:scale(1.34);transform-origin:left top}",
+}
+CSS += SEC[VAR] + ".cr{transform-origin:right top !important}"
 def topo(H, canto='afterzin'):
     y = 250 if H == 1920 else 70
     return (f"<img src='data:image/png;base64,{b64(LOGO)}' style='position:absolute;left:72px;top:{y}px;width:{160 if H==1920 else 150}px'>"
-            f"<div class='m' style='left:auto;right:72px;top:{y+26}px;font-size:{17 if H==1920 else 16}px'>{canto}</div>")
+            f"<div class='m cr' style='left:auto;right:72px;top:{y+26}px;font-size:{17 if H==1920 else 16}px'>{canto}</div>")
 
 def relogio(y, fs, hs, gap, info, extra=''):
     """o relógio: 00:00 apagado / 01:00 aceso"""
@@ -53,7 +69,7 @@ def bloco(base_y, fs, kicker, titulo, info, ks):
             f"<div class='r' style='top:{base_y+34}px'></div>" + ''.join(f"<div class='m' style='top:{base_y+62+i*34}px;font-size:{ks-2}px'>{l}</div>" for i, l in enumerate(info)))
 
 LINE = [('01:00', 'Mexikanno'), ('02:00', 'Marquez'), ('03:00', 'Paganotti'), ('04:00', 'Duha'), ('05:00', 'Kaio Alves'), ('06:00', 'Possani')]
-def grade(y, fs, hs, passo, info, kicker='line-up · horários'):
+def grade(y, fs, hs, passo, info, kicker='line-up e horários'):
     """grade de horários: hora (mono) + nome (itálico), no mesmo relógio da campanha"""
     h = f"<div class='m' style='top:{y}px;font-size:{round(hs*.72)}px;color:{DEST}'>{kicker}</div>"; y0 = y + 58
     for i, (hora, nome) in enumerate(LINE):
@@ -64,23 +80,24 @@ def grade(y, fs, hs, passo, info, kicker='line-up · horários'):
 
 PECAS = [  # nome, W, H, foto, foco, zoom, brilho, base_em, html
  ('1_feed_anuncio', 1080, 1350, '317621805', (.25, .5), 1.0, 1.1, .40,
-  topo(1350) + relogio(838, 88, 27, 30, ['afterzin why not? · sexta pra sábado, 21.11', 'bally club · depois do vintage culture'])),
+  topo(1350) + relogio(838, 88, 27, 30, ['afterzin why not?, sexta pra sábado, 21.11.', 'na Bally Club, depois do Vintage Culture.'])),
  ('2_feed_e-hoje', 1080, 1350, '587737046', (.62, .5), 1.0, 1.0, .40,
-  topo(1350, 'é hoje') + bloco(1168, 96, 'afterzin why not? · hoje', 'a noite<br>continua.', ['a partir da 01h · bally club', 'ingressos no site da bally ou na portaria'], 19)),
+  topo(1350, 'é hoje') + bloco(1168, 96, 'afterzin why not?, hoje', 'a noite<br>continua.', ['a partir da 01h, na Bally Club.', 'ingressos no site da Bally ou na portaria.'], 19)),
  ('s1_story_teaser', 1080, 1920, '216002663', (.5, .5), 1.0, 1.1, .40,
-  topo(1920) + bloco(1490, 112, 'sexta · depois do vintage culture', 'meia-noite<br>é cedo.', ['afterzin why not? · 01h · bally club'], 21)),
+  topo(1920) + bloco(1490, 112, 'sexta, depois do Vintage Culture', 'meia-noite<br>é cedo.', ['afterzin why not?, a partir da 01h, na Bally Club.'], 21)),
  ('s2_story_info', 1080, 1920, '317621805', (.2, .5), 1.0, 1.1, .40,
-  topo(1920) + relogio(1118, 100, 30, 34, ['afterzin why not? · sexta pra sábado, 21.11', 'bally club · ingressos no site ou na portaria'])),
+  topo(1920) + relogio(1118, 100, 30, 34, ['afterzin why not?, sexta pra sábado, 21.11, na Bally Club.', 'ingressos no site da Bally ou na portaria.'])),
  ('3_feed_line', 1080, 1350, '175742652', (.5, .5), 1.0, 1.05, .26,
-  topo(1350) + grade(596, 66, 26, 88, ['sexta pra sábado, 21.11 · bally club · até as 07h', 'ingressos no site da bally ou na portaria'])),
+  topo(1350) + grade(596, 66, 26, 88, ['sexta pra sábado, 21.11, na Bally Club, até as 07h.', 'ingressos no site da Bally ou na portaria.'])),
  ('s4_story_line', 1080, 1920, '175742652', (.5, .5), 1.0, 1.05, .30,
-  topo(1920) + grade(866, 74, 29, 98, ['sexta pra sábado, 21.11 · bally club', 'até as 07h · ingressos no site ou na portaria'])),
+  topo(1920) + grade(866, 74, 29, 98, ['sexta pra sábado, 21.11, na Bally Club, até as 07h.', 'ingressos no site da Bally ou na portaria.'])),
  ('s3_story_e-hoje', 1080, 1920, '587737046', (.72, .5), 1.0, 1.0, .40,
-  topo(1920, 'é hoje') + bloco(1490, 108, 'afterzin why not? · hoje', 'saiu do show,<br>cola na bally.', ['a partir da 01h · ingressos na portaria'], 21)),
+  topo(1920, 'é hoje') + bloco(1490, 108, 'afterzin why not?, hoje', 'saiu do show,<br>cola na bally.', ['a partir da 01h. ingressos na portaria.'], 21)),
 ]
 with sync_playwright() as p:
     br = p.chromium.launch()
     for nome, W, H, foto, foco, zoom, bri, be, html in PECAS:
+        if os.environ.get('ONLY') and nome not in os.environ['ONLY'].split(','): continue
         sf = 2 if H == 1350 else 1
         pg = br.new_page(viewport={'width': W, 'height': H}, device_scale_factor=sf)
         pg.set_content(f"<style>{CSS}body{{width:{W}px;height:{H}px}}</style>{html}")
@@ -88,4 +105,4 @@ with sync_playwright() as p:
         t = Image.open(OUT + '/_t.png'); bg = fundo(foto, W * sf, H * sf, foco, zoom, bri, be); bg.paste(t, (0, 0), t)
         grao(bg).save(f'{OUT}/{nome}.png'); print(nome)
     br.close()
-os.remove(OUT + '/_t.png')
+os.path.exists(OUT + '/_t.png') and os.remove(OUT + '/_t.png')
