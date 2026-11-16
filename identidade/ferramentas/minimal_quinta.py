@@ -1,5 +1,5 @@
 """Linha MINIMALISTA da quinta, por que não? — foto de ambiente em duotone lavanda, muito preto, texto pequeno à esquerda.
-Gera feed 4:5 (2x), story 1080x1920 e story em vídeo (7s) de cada peça.
+Gera feed 4:5 (2x) e story 1080x1920 de cada peça (sem vídeo).
 Uso: python3 minimal_quinta.py <pasta fontes> <pasta fotos stock>   (as fotos do Adobe Stock ficam FORA do repositório)"""
 import os, sys, base64, subprocess, random
 from PIL import Image, ImageOps, ImageEnhance, ImageChops, ImageFilter
@@ -69,14 +69,6 @@ with sync_playwright() as p:
         st = big.resize((1080, 1920), Image.LANCZOS)
         for i in range(3): l = Image.open(f'{OUT}/_l{i}.png'); st.paste(l, (0, 0), l)
         grao(st).save(f'{OUT}/story_{nome}.png')
-        fa = lambda s: f"format=rgba,fade=t=in:st={s}:d=0.7:alpha=1"
-        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-loop', '1', '-t', '7', '-r', '30', '-i', OUT + '/_big.png'] +
-            sum([['-loop', '1', '-t', '7', '-r', '30', '-i', f'{OUT}/_l{i}.png'] for i in range(3)], []) + ['-filter_complex',
-            "[0:v]zoompan=z='1+0.07*on/210':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1080x1920:fps=30,fade=t=in:st=0:d=1.0[b];"
-            f"[1:v]{fa(0.5)}[a];[2:v]{fa(1.4)}[c];[3:v]{fa(2.6)}[d];"
-            "[b][a]overlay[x];[x][c]overlay[y];[y][d]overlay,noise=alls=5:allf=t,fade=t=out:st=6.5:d=0.5,format=yuv420p[v]",
-            '-map', '[v]', '-t', '7', '-c:v', 'libx264', '-crf', '18', '-maxrate', '10M', '-bufsize', '20M', '-pix_fmt', 'yuv420p', '-movflags', '+faststart',
-            f'{OUT}/story_{nome}.mp4'], check=True)
         print(nome)
     br.close()
 for f in os.listdir(OUT):
