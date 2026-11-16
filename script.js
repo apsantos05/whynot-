@@ -70,11 +70,12 @@
     if (a.ingressos) { btn.href = a.ingressos; btn.hidden = false; }
 
     const ul = $("#af-lineup");
-    (a.lineup || []).forEach((n) => { const li = document.createElement("li"); li.textContent = n; ul.append(li); });
+    if (a.lineup?.length) a.lineup.forEach((n) => { const li = document.createElement("li"); li.textContent = n; ul.append(li); });
+    else ul.remove();
     if (a.poster) {
       const img = $("#af-poster");
       img.src = a.poster;
-      img.alt = `afterzin why not? na Bally Club, ${a.quando || ""}. Line-up: ${(a.lineup || []).join(", ")}.`;
+      img.alt = `afterzin why not? na Bally Club, ${a.quando || ""}.${a.lineup?.length ? ` Line-up: ${a.lineup.join(", ")}.` : ""}`;
     } else $(".af__poster").remove();
 
     // relógio: conta até o início; durante o after mostra "rolando agora"

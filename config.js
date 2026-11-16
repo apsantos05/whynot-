@@ -24,8 +24,8 @@ window.WHYNOT = {
     quando: "sexta pra sábado · 21.11 · 01h · bally club",
     ingressos: "",                          // link de venda (site da Bally). Vazio = sem botão, só o aviso abaixo
     nota: "ingressos no site da bally ou na portaria.",
-    lineup: ["Mexikanno", "Kaio Alves", "Coiote", "ALOIRA", "Maka"],
-    poster: "assets/after/afterzin-2011.jpg",
+    lineup: [],                             // ainda não decidida: vazio = sem line-up nem cartaz no site
+    poster: "",                             // cartaz (JPG 1080×1350 em assets/after/) quando a line-up sair
     // camarote no after: a mensagem do WhatsApp sai com o nome e a data do after
     camarote: { nome: "afterzin why not?", data: "20/11 (sexta pra sábado)" },
   },
