@@ -52,6 +52,16 @@ def bloco(base_y, fs, kicker, titulo, info, ks):
     return (f"<div class='m' style='top:{ty-46:.0f}px;font-size:{ks}px;color:{DEST}'>{kicker}</div><div class='t' style='top:{ty:.0f}px;font-size:{fs}px'>{titulo}</div>"
             f"<div class='r' style='top:{base_y+34}px'></div>" + ''.join(f"<div class='m' style='top:{base_y+62+i*34}px;font-size:{ks-2}px'>{l}</div>" for i, l in enumerate(info)))
 
+LINE = [('01:00', 'Mexikanno'), ('02:00', 'Marquez'), ('03:00', 'Paganotti'), ('04:00', 'Duha'), ('05:00', 'Kaio Alves'), ('06:00', 'Possani')]
+def grade(y, fs, hs, passo, info, kicker='line-up · horários'):
+    """grade de horários: hora (mono) + nome (itálico), no mesmo relógio da campanha"""
+    h = f"<div class='m' style='top:{y}px;font-size:{round(hs*.72)}px;color:{DEST}'>{kicker}</div>"; y0 = y + 58
+    for i, (hora, nome) in enumerate(LINE):
+        h += (f"<div class='h' style='top:{y0+i*passo+round(fs*.36)}px;font-size:{hs}px;color:{MED}'>{hora}</div>"
+              f"<div class='t' style='left:{72+round(hs*5.6)}px;top:{y0+i*passo}px;font-size:{fs}px;font-variation-settings:\"WONK\" 0'>{nome}</div>")
+    e = y0 + len(LINE) * passo + 18
+    return h + f"<div class='r' style='top:{e}px'></div>" + ''.join(f"<div class='m' style='top:{e+28+i*34}px;font-size:{round(hs*.66)}px'>{l}</div>" for i, l in enumerate(info))
+
 PECAS = [  # nome, W, H, foto, foco, zoom, brilho, base_em, html
  ('1_feed_anuncio', 1080, 1350, '317621805', (.25, .5), 1.0, 1.1, .40,
   topo(1350) + relogio(838, 88, 27, 30, ['afterzin why not? · sexta pra sábado, 21.11', 'bally club · depois do vintage culture'])),
@@ -61,6 +71,10 @@ PECAS = [  # nome, W, H, foto, foco, zoom, brilho, base_em, html
   topo(1920) + bloco(1490, 112, 'sexta · depois do vintage culture', 'meia-noite<br>é cedo.', ['afterzin why not? · 01h · bally club'], 21)),
  ('s2_story_info', 1080, 1920, '317621805', (.2, .5), 1.0, 1.1, .40,
   topo(1920) + relogio(1118, 100, 30, 34, ['afterzin why not? · sexta pra sábado, 21.11', 'bally club · ingressos no site ou na portaria'])),
+ ('3_feed_line', 1080, 1350, '175742652', (.5, .5), 1.0, 1.05, .26,
+  topo(1350) + grade(596, 66, 26, 88, ['sexta pra sábado, 21.11 · bally club · até as 07h', 'ingressos no site da bally ou na portaria'])),
+ ('s4_story_line', 1080, 1920, '175742652', (.5, .5), 1.0, 1.05, .30,
+  topo(1920) + grade(866, 74, 29, 98, ['sexta pra sábado, 21.11 · bally club', 'até as 07h · ingressos no site ou na portaria'])),
  ('s3_story_e-hoje', 1080, 1920, '587737046', (.72, .5), 1.0, 1.0, .40,
   topo(1920, 'é hoje') + bloco(1490, 108, 'afterzin why not? · hoje', 'saiu do show,<br>cola na bally.', ['a partir da 01h · ingressos na portaria'], 21)),
 ]
