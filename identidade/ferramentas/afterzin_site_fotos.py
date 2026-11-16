@@ -11,9 +11,9 @@ LOGO = R + '/assets/logo/grafite/logo-why-not-grafite.png'
 BASE, DEST, MED = (8, 9, 10), '#ececec', '#a9adb1'
 W, H = 1024, 600
 # nome, hora, recorte, centro do rosto (fração da largura), altura da cabeça (fração da altura), destaque
-DJS = [('Mexikanno', '01h', E1 + 'mex.png', .38, .25, False), ('Marquez', '02h', F + 'marquez.png', .50, .31, False),
-       ('Paganotti', '03h', F + 'paganotti.png', .72, .32, True), ('Kaio Alves', '05h', F + 'kaio.png', .51, .39, True),
-       ('Polão', '04h', F + 'polao.png', .38, .29, False), ('Possani', '06h', E1 + 'possani.png', .45, .28, False)]
+DJS = [('Mexikanno', '01h', E1 + 'mex.png', .38, .32, False), ('Marquez', '02h', F + 'marquez.png', .50, .30, False),
+       ('Paganotti', '03h', F + 'paganotti.png', .72, .285, True), ('Kaio Alves', '05h', F + 'kaio.png', .51, .45, True),
+       ('Polão', '04h', F + 'polao.png', .38, .262, False), ('Possani', '06h', E1 + 'possani.png', .45, .268, False)]
 XS = [512 + (k - 2.5) * 158 for k in range(6)]
 b64 = lambda p: base64.b64encode(open(p, 'rb').read()).decode()
 
@@ -31,7 +31,9 @@ def fundo(sf):
             from PIL import ImageFilter as _F
             im.putalpha(im.getchannel('A').filter(_F.MinFilter(7)).filter(_F.GaussianBlur(1.2)))
         head = (112 if dest else 88) * sf; sc = head / (hf * im.height); im = im.resize((round(im.width * sc), round(im.height * sc)), Image.LANCZOS)
-        a = im.getchannel('A'); g = ImageOps.autocontrast(ImageOps.grayscale(im.convert('RGB')), cutoff=1); g = ImageEnhance.Contrast(g).enhance(1.12)
+        a = im.getchannel('A')
+        fim = Image.linear_gradient('L').resize(im.size).point(lambda v: 255 if v < 150 else max(0, round(255 - (v - 150) * 2.6)))   # some cada foto no próprio rodapé
+        a = ImageChops.multiply(a, fim); g = ImageOps.autocontrast(ImageOps.grayscale(im.convert('RGB')), cutoff=1); g = ImageEnhance.Contrast(g).enhance(1.12)
         if not dest: g = g.point(lambda v: round(v * .86))
         rgb = Image.merge('RGB', [g.point(lambda v, b=b: round(b + (236 - b) * v / 255)) for b in BASE])
         bg.paste(rgb, (round(XS[i] * sf - cx * im.width), (138 if dest else 162) * sf), a)
