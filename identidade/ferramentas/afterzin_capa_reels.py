@@ -1,5 +1,5 @@
 """Capa de Reels do afterzin a partir de um quadro do vídeo: logo no canto, data no canto direito, frase grande embaixo.
-1080x1920; logo, data e frase cabem juntos no corte 4:5 da grade se o corte for puxado pro topo. Uso: python3 afterzin_capa_reels.py <pasta fontes> <quadro.png>"""
+1080x1920; logo, data e frase ficam dentro do corte 3:4 central da grade do perfil. Uso: python3 afterzin_capa_reels.py <pasta fontes> <quadro.png>"""
 import os, sys, base64, random
 import cv2, numpy as np
 from PIL import Image, ImageOps, ImageEnhance, ImageChops, ImageFilter
@@ -21,13 +21,16 @@ for (y0, y1, x0, x1, lim) in [(40, 104, 20, 185, 95), (935, 1065, 170, 545, 46)]
     mask[y0:y1, x0:x1] = (g[y0:y1, x0:x1] > lim).astype(np.uint8) * 255
 k = g.shape[1] / 720; mask = cv2.dilate(mask, np.ones((round(11 * k) | 1,) * 2, np.uint8)); im = cv2.inpaint(im, mask, round(7 * k), cv2.INPAINT_TELEA)
 foto = Image.fromarray(cv2.cvtColor(im, cv2.COLOR_BGR2RGB)).resize((W, H), Image.LANCZOS)
+# a grade do perfil corta a capa em 3:4 pelo centro (y 240 a 1680): desce a foto pra logo, data e frase caberem nesse corte sem pegar o rosto
+DY = 170; base = Image.new('RGB', (W, H), BASE)
+base.paste(foto.crop((0, 0, W, 50)).resize((W, DY + 30)).filter(ImageFilter.GaussianBlur(26)), (0, 0)); base.paste(foto, (0, DY)); foto = base
 
 def fundo(pb):
     f = foto
     if pb:
         gg = ImageEnhance.Contrast(ImageOps.autocontrast(ImageOps.grayscale(f), cutoff=.4)).enhance(1.08)
         f = Image.merge('RGB', [gg.point(lambda v, b=b: round(b + (236 - b) * v / 255)) for b in BASE])
-    m = Image.linear_gradient('L').resize((W, H)).point(lambda v: round(255 * (lambda t: t * t * (3 - 2 * t))(min(1, max(0, (v / 255 - .50) / .30)))))
+    m = Image.linear_gradient('L').resize((W, H)).point(lambda v: round(255 * (lambda t: t * t * (3 - 2 * t))(min(1, max(0, (v / 255 - .585) / .20)))))
     f = Image.composite(Image.new('RGB', (W, H), BASE), f, m.point(lambda v: round(v * .93)))
     t = ImageOps.flip(Image.linear_gradient('L')).resize((W, H)).point(lambda v: max(0, round((v - 165) * 1.5)))
     return Image.composite(Image.new('RGB', (W, H), BASE), f, t)
@@ -35,9 +38,9 @@ def fundo(pb):
 CSS = f"""@font-face{{font-family:Fr;font-style:italic;font-weight:100 900;src:url(data:font/woff2;base64,{b64(FD+'/fv/files/fraunces-latin-full-italic.woff2')})}}
 @font-face{{font-family:FrR;font-weight:100 900;src:url(data:font/woff2;base64,{b64(FD+'/fv/files/fraunces-latin-full-normal.woff2')})}}
 *{{margin:0;padding:0;box-sizing:border-box}} body{{width:{W}px;height:{H}px;background:transparent;position:relative;overflow:hidden}}"""
-html = (f"<img src='data:image/png;base64,{b64(LOGO)}' style='position:absolute;left:62px;top:92px;width:204px'>"
-        f"<div style='position:absolute;right:62px;top:92px;font-family:FrR;font-weight:500;font-size:56px;color:{DEST};letter-spacing:.01em;font-feature-settings:\"lnum\";font-variation-settings:\"WONK\" 0;text-shadow:0 2px 18px rgba(0,0,0,.55)'>21.11</div>"
-        f"<div style='position:absolute;left:60px;top:1296px;font-family:Fr;font-style:italic;font-weight:440;font-size:172px;line-height:.98;letter-spacing:-.015em;color:{DEST};text-shadow:0 4px 30px rgba(0,0,0,.5)'>aqui é<br>why not?</div>")
+html = (f"<img src='data:image/png;base64,{b64(LOGO)}' style='position:absolute;left:62px;top:292px;width:190px'>"
+        f"<div style='position:absolute;right:62px;top:290px;font-family:FrR;font-weight:500;font-size:52px;color:{DEST};letter-spacing:.01em;font-feature-settings:\"lnum\";font-variation-settings:\"WONK\" 0;text-shadow:0 2px 18px rgba(0,0,0,.55)'>21.11</div>"
+        f"<div style='position:absolute;left:60px;top:1372px;font-family:Fr;font-style:italic;font-weight:440;font-size:128px;line-height:.98;letter-spacing:-.015em;color:{DEST};text-shadow:0 4px 30px rgba(0,0,0,.5)'>aqui é<br>why not?</div>")
 with sync_playwright() as p:
     br = p.chromium.launch(); pg = br.new_page(viewport={'width': W, 'height': H})
     pg.set_content(f"<style>{CSS}</style>{html}"); pg.evaluate('document.fonts.ready.then(()=>0)'); pg.wait_for_timeout(250)
