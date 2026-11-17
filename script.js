@@ -74,7 +74,7 @@
     else ul.remove();
     if (a.poster) {
       const img = $("#af-poster");
-      img.src = a.poster;
+      img.src = `${a.poster}?v=2`;
       img.alt = `afterzin why not? na Bally Club, ${a.quando || ""}.${a.lineup?.length ? ` Line-up: ${a.lineup.join(", ")}.` : ""}`;
     } else $(".af__poster").remove();
 

@@ -1,4 +1,4 @@
-"""afterzin why not? — arte FINAL com a line-up confirmada (Paganotti + Marquez, Kaio Alves, Possani, Mexikanno, Duha).
+"""afterzin why not? — arte FINAL com a line-up confirmada (Paganotti + Marquez, Kaio Alves, Possani, Mexikanno, Polão).
 Paleta Grafite. Fotos tiradas do cartaz da Bally (fundo verde removido por cor), em P&B.
 Gera feed 4:5 + story (2x) em afterzin-2011/final/ e o JPG do site em ../assets/after/.
 Renderiza com o Chrome/Edge em modo headless (não precisa de Playwright).
@@ -11,13 +11,14 @@ R = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 A = R + '/afterzin-2011'; OUT = A + '/final'; os.makedirs(OUT, exist_ok=True)
 SITE = os.path.dirname(R) + '/assets/after'; os.makedirs(SITE, exist_ok=True)
 SRC = A + '/fotos/bally_2011_lineup_original.webp'
+POLAO = A + '/fotos/polao_original.webp'
 WN = R + '/assets/logo/grafite/logo-why-not-grafite.png'
 AZ = A + '/assets/wordmark-afterzin-grafite.png'
 BALLY = A + '/assets/bally_logo_grafite.png'
 BASE, DEST, MED, LINE = '#08090a', '#ececec', '#a9adb1', '#2c2f33'
 
 HEADLINER = 'Paganotti'
-LINEUP = ['Marquez', 'Kaio Alves', 'Possani', 'Mexikanno', 'Duha']
+LINEUP = ['Marquez', 'Kaio Alves', 'Possani', 'Mexikanno', 'Polão']
 QUANDO = 'SEXTA PRA SÁBADO · 21.11 · 01H'
 FRASE = "o show acaba à meia-noite. <span style='color:%s'>a noite, não.</span>" % MED
 INGRESSOS = 'INGRESSOS NO SITE DA BALLY OU NA PORTARIA'
@@ -42,6 +43,26 @@ def grupo():
     a = np.array(c)
     fg = (a != 128) & ~((H > 110) & (H < 140) & (S > 90) & (V > 90))   # buracos verdes entre dedos/cabelo
     m = Image.fromarray((fg * 255).astype('uint8')).filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(1.5))
+    # sai a dupla Duha (cartaz da Bally), entra o Polão no mesmo lugar
+    duo = Image.new('L', im.size, 0)
+    ImageDraw.Draw(duo).polygon([(535, 610), (540, 470), (565, 390), (605, 362), (645, 372), (655, 420), (700, 425), (720, 400),
+                                 (770, 400), (805, 430), (815, 480), (840, 520), (845, 610)], fill=255)
+    m = ImageChops.subtract(m, duo.filter(ImageFilter.GaussianBlur(3)))
+    pl = Image.open(POLAO).convert('RGB')
+    pm = Image.new('L', pl.size, 0)
+    ImageDraw.Draw(pm).polygon([(235, 330), (290, 305), (330, 312), (380, 300), (430, 290), (480, 298), (510, 315), (532, 360), (536, 440),
+                                (520, 505), (490, 535), (465, 548), (455, 562), (456, 620), (448, 690), (432, 745), (405, 790), (385, 830),
+                                (370, 923), (115, 923), (80, 820), (62, 700), (68, 560), (100, 475), (160, 400), (205, 380)], fill=255)
+    # tira o halo da parede clara perto da borda do recorte
+    Hp, Sp, Vp = [np.array(c).astype(int) for c in pl.convert('HSV').split()]
+    borda = np.array(pm) > np.array(pm.filter(ImageFilter.MinFilter(21)))
+    parede = borda & (Vp > 185) & (Sp < 45)
+    pm = Image.fromarray(np.where(parede, 0, np.array(pm)).astype('uint8')).filter(ImageFilter.GaussianBlur(1.6))
+    k = 0.45; x0, y0 = round(690 - 380 * k), round(335 - 290 * k)
+    pl = pl.resize((round(pl.width * k), round(pl.height * k)), Image.LANCZOS); pm = pm.resize(pl.size, Image.LANCZOS)
+    pl = ImageEnhance.Contrast(ImageEnhance.Brightness(pl).enhance(1.18)).enhance(1.3)   # aproxima do contraste das outras fotos
+    im.paste(pl, (x0, y0), pm)
+    lay = Image.new('L', im.size, 0); lay.paste(pm, (x0, y0))
     # P&B grafite
     g = ImageOps.autocontrast(ImageOps.grayscale(im), cutoff=1); g = ImageEnhance.Contrast(g).enhance(1.15)
     lo, hi = (8, 9, 10), (236, 236, 236)
@@ -50,7 +71,11 @@ def grupo():
     fb = Image.linear_gradient('L').resize((W, Hh)).point(lambda v: 255 if v < 150 else max(0, 255 - (v - 150) * 2.4))
     side = Image.linear_gradient('L').rotate(90, expand=True).resize((W, Hh))
     side = ImageChops.multiply(side.point(lambda v: min(255, v * 9)), ImageOps.mirror(side).point(lambda v: min(255, v * 9)))
-    rgb.putalpha(ImageChops.multiply(ImageChops.multiply(m, fb), side))
+    a = ImageChops.multiply(ImageChops.multiply(m, fb), side)
+    # o Polão some mais embaixo que o resto, pra o rosto não ficar apagado
+    fp = Image.linear_gradient('L').resize((W, Hh)).point(lambda v: 255 if v < 205 else max(0, 255 - (v - 205) * 5))
+    a = ImageChops.lighter(a, ImageChops.multiply(lay, fp))
+    rgb.putalpha(a)
     buf = io.BytesIO(); rgb.save(buf, 'PNG'); return base64.b64encode(buf.getvalue()).decode(), rgb.size
 
 FOTO, (FW, FH) = grupo()
