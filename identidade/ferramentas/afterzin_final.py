@@ -50,17 +50,17 @@ def grupo():
     m = ImageChops.subtract(m, duo.filter(ImageFilter.GaussianBlur(3)))
     pl = Image.open(POLAO).convert('RGB')
     pm = Image.new('L', pl.size, 0)
-    ImageDraw.Draw(pm).polygon([(235, 330), (290, 305), (330, 312), (380, 300), (430, 290), (480, 298), (510, 315), (532, 360), (536, 440),
-                                (520, 505), (490, 535), (465, 548), (455, 562), (456, 620), (448, 690), (432, 745), (405, 790), (385, 830),
-                                (370, 923), (115, 923), (80, 820), (62, 700), (68, 560), (100, 475), (160, 400), (205, 380)], fill=255)
+    ImageDraw.Draw(pm).polygon([(240, 300), (258, 252), (300, 228), (360, 222), (410, 240), (430, 282), (432, 345), (452, 372),
+                                (468, 440), (474, 515), (528, 578), (546, 650), (548, 760), (540, 860), (515, 923), (105, 923),
+                                (78, 820), (76, 660), (92, 545), (150, 478), (200, 450), (212, 385), (232, 350), (236, 320)], fill=255)
     # tira o halo da parede clara perto da borda do recorte
     Hp, Sp, Vp = [np.array(c).astype(int) for c in pl.convert('HSV').split()]
     borda = np.array(pm) > np.array(pm.filter(ImageFilter.MinFilter(21)))
     parede = borda & (Vp > 185) & (Sp < 45)
     pm = Image.fromarray(np.where(parede, 0, np.array(pm)).astype('uint8')).filter(ImageFilter.GaussianBlur(1.6))
-    k = 0.45; x0, y0 = round(690 - 380 * k), round(335 - 290 * k)
+    k = 0.52; x0, y0 = round(690 - 320 * k), round(340 - 222 * k)
     pl = pl.resize((round(pl.width * k), round(pl.height * k)), Image.LANCZOS); pm = pm.resize(pl.size, Image.LANCZOS)
-    pl = ImageEnhance.Contrast(ImageEnhance.Brightness(pl).enhance(1.18)).enhance(1.3)   # aproxima do contraste das outras fotos
+    pl = ImageEnhance.Contrast(pl).enhance(1.2)   # aproxima do contraste das outras fotos
     im.paste(pl, (x0, y0), pm)
     lay = Image.new('L', im.size, 0); lay.paste(pm, (x0, y0))
     # P&B grafite
