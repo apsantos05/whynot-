@@ -820,3 +820,5 @@ body.com-after .q-title__sub { font-size: clamp(1.7rem, 5.5vw, 3rem); }
   text-shadow: -2px 2px 0 #a9adb1, -4px 4px 0 #6e7276, -6px 6px 0 #3a3d40;
 }
 .af__lineup li:not(:first-child) { font-size: .78em; }
+.af__logo { display: block; width: clamp(220px, 46vw, 400px); height: auto; filter: drop-shadow(-3px 3px 0 #6e7276) drop-shadow(0 8px 26px rgb(0 0 0 / .9)); }
+.af__lineup li:first-child:has(.af__logo) { text-shadow: none; margin-bottom: 6px; }

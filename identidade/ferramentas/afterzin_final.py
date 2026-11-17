@@ -15,6 +15,7 @@ POLAO = A + '/fotos/polao_original.webp'
 WN = R + '/assets/logo/grafite/logo-why-not-grafite.png'
 AZ = A + '/assets/wordmark-afterzin-grafite.png'
 BALLY = A + '/assets/bally_logo_grafite.png'
+PAG = A + '/assets/paganotti_logo.png'   # logo do Paganotti, tirado do cartaz da Bally
 BASE, DEST, MED, LINE = '#08090a', '#ececec', '#a9adb1', '#2c2f33'
 
 HEADLINER = 'Paganotti'
@@ -92,6 +93,7 @@ body{{position:relative}}
 .hl{{font-family:Fraunces;font-weight:900;font-variation-settings:'opsz' 144;color:{DEST};letter-spacing:-.03em;line-height:1;
      text-shadow:-2px 2px 0 #a9adb1,-4px 4px 0 #6e7276,-6px 6px 0 #3a3d40,-8px 8px 0 #1a1b1d,0 10px 40px rgba(0,0,0,.9)}}
 .img{{position:absolute;left:50%;transform:translateX(-50%)}}
+.logo{{filter:drop-shadow(-3px 3px 0 #6e7276) drop-shadow(0 8px 30px rgba(0,0,0,.95))}}
 .rule{{position:absolute;left:50%;height:1px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,{MED},transparent);opacity:.55}}
 .sep{{color:{LINE};margin:0 .35em}}
 """
@@ -126,13 +128,13 @@ feed = render('2011_feed_afterzin_final', 1080, 1350, bg(1080, 1350, 360) + f"""
 <div class='c sm' style='top:160px;font-size:19px;color:{DEST}'>ACABOU O VINTAGE CULTURE?</div>
 <img class='img' src='data:image/png;base64,{b64(AZ)}' style='top:205px;width:760px;transform:translateX(-50%) rotate(-6deg)'>
 {foto(398, 1080)}
-<div class='c hl' style='top:912px;font-size:118px'>{HEADLINER}</div>
-<div class='c' style='top:1044px'>{nomes(40)}</div>
-<div class='rule' style='top:1108px;width:420px'></div>
-<div class='c sm' style='top:1124px;font-size:27px;color:{DEST}'>{QUANDO}</div>
-<div class='c fr' style='top:1170px;font-size:31px'>{FRASE}</div>
-<img class='img' src='data:image/png;base64,{b64(BALLY)}' style='top:1228px;width:120px;opacity:.9'>
-<div class='c sm' style='top:1306px;font-size:14px'>{INGRESSOS}</div>
+<img class='img logo' src='data:image/png;base64,{b64(PAG)}' style='top:884px;width:290px'>
+<div class='c' style='top:1090px'>{nomes(38)}</div>
+<div class='rule' style='top:1146px;width:420px'></div>
+<div class='c sm' style='top:1160px;font-size:26px;color:{DEST}'>{QUANDO}</div>
+<div class='c fr' style='top:1200px;font-size:29px'>{FRASE}</div>
+<img class='img' src='data:image/png;base64,{b64(BALLY)}' style='top:1248px;width:100px;opacity:.9'>
+<div class='c sm' style='top:1314px;font-size:13px'>{INGRESSOS}</div>
 """)
 
 # STORY 9:16 — área segura 250 topo / 330 base
@@ -141,12 +143,12 @@ render('2011_story_afterzin_final', 1080, 1920, bg(1080, 1920, 640) + f"""
 <div class='c sm' style='top:372px;font-size:22px;color:{DEST}'>ACABOU O VINTAGE CULTURE?</div>
 <img class='img' src='data:image/png;base64,{b64(AZ)}' style='top:425px;width:880px;transform:translateX(-50%) rotate(-6deg)'>
 {foto(680, 1080)}
-<div class='c hl' style='top:1182px;font-size:140px'>{HEADLINER}</div>
-<div class='c' style='top:1352px'>{nomes(40)}</div>
-<div class='rule' style='top:1428px;width:460px'></div>
-<div class='c sm' style='top:1452px;font-size:29px;color:{DEST}'>{QUANDO}</div>
-<div class='c fr' style='top:1500px;font-size:36px'>{FRASE}</div>
-<div class='c sm' style='top:1568px;font-size:17px'>BALLY CLUB · {INGRESSOS}</div>
+<img class='img logo' src='data:image/png;base64,{b64(PAG)}' style='top:1105px;width:380px'>
+<div class='c' style='top:1395px'>{nomes(40)}</div>
+<div class='rule' style='top:1462px;width:460px'></div>
+<div class='c sm' style='top:1482px;font-size:29px;color:{DEST}'>{QUANDO}</div>
+<div class='c fr' style='top:1528px;font-size:36px'>{FRASE}</div>
+<div class='c sm' style='top:1592px;font-size:17px'>BALLY CLUB · {INGRESSOS}</div>
 """)
 
 # site: JPG 1080×1350

@@ -70,11 +70,18 @@
     if (a.ingressos) { btn.href = a.ingressos; btn.hidden = false; }
 
     const ul = $("#af-lineup");
-    if (a.lineup?.length) a.lineup.forEach((n) => { const li = document.createElement("li"); li.textContent = n; ul.append(li); });
+    if (a.lineup?.length) a.lineup.forEach((n, i) => {
+      const li = document.createElement("li");
+      if (i === 0 && a.logoHeadliner) {
+        const img = new Image(); img.src = `${a.logoHeadliner}?v=1`; img.alt = n; img.className = "af__logo";
+        li.append(img);
+      } else li.textContent = n;
+      ul.append(li);
+    });
     else ul.remove();
     if (a.poster) {
       const img = $("#af-poster");
-      img.src = `${a.poster}?v=3`;
+      img.src = `${a.poster}?v=4`;
       img.alt = `afterzin why not? na Bally Club, ${a.quando || ""}.${a.lineup?.length ? ` Line-up: ${a.lineup.join(", ")}.` : ""}`;
     } else $(".af__poster").remove();
 

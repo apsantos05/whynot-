@@ -25,6 +25,7 @@ window.WHYNOT = {
     ingressos: "",                          // link de venda (site da Bally). Vazio = sem botão, só o aviso abaixo
     nota: "ingressos no site da bally ou na portaria.",
     lineup: ["Paganotti", "Marquez", "Kaio Alves", "Possani", "Mexikanno", "Polão"],
+    logoHeadliner: "assets/after/paganotti.png",   // logo no lugar do 1º nome da line-up
     poster: "assets/after/afterzin-2011.jpg",   // feito com identidade/ferramentas/afterzin_final.py
     // camarote no after: a mensagem do WhatsApp sai com o nome e a data do after
     camarote: { nome: "afterzin why not?", data: "20/11 (sexta pra sábado)" },
