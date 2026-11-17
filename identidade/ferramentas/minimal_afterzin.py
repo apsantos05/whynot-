@@ -83,11 +83,11 @@ def grade(y, fs, hs, passo, info, kicker='line-up e horários'):
 
 PECAS = [  # nome, W, H, foto, foco, zoom, brilho, base_em, html
  ('1_feed_anuncio', 1080, 1350, '317621805', (.25, .5), 1.0, 1.1, .40,
-  topo(1350) + relogio(838, 88, 27, 30, ['afterzin why not?, sexta pra sábado, 21.11.', 'na Bally Club, depois do Vintage Culture.'])),
+  topo(1350) + relogio(838, 88, 27, 30, ['afterzin why not?, sexta pra sábado, 21.11.', 'na Bally Club, depois do show.'])),
  ('2_feed_e-hoje', 1080, 1350, '587737046', (.62, .5), 1.0, 1.0, .40,
   topo(1350, 'é hoje') + bloco(1168, 96, 'afterzin why not?, hoje', 'a noite<br>continua.', ['a partir da 01h, na Bally Club.', 'ingressos no site da Bally ou na portaria.'], 19)),
  ('s1_story_teaser', 1080, 1920, '216002663', (.5, .5), 1.0, 1.1, .40,
-  topo(1920) + bloco(1490, 112, 'sexta, depois do Vintage Culture', 'meia-noite<br>é cedo.', ['afterzin why not?, a partir da 01h, na Bally Club.'], 21)),
+  topo(1920) + bloco(1490, 112, 'sexta, depois do show', 'meia-noite<br>é cedo.', ['afterzin why not?, a partir da 01h, na Bally Club.'], 21)),
  ('s2_story_info', 1080, 1920, '317621805', (.2, .5), 1.0, 1.1, .40,
   topo(1920) + relogio(1118, 100, 30, 34, ['afterzin why not?, sexta pra sábado, 21.11, na Bally Club.', 'ingressos no site da Bally ou na portaria.'])),
  ('3_feed_line', 1080, 1350, '175742652', (.5, .5), 1.0, 1.05, .26,
