@@ -17,9 +17,10 @@ b64 = lambda p: base64.b64encode(open(p, 'rb').read()).decode()
 im = cv2.imread(QUADRO); g = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
 mask = np.zeros(g.shape, np.uint8)
 for (y0, y1, x0, x1, lim) in [(40, 104, 20, 185, 95), (935, 1065, 170, 545, 46)]:   # logo do canto e a legenda queimada
+    k = g.shape[1] / 720; y0, y1, x0, x1 = [round(v * k) for v in (y0, y1, x0, x1)]   # coordenadas medidas em 720 de largura
     mask[y0:y1, x0:x1] = (g[y0:y1, x0:x1] > lim).astype(np.uint8) * 255
-mask = cv2.dilate(mask, np.ones((11, 11), np.uint8)); im = cv2.inpaint(im, mask, 7, cv2.INPAINT_TELEA)
-foto = Image.fromarray(cv2.cvtColor(im, cv2.COLOR_BGR2RGB)).resize((W, H), Image.LANCZOS).filter(ImageFilter.UnsharpMask(1.4, 45, 2))
+k = g.shape[1] / 720; mask = cv2.dilate(mask, np.ones((round(11 * k) | 1,) * 2, np.uint8)); im = cv2.inpaint(im, mask, round(7 * k), cv2.INPAINT_TELEA)
+foto = Image.fromarray(cv2.cvtColor(im, cv2.COLOR_BGR2RGB)).resize((W, H), Image.LANCZOS)
 
 def fundo(pb):
     f = foto
