@@ -814,3 +814,9 @@ body.com-after .q-title__sub { font-size: clamp(1.7rem, 5.5vw, 3rem); }
 .af__quando, .q-especial, .af__frase { text-wrap: balance; }
 @media (max-width: 640px) { .q-especial { border-radius: 14px; line-height: 1.6; } }
 .nw { white-space: nowrap; }
+/* headliner do after: primeiro nome da line-up, maior e sozinho na linha */
+.af__lineup li:first-child {
+  flex-basis: 100%; justify-content: center; font-size: 1.9em; line-height: 1.05; letter-spacing: -0.03em;
+  text-shadow: -2px 2px 0 #a9adb1, -4px 4px 0 #6e7276, -6px 6px 0 #3a3d40;
+}
+.af__lineup li:not(:first-child) { font-size: .78em; }
