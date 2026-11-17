@@ -56,11 +56,11 @@ def topo(H, canto='afterzin'):
     return (f"<img src='data:image/png;base64,{b64(LOGO)}' style='position:absolute;left:72px;top:{y}px;width:{160 if H==1920 else 150}px'>"
             f"<div class='m cr' style='left:auto;right:72px;top:{y+26}px;font-size:{17 if H==1920 else 16}px'>{canto}</div>")
 
-def relogio(y, fs, hs, gap, info, extra=''):
+def relogio(y, fs, hs, gap, info, extra='', t1='o show acaba.', t2='a noite continua.'):
     """o relógio: 00:00 apagado / 01:00 aceso"""
     a = y; b = a + hs + 14; c = b + fs + gap; d = c + hs + 14; e = d + fs + 44
-    return (f"<div class='h d' style='top:{a}px;font-size:{hs}px'>00:00</div><div class='t d' style='top:{b}px;font-size:{fs}px'>o show acaba.</div>"
-            f"<div class='h' style='top:{c}px;font-size:{hs}px;color:{DEST}'>01:00</div><div class='t' style='top:{d}px;font-size:{fs}px'>a noite continua.</div>"
+    return (f"<div class='h d' style='top:{a}px;font-size:{hs}px'>00:00</div><div class='t d' style='top:{b}px;font-size:{fs}px'>{t1}</div>"
+            f"<div class='h' style='top:{c}px;font-size:{hs}px;color:{DEST}'>01:00</div><div class='t' style='top:{d}px;font-size:{fs}px'>{t2}</div>"
             f"<div class='r' style='top:{e}px'></div>" + ''.join(f"<div class='m' style='top:{e+28+i*34}px;font-size:{round(hs*.62)}px'>{l}</div>" for i, l in enumerate(info)) + extra)
 
 def bloco(base_y, fs, kicker, titulo, info, ks):
@@ -83,11 +83,13 @@ def grade(y, fs, hs, passo, info, kicker='line-up e horários'):
 
 PECAS = [  # nome, W, H, foto, foco, zoom, brilho, base_em, html
  ('1_feed_anuncio', 1080, 1350, '317621805', (.25, .5), 1.0, 1.1, .40,
-  topo(1350) + relogio(838, 88, 27, 30, ['afterzin why not?, sexta pra sábado, 21.11.', 'na Bally Club, depois do show.'])),
+  topo(1350) + relogio(838, 88, 27, 30, ['afterzin why not?, sexta pra sábado, 21.11.', 'na Bally Club.'])),
+ ('1b_feed_anuncio_sem-show', 1080, 1350, '317621805', (.25, .5), 1.0, 1.1, .40,
+  topo(1350) + relogio(838, 88, 27, 30, ['afterzin why not?, sexta pra sábado, 21.11.', 'na Bally Club.'], t1='é cedo.')),
  ('2_feed_e-hoje', 1080, 1350, '587737046', (.62, .5), 1.0, 1.0, .40,
   topo(1350, 'é hoje') + bloco(1168, 96, 'afterzin why not?, hoje', 'a noite<br>continua.', ['a partir da 01h, na Bally Club.', 'ingressos no site da Bally ou na portaria.'], 19)),
  ('s1_story_teaser', 1080, 1920, '216002663', (.5, .5), 1.0, 1.1, .40,
-  topo(1920) + bloco(1490, 112, 'sexta, depois do show', 'meia-noite<br>é cedo.', ['afterzin why not?, a partir da 01h, na Bally Club.'], 21)),
+  topo(1920) + bloco(1490, 112, 'sexta,', 'meia-noite<br>é cedo.', ['afterzin why not?, a partir da 01h, na Bally Club.'], 21)),
  ('s2_story_info', 1080, 1920, '317621805', (.2, .5), 1.0, 1.1, .40,
   topo(1920) + relogio(1118, 100, 30, 34, ['afterzin why not?, sexta pra sábado, 21.11, na Bally Club.', 'ingressos no site da Bally ou na portaria.'])),
  ('3_feed_line', 1080, 1350, '175742652', (.5, .5), 1.0, 1.05, .26,
