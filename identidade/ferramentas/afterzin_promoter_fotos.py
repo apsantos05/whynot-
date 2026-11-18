@@ -15,10 +15,11 @@ b64 = lambda p: base64.b64encode(open(p, 'rb').read()).decode()
 sm = lambda t: (lambda u: u * u * (3 - 2 * u))(min(1, max(0, t)))
 
 # nome, recorte, centro do rosto (fração da largura), altura da cabeça (fração da altura), x do rosto, topo da cabeça, altura da cabeça em px, espelha
-TRAS = [('Mexikanno', E1 + 'mex.png', .38, .32, 128, 572, 178, False), ('Marquez', F + 'marquez.png', .50, .30, 338, 560, 180, False),
-        ('Polão', F + 'polao.png', .38, .262, 792, 560, 184, False), ('Possani', E1 + 'possani.png', .45, .268, 978, 574, 176, False)]
-FRENTE = [('Kaio Alves', F + 'kaio.png', .51, .45, 672, 770, 236, False), ('Paganotti', F + 'paganotti.png', .72, .285, 432, 778, 250, False)]
-FIM_GRUPO = (1120, 1330)      # o grupo todo some no preto entre essas duas alturas
+TRAS = [('Mexikanno', E1 + 'mex.png', .38, .32, 118, 548, 180, False), ('Marquez', F + 'marquez.png', .50, .30, 318, 548, 180, False),
+        ('Possani', E1 + 'possani.png', .45, .268, 792, 548, 180, False), ('Polão', F + 'polao.png', .38, .262, 988, 548, 180, False)]
+# Kaio à esquerda (corpo virado pra fora) e Paganotti espelhado, com a mão pra direita: cada um abre pra um lado
+FRENTE = [('Kaio Alves', F + 'kaio2.png', .66, .222, 425, 800, 248, False), ('Paganotti', F + 'paganotti.png', .72, .285, 662, 800, 248, True)]
+FIM_GRUPO = (1095, 1300)      # o grupo todo some no preto entre essas duas alturas
 
 def figura(arq, cx, hf, x, topo, cab, espelha, brilho, sat):
     im = Image.open(arq).convert('RGBA'); im = im.crop(im.getchannel('A').getbbox())
@@ -63,10 +64,11 @@ html = (f"<img src='data:image/png;base64,{b64(LOGO)}' style='position:absolute;
         f"<div class='m' style='left:auto;right:72px;top:268px;font-size:25px'>line-up</div>"
         f"<div class='t' style='left:64px;top:326px;font-size:150px;font-variation-settings:\"WONK\" 1'>afterzin.</div>"
         f"<div class='m' style='top:494px;font-size:30px;color:{DEST}'>sexta pra sábado, 21.11, a partir da 01h, na Bally Club.</div>"
-        f"<div class='t' style='top:1322px;font-size:88px'>Paganotti, Kaio Alves,</div>"
-        f"<div class='t' style='top:1428px;font-size:47px;opacity:.8'>Mexikanno, Marquez, Polão e Possani.</div>"
-        f"<div class='r' style='top:1512px'></div>"
-        f"<div class='m' style='top:1538px;font-size:28px'>ingressos comigo, no link.</div>")
+        f"<div class='m' style='top:1312px;font-size:32px;color:{DEST}'>a line é pesada.</div>"
+        f"<div class='t' style='top:1360px;font-size:86px'>Kaio Alves, Paganotti,</div>"
+        f"<div class='t' style='top:1462px;font-size:46px;opacity:.8'>Mexikanno, Marquez, Polão e Possani.</div>"
+        f"<div class='r' style='top:1542px'></div>"
+        f"<div class='m' style='top:1566px;font-size:28px'>ingressos comigo, no link.</div>")
 with sync_playwright() as p:
     br = p.chromium.launch(); pg = br.new_page(viewport={'width': W, 'height': H})
     pg.set_content(f"<style>{CSS}</style>{html}"); pg.evaluate('document.fonts.ready.then(()=>0)'); pg.wait_for_timeout(250)
