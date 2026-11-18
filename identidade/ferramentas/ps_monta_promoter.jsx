@@ -33,10 +33,11 @@ function recorta() { executeAction(stringIDToTypeID('groupEvent'), new ActionDes
 var fundo = poe('fundo_pb', 'fundo P&B (feixes de luz)');
 var djs = doc.layerSets.add(); djs.name = 'DJs (cor natural)'; djs.move(fundo, ElementPlacement.PLACEBEFORE);
 var ordem = [['dj_mexikanno', 'Mexikanno'], ['dj_marquez', 'Marquez'], ['dj_possani', 'Possani'], ['dj_polao', 'Polão'],
-             ['sombra_frente', 'sombra da frente'], ['dj_kaio-alves', 'Kaio Alves'], ['dj_paganotti', 'Paganotti']];
+             ['sombra_frente', 'sombra da frente'], ['dj_kaio-alves', 'Kaio Alves'], ['dj_paganotti', 'Paganotti'], ['veu_texto', 'véu atrás dos nomes']];
 for (var i = 0; i < ordem.length; i++) {
     var l = poe(ordem[i][0], ordem[i][1], djs);
     if (ordem[i][0] == 'sombra_frente') { l.opacity = 75; continue; }
+    if (ordem[i][0] == 'veu_texto') continue;
     // contraste leve só nesse DJ (curva em S presa na camada)
     curvas('contraste ' + ordem[i][1], [[0, 0], [64, 58], [192, 200], [255, 255]]); recorta();
 }
