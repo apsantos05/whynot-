@@ -62,8 +62,30 @@ SEXTA = (topo('grafite', 'afterzin') +
   "<div class='m' style='top:1412px;font-size:28px'>a partir da 01h, na Bally Club.</div>"
   "<div class='m' style='top:1452px;font-size:28px'>ingressos no link.</div>")
 
+# versões pras PROMOTERS postarem no perfil delas, com o link de cada uma
+QUINTA_PROMO = QUINTA.replace('ingressos no link.', 'ingressos comigo, no link.')
+
+LINE = [('01:00', 'Mexikanno'), ('02:00', 'Marquez'), ('03:00', 'Paganotti'), ('04:00', 'Polão'), ('05:00', 'Kaio Alves'), ('06:00', 'Possani')]
+DESTAQUE = {'Paganotti', 'Kaio Alves'}
+def grade(y, fs=74, hs=33, passo=98):
+    h, yy = '', y
+    for hora, nome in LINE:
+        d = nome in DESTAQUE; f = round(fs * (1.34 if d else 1))
+        h += (f"<div class='m{' c' if d else ''}' style='top:{yy+round(f*.40)}px;font-size:{hs}px;font-weight:500;font-feature-settings:\"tnum\",\"lnum\"'>{hora}</div>"
+              f"<div class='t' style='left:236px;top:{yy}px;font-size:{f}px;{'' if d else 'opacity:.78'}'>{nome}</div>")
+        yy += round(passo * (1.26 if d else 1))
+    return h, yy
+_g, _fim = grade(752)
+SEXTA_PROMO = (topo('grafite', 'afterzin') +
+  "<div class='m c' style='top:690px;font-size:30px'>afterzin why not?, sexta pra sábado, 21.11</div>" + _g +
+  f"<div class='r' style='top:{_fim+22}px'></div>"
+  f"<div class='m' style='top:{_fim+50}px;font-size:28px'>a partir da 01h, na Bally Club.</div>"
+  f"<div class='m' style='top:{_fim+90}px;font-size:28px'>ingressos comigo, no link.</div>")
+
 PECAS = [  # saída, paleta, foto, foco, zoom, brilho, base_em, html
  (R + '/quintas-bally/semanas/2026-11-19/story_special-bday_link.png', 'lavanda', '1885683718', (.5, .56), 1.0, 1.75, .37, QUINTA),
+ (R + '/quintas-bally/semanas/2026-11-19/story_special-bday_promoter.png', 'lavanda', '1885683718', (.5, .56), 1.0, 1.75, .37, QUINTA_PROMO),
+ (R + '/afterzin-2011/minimal/s6_story_promoter_link.png', 'grafite', '175742652', (.5, .5), 1.0, 1.05, .28, SEXTA_PROMO),
  (R + '/afterzin-2011/minimal/s5_story_ingressos_link.png', 'grafite', '354468011', (.56, .5), 1.0, 1.3, .44, SEXTA),
 ]
 with sync_playwright() as p:
