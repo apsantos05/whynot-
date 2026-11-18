@@ -18,12 +18,12 @@ def coluna(f):
     c = Image.new('L', (1, H)); c.putdata([round(255 * min(1, max(0, f(y)))) for y in range(H)]); return c.resize((W, H))
 
 # nome, arquivo da camada, recorte, centro do rosto (fração da largura), altura da cabeça (fração da altura), x do rosto, topo da cabeça, altura da cabeça, espelha, brilho
-DJS = [('Mexikanno', 'dj_mexikanno', E1 + 'mex.png', .38, .32, 112, 598, 190, False, .9),
-       ('Marquez', 'dj_marquez', F + 'marquez.png', .50, .30, 318, 590, 190, False, .9),
-       ('Possani', 'dj_possani', E1 + 'possani.png', .45, .268, 768, 590, 190, False, .9),
-       ('Polão', 'dj_polao', F + 'polao.png', .38, .262, 972, 586, 190, False, .9),
-       ('Kaio Alves', 'dj_kaio-alves', F + 'kaio2.png', .66, .222, 392, 842, 282, False, 1.02),
-       ('Paganotti', 'dj_paganotti', F + 'paganotti.png', .72, .285, 676, 806, 330, True, 1.0)]
+DJS = [('Mexikanno', 'dj_mexikanno', E1 + 'mex.png', .38, .32, 205, 566, 188, False, .9),
+       ('Marquez', 'dj_marquez', F + 'marquez.png', .50, .30, 400, 560, 188, False, .9),
+       ('Possani', 'dj_possani', E1 + 'possani.png', .45, .268, 680, 560, 188, False, .9),
+       ('Polão', 'dj_polao', F + 'polao.png', .38, .262, 878, 556, 188, False, .9),
+       ('Kaio Alves', 'dj_kaio-alves', F + 'kaio2.png', .66, .222, 380, 846, 300, False, 1.02),
+       ('Paganotti', 'dj_paganotti', F + 'paganotti.png', .72, .285, 690, 846, 300, True, 1.0)]
 FIM = (1270, 1590)        # cada DJ some no preto entre essas alturas
 
 def figura(arq, cx, hf, x, topo, cab, espelha, brilho):
