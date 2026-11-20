@@ -95,7 +95,7 @@ PECAS = [  # nome, W, H, foto, foco, zoom, brilho, base_em, html
  ('s4_story_line', 1080, 1920, '175742652', (.5, .5), 1.0, 1.05, .30,
   topo(1920) + grade(800, 74, 29, 98, ['sexta pra sábado, 21.11, na Bally Club, até as 07h.', 'ingressos no site da Bally ou na portaria.'])),
  ('s3_story_e-hoje', 1080, 1920, '587737046', (.72, .5), 1.0, 1.0, .40,
-  topo(1920, 'é hoje') + bloco(1490, 108, 'afterzin why not?, hoje', 'saiu do show,<br>cola na bally.', ['a partir da 01h. ingressos na portaria.'], 21)),
+  topo(1920, 'é hoje') + bloco(1490, 108, 'afterzin why not?, hoje', 'acabou lá,<br>cola na bally.', ['a partir da 01h. ingressos na portaria.'], 21)),
 ]
 with sync_playwright() as p:
     br = p.chromium.launch()
