@@ -31,6 +31,21 @@ window.WHYNOT = {
     camarote: { nome: "afterzin why not?", data: "20/11 (sexta pra sábado)" },
   },
 
+  // PARCERIA DA QUINTA: enquanto "ate" não passar, a página da quinta troca de tema (cores, título,
+  // logo do parceiro e line-up com horários). Depois volta sozinha para a quinta normal.
+  // Para uma parceria nova: troque os textos, a logo em assets/parceria/ e as datas.
+  parceria: {
+    tema: "baruc",                                   // classe de cores em styles.css (body.tema-baruc)
+    ate: "2026-11-27T08:00:00-03:00",
+    quando: "quinta · 26.11 · 22h · bally club",
+    titulo: ["ressaca", "das <em>provas.</em>"],     // linha 1 (logo viva) e linha 2 (itálico; <em> sai em vermelho)
+    com: "com a Baruc, Odonto Unorte",
+    logo: "assets/parceria/baruc.png",
+    logoAlt: "Baruc, A.A.A.E.K Odonto Unorte",
+    lineup: [["22h", "Mexikanno"], ["00h", "DJ Camuri"], ["01h", "Maycon Beats"], ["02h", "Jhonatan Soares"], ["03h", "Possani"]],
+    ingressos: "",                                   // link de venda; vazio = sem botão
+  },
+
   // Line-up da semana (página inicial). Toda semana: troque o arquivo assets/semana/line-up.jpg
   // pelo banner novo (1024×600) e mude "data" para o dia da quinta (AAAA-MM-DD).
   // Depois desse dia o banner some sozinho até você colocar o da próxima quinta.

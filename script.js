@@ -44,7 +44,34 @@
   /* ---------- quinta, por que não? (Bally Club) ----------
      Horário e local vêm do config. O banner da line-up aparece até o dia da quinta
      configurada (fuso de Brasília) e some sozinho depois, até entrar o da semana seguinte. */
-  if (document.body.classList.contains("quinta")) { setupAfter(); setupQuinta(); }
+  if (document.body.classList.contains("quinta")) { setupAfter(); setupQuinta(); setupParceria(); }
+
+  /* ---------- parceria da quinta: tema temporário até config.parceria.ate ---------- */
+  function setupParceria() {
+    const p = C.parceria;
+    if (!p?.ate || !(Date.parse(p.ate) > Date.now())) return;
+    document.body.classList.add(`tema-${p.tema}`);
+    const [l1, l2] = p.titulo || [];
+    if (l1) $("#q-title-1").textContent = l1;
+    if (l2) $("#q-title-2").innerHTML = l2;
+    const tit = $("#q-title"); tit.setAttribute("aria-label", [l1, l2].join(" ").replace(/<[^>]+>/g, ""));
+    if (p.quando) $("#q-quando").textContent = p.quando;
+    $("#q-especial").hidden = true;
+    $("#q-parceria-com").textContent = p.com || "";
+    const logo = $("#q-parceria-logo");
+    if (p.logo) { logo.src = p.logo; logo.alt = p.logoAlt || p.com || ""; } else logo.remove();
+    const ol = $("#q-line");
+    (p.lineup || []).forEach(([h, n]) => {
+      const li = document.createElement("li");
+      li.innerHTML = `<span class="q-line__h"></span><span class="q-line__n"></span>`;
+      li.firstChild.textContent = h; li.lastChild.textContent = n;
+      ol.append(li);
+    });
+    if (!ol.children.length) ol.remove();
+    if (p.ingressos) { const b = $("#q-ingresso"); b.href = p.ingressos; b.hidden = false; }
+    $("#q-parceria").hidden = false;
+    document.title = `${[l1, l2].join(" ").replace(/<[^>]+>/g, "")} · why not? × Bally Club`;
+  }
 
   /* ---------- afterzin: destaque até config.after.ate ----------
      Ativo: vira o topo da página (com a logo viva) e a quinta desce, menor.
@@ -219,8 +246,11 @@
   const soon = document.body.classList.contains("soon");
   const quinta = document.body.classList.contains("quinta");
   const comAfter = document.body.classList.contains("com-after");
+  const baruc = document.body.classList.contains("tema-baruc") && !comAfter;
   const ramp = (() => {
-    const stops = comAfter
+    const stops = baruc
+      ? [[0, [0xf0, 0xb8, 0xbc]], [0.3, [0xe3, 0x26, 0x2e]], [0.65, [0x6e, 0x12, 0x22]], [1, [0x0c, 0x06, 0x08]]]
+      : comAfter
       ? [[0, [0xd6, 0xd8, 0xda]], [0.35, [0x8a, 0x8e, 0x92]], [0.7, [0x26, 0x28, 0x2b]], [1, [0x08, 0x09, 0x0a]]]
       : quinta
       ? [[0, [0xd9, 0xd0, 0xe8]], [0.35, [0x8f, 0x80, 0xa8]], [0.7, [0x2a, 0x22, 0x36]], [1, [0x09, 0x08, 0x0c]]]

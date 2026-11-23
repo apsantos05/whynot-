@@ -7,13 +7,13 @@
   <meta name="description" content="quinta, por que não? Toda quinta na Bally Club. Open gin, lista VIP pra elas e camarotes.">
   <meta property="og:title" content="quinta, por que não?">
   <meta property="og:description" content="why not? × Bally Club · toda quinta.">
-  <meta property="og:image" content="assets/after/afterzin-2011.jpg">
+  <meta property="og:image" content="assets/parceria/baruc-feed.jpg">
   <meta name="theme-color" content="#09080c">
   <link rel="icon" href="assets/logo.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,900;1,9..144,400&family=Hanken+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=58">
+  <link rel="stylesheet" href="styles.css?v=59">
 </head>
 <body class="quinta">
   <header class="q-top">
@@ -49,11 +49,19 @@
     <p class="q-mono q-antes" id="q-antes" hidden>antes, na quinta</p>
     <p class="q-mono q-quando" id="q-quando">toda quinta · 22h · bally club</p>
 
-    <h2 class="q-title" aria-label="quinta, por que não?">
-      <span class="hero__stack q-stack" aria-hidden="true"><span class="extrude">quinta,</span></span>
-      <span class="q-title__sub" aria-hidden="true">por que não?</span>
+    <h2 class="q-title" id="q-title" aria-label="quinta, por que não?">
+      <span class="hero__stack q-stack" aria-hidden="true"><span class="extrude" id="q-title-1">quinta,</span></span>
+      <span class="q-title__sub" id="q-title-2" aria-hidden="true">por que não?</span>
     </h2>
     <p class="q-especial" id="q-especial" hidden></p>
+
+    <!-- parceria da semana (config.js → parceria): logo do parceiro e line-up com horários -->
+    <div class="q-parceria" id="q-parceria" hidden>
+      <p class="q-parceria__com" id="q-parceria-com"></p>
+      <img class="q-parceria__logo" id="q-parceria-logo" alt="" width="421" height="440">
+      <ol class="q-line" id="q-line" aria-label="Line-up e horários"></ol>
+      <a class="btn btn--lav q-parceria__ingresso" id="q-ingresso" target="_blank" rel="noopener" hidden>Comprar ingresso</a>
+    </div>
 
     <!-- line-up da semana: troque o banner e a data em config.js -->
     <section class="q-semana" id="q-semana" hidden aria-labelledby="q-semana-titulo">
@@ -75,11 +83,11 @@
   </main>
 
   <footer class="q-foot">
-    <img src="assets/bally-lavanda.png" alt="Bally Club" class="q-foot__bally" height="40">
+    <img src="assets/bally-lavanda.png" alt="Bally Club" class="q-foot__bally" id="q-bally" height="40">
     <a data-href="instagram" data-bind="instagramHandle"></a>
   </footer>
 
-  <script src="config.js?v=57"></script>
-  <script src="script.js?v=58"></script>
+  <script src="config.js?v=59"></script>
+  <script src="script.js?v=59"></script>
 </body>
 </html>
