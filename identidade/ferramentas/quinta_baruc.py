@@ -65,7 +65,32 @@ FEED = (topo(72, 150) +
   "<div class='r' style='top:842px'></div>" + grade(872, 50, 26, 64) +
   "<div class='m c' style='top:1218px;font-size:28px'>ingressos no link da bio.</div>")
 
+# lista VIP (link do grupo): valores com nome na lista até 00h
+def precos(y, fs, gap):
+    return (f"<div class='m' style='top:{y}px;font-size:{round(fs*.36)}px'>mulher, com nome na lista</div>"
+            f"<div class='t' style='top:{y+round(fs*.52)}px;font-size:{fs}px'><span class='v'>free</span> até 00h.</div>"
+            f"<div class='m' style='top:{y+gap}px;font-size:{round(fs*.36)}px'>homem, com nome na lista</div>"
+            f"<div class='t' style='top:{y+gap+round(fs*.52)}px;font-size:{fs}px'><span class='v'>R$ 20</span> até 00h.</div>")
+
+STORY_VIP = (topo(250, 160) +
+  f"<img src='data:image/png;base64,{b64(LOGO_BR)}' style='position:absolute;left:72px;top:360px;width:210px;filter:drop-shadow(0 12px 40px rgba(0,0,0,.6))'>"
+  "<div class='m c' style='top:640px;font-size:31px'>quinta, 26.11, na Bally Club</div>"
+  "<div class='t' style='top:688px;font-size:156px'>lista <span class='v'>vip.</span></div>"
+  "<div class='m' style='top:870px;font-size:30px'>ressaca das provas, com a Baruc.</div>"
+  "<div class='r' style='top:940px'></div>" + precos(986, 96, 220) +
+  "<div class='m c' style='top:1486px;font-size:31px'>entra no grupo e coloca seu nome.</div>")
+
+FEED_VIP = (topo(72, 150) +
+  f"<img src='data:image/png;base64,{b64(LOGO_BR)}' style='position:absolute;right:66px;top:150px;width:220px;filter:drop-shadow(0 10px 30px rgba(0,0,0,.6))'>"
+  "<div class='m c' style='top:430px;font-size:29px'>quinta, 26.11, na Bally Club</div>"
+  "<div class='t' style='top:474px;font-size:140px'>lista <span class='v'>vip.</span></div>"
+  "<div class='m' style='top:640px;font-size:27px'>ressaca das provas, com a Baruc.</div>"
+  "<div class='r' style='top:700px'></div>" + precos(736, 84, 196) +
+  "<div class='m c' style='top:1180px;font-size:28px'>link do grupo na bio.</div>")
+
 PECAS = [  # saída, W, H, html, foto, foco, escurecimento por altura
+ ('story_lista-vip_baruc.png', 1080, 1920, STORY_VIP, '216002663', (.5, .5), lambda y: .55 * (1 - sm((y - 200) / 420)) + .80 * sm((y - 620) / 520)),
+ ('feed_lista-vip_baruc.png', 1080, 1350, FEED_VIP, '216002663', (.5, .5), lambda y: .45 * (1 - sm((y - 40) / 300)) + .80 * sm((y - 420) / 420)),
  ('story_ressaca-das-provas_baruc.png', 1080, 1920, STORY, '317621805', (.30, .5), lambda y: .55 * (1 - sm((y - 200) / 420)) + .82 * sm((y - 760) / 520)),
  ('feed_ressaca-das-provas_baruc.png', 1080, 1350, FEED, '317621805', (.30, .5), lambda y: .45 * (1 - sm((y - 40) / 300)) + .80 * sm((y - 440) / 420)),
 ]
