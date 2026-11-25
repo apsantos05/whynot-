@@ -49,7 +49,7 @@ window.WHYNOT = {
   // XMAS PARTY (sexta 18.12): spoiler com luzinhas, cortina e sino (natal.js).
   // Aparece entre "de" e "ate". Para ver antes, abra o site com ?natal=1
   natal: {
-    de: "2026-11-27T08:00:00-03:00",     // depois que sai o tema da Baruc
+    de: "2026-11-25T00:00:00-03:00",
     ate: "2026-12-19T08:00:00-03:00",
     data: "2026-12-18",
   },
