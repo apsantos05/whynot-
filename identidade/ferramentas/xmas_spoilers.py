@@ -1,5 +1,5 @@
 """XMAS PARTY, stories de spoiler (1080x1920) com a cortina de veludo.
-  1 fechada: "dia 18, essa cortina abre."   2 entreaberta: "já dá pra ver um pouco."   3 contagem: "faltam N dias."
+  1 fechada e 2 entreaberta: só a logo e a data (suspense)   3 contagem: "faltam N dias."
 Uso: python3 xmas_spoilers.py <pasta fontes> [dias...]"""
 import os, sys, base64
 from PIL import Image, ImageChops
@@ -29,11 +29,11 @@ def peca(nome, fundo, html, escurece):
     bg.alpha_composite(Image.open(P + '_t.png')); bg.convert('RGB').save(P + nome, quality=95); os.remove(P + '_t.png'); print(nome)
 
 peca('story_spoiler_1_cortina-fechada.png', 'cortina_fechada.png', TOPO +
-     "<div class='c ouro' style='top:1330px;font-size:118px'>dia 18,<br>essa cortina abre.</div>"
-     "<div class='c cap' style='top:1640px;font-size:34px'>sexta-feira</div>", (150, 1.6))
+     "<div class='c ouro' style='top:1400px;font-size:170px'>18.12</div>"
+     "<div class='c cap' style='top:1615px;font-size:36px'>sexta-feira</div>", (150, 1.6))
 peca('story_spoiler_2_cortina-entreaberta.png', 'cortina_entreaberta.png', TOPO +
-     "<div class='c ouro' style='top:1360px;font-size:112px'>já dá pra ver<br>um pouco.</div>"
-     "<div class='c cap' style='top:1660px;font-size:34px'>sexta, 18.12</div>", (150, 1.6))
+     "<div class='c ouro' style='top:1400px;font-size:170px'>18.12</div>"
+     "<div class='c cap' style='top:1615px;font-size:36px'>sexta-feira</div>", (150, 1.6))
 for d in DIAS:
     peca(f'story_contagem_faltam-{d}.png', 'cortina_aberta.png', TOPO +
          f"<div class='c cap' style='top:1355px;font-size:34px'>faltam</div>"
