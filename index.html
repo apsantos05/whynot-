@@ -12,13 +12,19 @@
   <link rel="icon" href="assets/logo.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,900;1,9..144,400&family=Hanken+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=59">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,900;1,9..144,400&family=Hanken+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&family=Playfair+Display:ital@1&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=60">
 </head>
 <body class="quinta">
+  <!-- XMAS PARTY (natal.js): luzinhas, neve e botão de som. Ficam escondidos fora das datas de config.natal -->
+  <div class="natal-luzes" id="natal-luzes" aria-hidden="true"></div>
+  <canvas class="natal-neve" id="natal-neve" aria-hidden="true"></canvas>
+  <button class="natal-som" id="natal-som" type="button" hidden aria-pressed="true"><span aria-hidden="true">🔔</span></button>
+
   <header class="q-top">
     <span class="q-top__logo">why not?</span>
     <span class="q-mono">× bally club</span>
+    <a class="natal-chip" id="natal-chip" href="#natal" hidden>🎁 spoiler · 18.12</a>
   </header>
 
   <!-- AFTERZIN: destaque da semana. Datas e links em config.js (after). Some sozinho depois do fim. -->
@@ -80,6 +86,21 @@
     </div>
     <p class="q-note">nome na lista só pelo grupo.</p>
 
+    <!-- XMAS PARTY: cortina que abre com sino -->
+    <section class="natal" id="natal" hidden aria-labelledby="natal-titulo">
+      <p class="natal__kicker">spoiler</p>
+      <h2 class="natal__titulo" id="natal-titulo">tem coisa vindo aí.</h2>
+      <div class="natal__palco" id="natal-palco" role="button" tabindex="0" aria-label="Abrir a cortina">
+        <img class="natal__fundo" src="assets/natal/aberta.jpg" width="880" height="1100" alt="why not? Xmas Party, 18.12, sexta-feira" loading="lazy">
+        <span class="natal__pano natal__pano--e" aria-hidden="true"></span>
+        <span class="natal__pano natal__pano--d" aria-hidden="true"></span>
+        <span class="natal__toque" aria-hidden="true">🔔 toque pra abrir</span>
+      </div>
+      <p class="natal__faltam" id="natal-faltam"></p>
+      <p class="natal__texto">o natal da why not? chega antes de todo mundo viajar.<br>sexta, 18.12. o resto, só no grupo.</p>
+      <a class="btn natal__btn" id="natal-grupo" target="_blank" rel="noopener" hidden>Quero saber primeiro</a>
+    </section>
+
   </main>
 
   <footer class="q-foot">
@@ -87,7 +108,8 @@
     <a data-href="instagram" data-bind="instagramHandle"></a>
   </footer>
 
-  <script src="config.js?v=59"></script>
+  <script src="config.js?v=60"></script>
   <script src="script.js?v=59"></script>
+  <script src="natal.js?v=1"></script>
 </body>
 </html>

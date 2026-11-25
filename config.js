@@ -46,6 +46,14 @@ window.WHYNOT = {
     ingressos: "",                                   // link de venda; vazio = sem botão
   },
 
+  // XMAS PARTY (sexta 18.12): spoiler com luzinhas, cortina e sino (natal.js).
+  // Aparece entre "de" e "ate". Para ver antes, abra o site com ?natal=1
+  natal: {
+    de: "2026-11-27T08:00:00-03:00",     // depois que sai o tema da Baruc
+    ate: "2026-12-19T08:00:00-03:00",
+    data: "2026-12-18",
+  },
+
   // Line-up da semana (página inicial). Toda semana: troque o arquivo assets/semana/line-up.jpg
   // pelo banner novo (1024×600) e mude "data" para o dia da quinta (AAAA-MM-DD).
   // Depois desse dia o banner some sozinho até você colocar o da próxima quinta.
