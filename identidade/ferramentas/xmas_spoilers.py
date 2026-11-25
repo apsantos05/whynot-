@@ -36,5 +36,8 @@ peca('story_spoiler_2_cortina-entreaberta.png', 'cortina_entreaberta.png', TOPO 
      "<div class='c cap' style='top:1615px;font-size:36px'>sexta-feira</div>", (150, 1.6))
 for d in DIAS:
     peca(f'story_contagem_faltam-{d}.png', 'cortina_aberta.png', TOPO +
-         f"<div class='c cap' style='top:1355px;font-size:34px'>faltam</div>"
-         f"<div class='c ouro' style='top:1400px;font-size:190px'>{d} dias.</div>", (170, 1.9))
+         f"<div class='c cap' style='top:1355px;font-size:34px'>{'falta' if d == 1 else 'faltam'}</div>"
+         f"<div class='c ouro' style='top:1400px;font-size:190px'>{d} {'dia' if d == 1 else 'dias'}.</div>", (170, 1.9))
+# dia da festa
+peca('story_e-hoje.png', 'cortina_aberta.png', TOPO +
+     "<div class='c ouro' style='top:1390px;font-size:200px'>é hoje.</div>", (170, 1.9))
