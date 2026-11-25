@@ -29,8 +29,8 @@ def peca(nome, fundo, html, escurece):
     bg.alpha_composite(Image.open(P + '_t.png')); bg.convert('RGB').save(P + nome, quality=95); os.remove(P + '_t.png'); print(nome)
 
 peca('story_spoiler_1_cortina-fechada.png', 'cortina_fechada.png', TOPO +
-     "<div class='c ouro' style='top:1400px;font-size:170px'>18.12</div>"
-     "<div class='c cap' style='top:1615px;font-size:36px'>sexta-feira</div>", (150, 1.6))
+     "<div class='c ouro' style='top:1625px;font-size:150px'>18.12</div>"
+     "<div class='c cap' style='top:1810px;font-size:32px'>sexta-feira</div>", (175, 2.2))
 peca('story_spoiler_2_cortina-entreaberta.png', 'cortina_entreaberta.png', TOPO +
      "<div class='c ouro' style='top:1400px;font-size:170px'>18.12</div>"
      "<div class='c cap' style='top:1615px;font-size:36px'>sexta-feira</div>", (150, 1.6))
