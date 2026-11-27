@@ -61,11 +61,11 @@ def canto(lado, top, h):
     return f"<img src='data:image/png;base64,{b64(tmp)}' style='position:absolute;{pos};top:{top}px;height:{h}px;filter:drop-shadow(0 3px 10px rgba(0,0,0,.85))'>"
 def centro(lado, top, h):
     t = canto(lado, top, h); return t.replace("left:72px", "left:50%;transform:translateX(-50%)").replace("right:72px", "left:50%;transform:translateX(-50%)")
-TOPO_APRESENTAM = ("<div style='position:absolute;left:290px;right:290px;top:30px;height:300px;background:radial-gradient(ellipse at 50% 50%,rgba(6,1,2,.85),rgba(6,1,2,0) 72%)'></div>" +
-     centro('e', 84, 50) + "<div class='c' style='top:146px;font-family:P;font-style:italic;font-size:30px;color:#e9cf8e;text-shadow:0 2px 6px rgba(0,0,0,.9)'>e</div>" +
-     centro('d', 188, 62) + "<div class='c cap' style='top:270px;font-size:22px'>apresentam</div>")
+TOPO_APRESENTAM = ("<div style='position:absolute;left:180px;right:180px;top:0px;height:300px;background:radial-gradient(ellipse at 50% 42%,rgba(6,1,2,.92),rgba(6,1,2,.55) 45%,rgba(6,1,2,0) 75%)'></div>" +
+     topo(92, 520))
 peca('feed_surpresa_luz-na-cortina.png', 'cortina_luz_feed.png', TOPO_APRESENTAM +
      "<div style='position:absolute;left:220px;right:220px;top:1120px;height:220px;background:radial-gradient(ellipse at 50% 45%,rgba(6,1,2,.7),rgba(6,1,2,0) 70%)'></div>"
      "<div class='c ouro' style='top:1135px;font-size:108px'>18.12</div>"
      "<div class='c cap' style='top:1262px;font-size:24px'>sexta-feira</div>", (215, 2.0), H=1350)
-for f in ('_canto_e.png', '_canto_d.png'): os.remove(P + f)
+for f in ('_canto_e.png', '_canto_d.png'):
+    if os.path.exists(P + f): os.remove(P + f)
