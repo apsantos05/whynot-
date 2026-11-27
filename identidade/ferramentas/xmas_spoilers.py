@@ -2,7 +2,7 @@
   1 fechada e 2 entreaberta: só a logo e a data (suspense)   3 contagem: "faltam N dias."  + feed de chamada. Topo: why not? | The House
 Uso: python3 xmas_spoilers.py <pasta fontes> [dias...]"""
 import os, sys, base64
-from PIL import Image, ImageChops
+from PIL import Image, ImageChops, ImageFilter
 from playwright.sync_api import sync_playwright
 R = os.path.dirname(os.path.dirname(os.path.abspath(__file__))); FD = sys.argv[1]; DIAS = [int(d) for d in sys.argv[2:]] or [23]
 P = R + '/xmas-party/spoilers/'; F = P + 'fundos/'
@@ -24,7 +24,9 @@ def peca(nome, fundo, html, escurece, H=1920, y0=0):
         br = p.chromium.launch(); pg = br.new_page(viewport={'width': 1080, 'height': H})
         pg.set_content(f"<style>{CSS}</style>{html}"); pg.evaluate('document.fonts.ready.then(()=>0)'); pg.wait_for_timeout(300)
         pg.screenshot(path=P + '_t.png', omit_background=True); br.close()
-    bg = Image.open(F + fundo).convert('RGB').resize((1080, 1920), Image.LANCZOS).crop((0, y0, 1080, y0 + H))
+    src = Image.open(F + fundo).convert('RGB')
+    if abs(src.width / src.height - 1080 / H) < .01: bg = src.resize((1080, H), Image.LANCZOS).filter(ImageFilter.UnsharpMask(1.2, 40, 2))
+    else: bg = src.resize((1080, 1920), Image.LANCZOS).crop((0, y0, 1080, y0 + H))
     # escurece o pé da imagem (onde fica o texto) com degradê suave
     g = Image.linear_gradient('L').resize((1080, H)).point(lambda v: int(min(255, max(0, (v - escurece[0]) * escurece[1]))))
     bg = Image.composite(Image.new('RGB', bg.size, (8, 2, 3)), bg, g).convert('RGBA')
@@ -47,3 +49,7 @@ peca('story_e-hoje.png', 'cortina_aberta.png', TOPO +
 peca('feed_chamada_cortina-fechada.png', 'cortina_fechada.png', topo(80, 520) +
      "<div class='c ouro' style='top:1130px;font-size:118px'>18.12</div>"
      "<div class='c cap' style='top:1268px;font-size:28px'>sexta-feira</div>", (190, 2.4), H=1350, y0=500)
+# feed 4:5 surpresa: só a cortina com a luz estourando pela fresta. Logos embaixo (a fresta de luz no alto não pode virar "barra" entre elas)
+peca('feed_surpresa_luz-na-cortina.png', 'cortina_luz_feed.png',
+     "<div style='position:absolute;left:190px;right:190px;top:1100px;height:250px;background:radial-gradient(ellipse at 50% 45%,rgba(6,1,2,.72),rgba(6,1,2,0) 70%)'></div>"
+     "<div class='c ouro' style='top:1118px;font-size:92px'>18.12</div>" + topo(1240, 430), (215, 2.0), H=1350)
