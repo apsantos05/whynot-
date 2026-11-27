@@ -49,7 +49,23 @@ peca('story_e-hoje.png', 'cortina_aberta.png', TOPO +
 peca('feed_chamada_cortina-fechada.png', 'cortina_fechada.png', topo(80, 520) +
      "<div class='c ouro' style='top:1130px;font-size:118px'>18.12</div>"
      "<div class='c cap' style='top:1268px;font-size:28px'>sexta-feira</div>", (190, 2.4), H=1350, y0=500)
-# feed 4:5 surpresa: só a cortina com a luz estourando pela fresta. Logos embaixo (a fresta de luz no alto não pode virar "barra" entre elas)
-peca('feed_surpresa_luz-na-cortina.png', 'cortina_luz_feed.png',
-     "<div style='position:absolute;left:190px;right:190px;top:1100px;height:250px;background:radial-gradient(ellipse at 50% 45%,rgba(6,1,2,.72),rgba(6,1,2,0) 70%)'></div>"
-     "<div class='c ouro' style='top:1118px;font-size:92px'>18.12</div>" + topo(1240, 430), (215, 2.0), H=1350)
+# feed 4:5 surpresa: só a cortina com a luz estourando pela fresta. Logos nos cantos de cima (longe da fresta), data sozinha no chão
+PAR_IMG = Image.open(PAR)
+def canto(lado, top, h):
+    """recorta do par a logo da esquerda (why not?) ou da direita (The House) e posiciona no canto"""
+    a = PAR_IMG.split()[3]; cols = [x for x in range(PAR_IMG.width) if a.crop((x, 0, x + 1, PAR_IMG.height)).getbbox()]
+    gaps = [i for i in range(1, len(cols)) if cols[i] - cols[i - 1] > 40]; cut = cols[gaps[0]] - 10
+    parte = PAR_IMG.crop((0, 0, cut, PAR_IMG.height) if lado == 'e' else (cut, 0, PAR_IMG.width, PAR_IMG.height)); parte = parte.crop(parte.getbbox())
+    tmp = P + f'_canto_{lado}.png'; parte.save(tmp); w = round(parte.width * h / parte.height)
+    pos = f"left:72px" if lado == 'e' else f"right:72px"
+    return f"<img src='data:image/png;base64,{b64(tmp)}' style='position:absolute;{pos};top:{top}px;height:{h}px;filter:drop-shadow(0 3px 10px rgba(0,0,0,.85))'>"
+def centro(lado, top, h):
+    t = canto(lado, top, h); return t.replace("left:72px", "left:50%;transform:translateX(-50%)").replace("right:72px", "left:50%;transform:translateX(-50%)")
+TOPO_APRESENTAM = ("<div style='position:absolute;left:290px;right:290px;top:30px;height:300px;background:radial-gradient(ellipse at 50% 50%,rgba(6,1,2,.85),rgba(6,1,2,0) 72%)'></div>" +
+     centro('e', 84, 50) + "<div class='c' style='top:146px;font-family:P;font-style:italic;font-size:30px;color:#e9cf8e;text-shadow:0 2px 6px rgba(0,0,0,.9)'>e</div>" +
+     centro('d', 188, 62) + "<div class='c cap' style='top:270px;font-size:22px'>apresentam</div>")
+peca('feed_surpresa_luz-na-cortina.png', 'cortina_luz_feed.png', TOPO_APRESENTAM +
+     "<div style='position:absolute;left:220px;right:220px;top:1120px;height:220px;background:radial-gradient(ellipse at 50% 45%,rgba(6,1,2,.7),rgba(6,1,2,0) 70%)'></div>"
+     "<div class='c ouro' style='top:1135px;font-size:108px'>18.12</div>"
+     "<div class='c cap' style='top:1262px;font-size:24px'>sexta-feira</div>", (215, 2.0), H=1350)
+for f in ('_canto_e.png', '_canto_d.png'): os.remove(P + f)
