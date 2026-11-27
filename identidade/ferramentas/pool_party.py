@@ -35,8 +35,8 @@ def precos(y, fs, gap):
             f"<div class='m' style='left:560px;top:{y}px;font-size:{round(fs*.36)}px'>homem</div>"
             f"<div class='t' style='left:556px;top:{y+round(fs*.5)}px;font-size:{fs}px'>R$ 50.</div>")
 dl = lambda top, fs: f"<div class='m c' style='top:{top}px;font-size:{fs}px'>{DATA}</div>" if DATA else ''
-STORY = (topo(250, 160) +
-  "<div class='t' style='top:360px;font-size:200px'>pool<br><span class='a'>party.</span></div>" +
+STORY = (topo(210, 150) +
+  "<div class='t' style='top:300px;font-size:150px'>pool <span class='a'>party.</span></div>" +
   "<div class='m c' style='top:1240px;font-size:31px'>na casa, com piscina</div>"
   "<div class='t' style='top:1286px;font-size:120px'>open cooler.</div>"
   "<div class='r' style='top:1440px'></div>" + precos(1470, 104, 0) + dl(1655, 30))
@@ -45,8 +45,8 @@ FEED = (topo(64, 140) +
   "<div class='m c' style='top:850px;font-size:28px'>na casa, com piscina</div>"
   "<div class='t' style='top:890px;font-size:100px'>open cooler.</div>"
   "<div class='r' style='top:1018px'></div>" + precos(1044, 88, 0) + dl(1230, 27))
-PECAS = [('story_pool-party.png', 1080, 1920, STORY, .5, lambda y: .78 * (1 - sm((y - 150) / 520)) + .74 * sm((y - 1120) / 380)),
-         ('feed_pool-party.png', 1080, 1350, FEED, .5, lambda y: .72 * (1 - sm((y - 40) / 360)) + .72 * sm((y - 760) / 300))]
+PECAS = [('story_pool-party.png', 1080, 1920, STORY, .563, lambda y: .82 * (1 - sm((y - 330) / 300)) + .74 * sm((y - 1120) / 380)),
+         ('feed_pool-party.png', 1080, 1350, FEED, .563, lambda y: .72 * (1 - sm((y - 40) / 360)) + .72 * sm((y - 760) / 300))]
 with sync_playwright() as p:
     br = p.chromium.launch()
     for nome, W, H, html, fx, esc in PECAS:
